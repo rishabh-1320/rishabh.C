@@ -7,11 +7,10 @@ export const homeContent: HomeContent = {
   resumeUrl: "https://drive.google.com/file/d/1yuRPDLlRh_Q7rkXvQfxWwoOZYhgisN42/view?usp=sharing",
   nav: [
     { label: "Works", href: "/#features" },
-    { label: "AI Exploration", href: "/#ai-exploration" },
     { label: "About", href: "/#about" }
   ],
   hero: {
-    lead: "Designing The",
+    lead: "Designing the",
     highlight: "Complex B2B enterprise tools",
     support: "PRD's into functioning prototypes",
     intro:
@@ -57,7 +56,7 @@ export const homeContent: HomeContent = {
       description:
         "End-to-end UX overhaul and brand evolution for Chestnut, a Producer Performance Management platform.",
       image: "https://framerusercontent.com/images/evb8WhW5MaVa23RUApiaX1mK1ic.png?scale-down-to=1024&width=2290&height=1474",
-      ctaLabel: "Case study unavailable",
+      ctaLabel: "Under NDA — available on request",
       active: false,
       tags: ["Product", "B2B", "Design"]
     },
@@ -74,9 +73,9 @@ export const homeContent: HomeContent = {
     },
     {
       id: "work-onboarding-replica",
-      title: "Lokalise Onboarding Case Study",
+      title: "Lingobase Onboarding Case Study",
       description:
-        "End-to-end onboarding redesign case study replicated with full structure, metrics, and visual walkthrough in native portfolio styling.",
+        "Redesigned Lingobase's end-to-end onboarding — from homepage to in-product checklist — lifting sign-up, activation, and trial-to-customer conversion.",
       image: "/case-study/onboarding/dummy-cover.svg",
       ctaLabel: "View case study",
       active: true,
@@ -95,28 +94,7 @@ export const homeContent: HomeContent = {
       tags: ["Design System", "Component Library", "Design to Code"]
     }
   ],
-  aiExplorations: [
-    {
-      id: "ai-component-lib",
-      title: "Making Component Library",
-      description: "Building a comprehensive, scalable component library with design tokens and coded components.",
-      image: "https://framerusercontent.com/images/4pyO6vhykNH4ooSWJ9TTjvKrU.png?width=1200&height=600",
-      ctaLabel: "Open Case study",
-      active: true,
-      href: "/ai/ai-shopping-assistant",
-      tags: ["Design System", "Component Library", "Design to Code"]
-    },
-    {
-      id: "ai-shopping",
-      title: "AI Shopping Assistant",
-      description: "Pet project exploring AI-driven shopping flows and conversational product discovery.",
-      image: "https://framerusercontent.com/images/r186HwEvDAVtFgHPbRq9eyYWYKs.png?width=750&height=750",
-      ctaLabel: "Open project",
-      active: true,
-      href: "/ai/ai-shopping-assistant",
-      tags: ["Vibe Code", "Pet Project", "AI"]
-    }
-  ],
+  aiExplorations: [],
   galleryTitle: "Fun Stuff",
   galleryIntro: "At the end, I am human. A glimpse of my life outside messed up components.",
   gallery: [
@@ -154,7 +132,7 @@ export const homeContent: HomeContent = {
     }
   ],
   coursesTitle: "Who Am I?",
-  coursesIntro: "I'm a Product Designer specializing in B2B enterprise tools that turn fragmented workflows into seamless digital experiences.",
+  coursesIntro: "Outside client work, I invest in learning — from interaction design courses to staying current with emerging tools and methods.",
   courseHighlights: ["UX designer", "Design to Code", "Making Component library"],
   aboutSummary:
     "A product designer who loves working on complex systems and enhancing features to improve product functionality and user experience.",
@@ -181,16 +159,14 @@ export const homeContent: HomeContent = {
     }
   ],
   funStuffSummary: "Ready to work with me?",
-  contactHeading: "Then pick your phone and call me or not..",
+  contactHeading: "Let's connect — email or call, your choice.",
   contactSubheading: "Let's build the future of your product together and better.",
   email: "rishabh1320@gmail.com",
   phone: "+91 9916519867",
   socials: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "X", href: "https://x.com/pixsellz" },
-    { label: "YouTube", href: "https://youtube.com" }
+    { label: "X", href: "https://x.com/pixsellz" }
   ],
-  footerNote: "© 2025 Rishabh port . All rights reserved.",
+  footerNote: "© 2026 Design Port. All rights reserved.",
   footerPhoto: "https://framerusercontent.com/images/awA4YVq4Ji6HYF9bDmvnjrhD8K0.jpg?width=3415&height=3488"
 };
 
@@ -200,33 +176,33 @@ export const hrmsCaseStudy: CaseStudyContent = {
   subtitle:
     "Designed a workforce attendance dashboard to help business leaders analyze trends and make data-driven decisions.",
   role: "Product Designer",
-  duration: "1 month",
+  duration: "1 month · Solo project",
   overview:
     "This project reworked a noisy attendance experience into a focused analytics dashboard with clear KPI hierarchy, stronger visual storytelling, and quicker decision paths for leadership teams.",
   steps: [
     {
-      title: "Where I started",
+      title: "Auditing the existing dashboard",
       description:
         "I audited the existing attendance dashboard, identified major friction points, and mapped where users were losing context across the reporting flow.",
       image: "https://framerusercontent.com/images/ZLdRrcIW22rCiBPHTvsVussRWE0.png?scale-down-to=1024&width=1632&height=1744",
       alt: "Existing attendance dashboard"
     },
     {
-      title: "Gathering inspirations before starting to design",
+      title: "Competitive Research & Inspiration",
       description:
         "I collected references for layout systems, KPI density, and data narrative patterns to define the visual direction before wireframing.",
       image: "https://framerusercontent.com/images/lA5ZkFjGwNYAERa4giPM4ygQxw.png?scale-down-to=1024&width=2028&height=2401",
       alt: "Moodboard and inspirations"
     },
     {
-      title: "Indentiying KPI's",
+      title: "Identifying KPIs",
       description:
         "I worked with stakeholders to identify the KPI set that mattered most for real-time monitoring and management reporting.",
       image: "https://framerusercontent.com/images/9YL8gZc19XGwr8shgFK6syCg4M.png?scale-down-to=1024&width=1920&height=2473",
       alt: "KPI identification and layout notes"
     },
     {
-      title: "Finding The right place for each KPI",
+      title: "Finding the right place for each KPI",
       description:
         "A wireframe pass helped place each KPI in a structure that supports fast scanning, clear grouping, and logical visual hierarchy.",
       image: "https://framerusercontent.com/images/fX5ImhTCmKhFsAi5J2RHIweQoj0.png?scale-down-to=1024&width=1209&height=1508",
@@ -247,5 +223,5 @@ export const hrmsCaseStudy: CaseStudyContent = {
       alt: "Final dashboard design"
     }
   ],
-  thanksNote: "Thank you for viewing"
+  thanksNote: "Thank you for reading. This project pushed me to balance data density with clarity — if I were to revisit it, I'd invest more time in testing with actual HR managers earlier in the process."
 };

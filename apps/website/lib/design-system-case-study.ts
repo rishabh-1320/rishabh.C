@@ -65,9 +65,9 @@ export const designSystemCaseStudy: DesignSystemCaseStudyContent = {
   heroTitle: "Building Plasma,",
   heroSubtitle: "a scalable design system",
   overview:
-    "This case study captures how a design system matured from visual exploration into reusable patterns, robust documentation, and engineering-ready standards across multiple products.",
+    "Before Plasma, three products shared no common components — every team maintained its own button, its own form, its own spacing rules. This case study documents how I built Plasma, an internal design system, to unify them: from token foundations through component documentation to engineering handoff.",
   myRole: "Product design, system architecture, documentation strategy, and design-dev alignment.",
-  timeline: "5-phase system rollout",
+  timeline: "Jan – May 2024",
   team: ["Product Designer", "Design Lead", "Frontend Engineer", "UX Writer"],
   heroFigure: {
     src: "/case-study/design-system/hero/plasma-hero-overview.webp",
@@ -329,6 +329,6 @@ export const designSystemCaseStudy: DesignSystemCaseStudyContent = {
     publication: "Owl Studios / Medium",
     href: "https://medium.com/owl-studios/plasma-design-system-4d63fb6c1afc",
     note:
-      "This page is a curated adaptation inspired by the original Plasma article, restructured for portfolio storytelling."
+      "Methodology informed by Andrew Couldwell's work at Owl Studios. Architecture and implementation are original."
   }
 };

@@ -10,6 +10,8 @@ type HomeSectionsProps = {
 
 export function HomeSections({ content }: HomeSectionsProps) {
   const heroPhrases = getHeroPhrases(content.hero.highlight, content.hero.support);
+  const heroAccessibleLabel = [content.hero.lead, ...heroPhrases].join(" ");
+  const hasAiExplorations = content.aiExplorations.length > 0;
 
   return (
     <>
@@ -27,7 +29,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
                 style={{ fontFamily: '"Aileron", sans-serif' }}
               >
                 <span className="block">{content.hero.lead}</span>
-                <HeroRotator phrases={heroPhrases} />
+                <HeroRotator phrases={heroPhrases} accessibleLabel={heroAccessibleLabel} />
               </h1>
 
               <p
@@ -36,6 +38,15 @@ export function HomeSections({ content }: HomeSectionsProps) {
               >
                 {content.hero.intro}
               </p>
+
+              <div className="mt-2 flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link href="/#features" className="w-full sm:w-auto">
+                  <span className="framer-btn-primary w-full sm:w-auto">View Selected Work</span>
+                </Link>
+                <Link href={`mailto:${content.email}`} className="w-full sm:w-auto">
+                  <span className="framer-btn-secondary w-full sm:w-auto">Contact Me</span>
+                </Link>
+              </div>
             </div>
 
             <div className="relative z-10 w-full">
@@ -61,7 +72,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
       <Section id="how-it-works" className="process-section">
         <Container className="process-container">
           <div className="process-headline">
-            <span className="framer-chip framer-chip-blue process-chip">How do i work?</span>
+            <span className="framer-chip framer-chip-blue process-chip">How do I work?</span>
             <h2 className="process-title" style={{ fontFamily: '"Aileron", sans-serif' }}>
               My Design <span className="text-[#8e8e8e]">Process</span>
             </h2>
@@ -120,7 +131,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
             {content.works.map((item, index) => (
               <div
                 key={item.id}
-                className="sticky w-full"
+                className="w-full xl:sticky"
                 style={{
                   top: `clamp(${84 + index * 10}px, calc(4vw + ${72 + index * 6}px), ${112 + index * 18}px)`,
                   zIndex: 20 + index
@@ -137,28 +148,30 @@ export function HomeSections({ content }: HomeSectionsProps) {
       </Section>
 
       {/* ─── AI EXPLORATION ─── */}
-      <Section id="ai-exploration" className="section-deferred bg-white pb-[120px] pt-[40px] md:pb-[128px] md:pt-[64px] xl:pb-[160px] xl:pt-[80px]">
-        <Container className="max-w-[1600px]">
-          <div className="mx-auto mb-10 flex w-full max-w-[1000px] flex-col items-center gap-2 text-center md:mb-12">
-            <span className="framer-chip framer-chip-blue">Pet Projects</span>
-            <h2
-              className="text-4xl font-semibold tracking-[-0.02em] md:text-6xl"
-              style={{ fontFamily: '"Aileron", sans-serif' }}
-            >
-              AI <span className="text-[#8e8e8e]">Explorations</span>
-            </h2>
-            <p className="max-w-[740px] text-[18px] leading-[26px] text-[#181818] md:text-[20px] md:leading-[30px]" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: "-0.01em" }}>
-              Stay motivated and improve faster with practical tips from me.
-            </p>
-          </div>
+      {hasAiExplorations ? (
+        <Section id="ai-exploration" className="section-deferred bg-white pb-[120px] pt-[40px] md:pb-[128px] md:pt-[64px] xl:pb-[160px] xl:pt-[80px]">
+          <Container className="max-w-[1600px]">
+            <div className="mx-auto mb-10 flex w-full max-w-[1000px] flex-col items-center gap-2 text-center md:mb-12">
+              <span className="framer-chip framer-chip-blue">Pet Projects</span>
+              <h2
+                className="text-4xl font-semibold tracking-[-0.02em] md:text-6xl"
+                style={{ fontFamily: '"Aileron", sans-serif' }}
+              >
+                AI <span className="text-[#8e8e8e]">Explorations</span>
+              </h2>
+              <p className="max-w-[740px] text-[18px] leading-[26px] text-[#181818] md:text-[20px] md:leading-[30px]" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: "-0.01em" }}>
+                Side projects and AI experiments I explore outside client work.
+              </p>
+            </div>
 
-          <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 md:flex-row">
-            {content.aiExplorations.map((item) => (
-              <AiExplorationCard key={item.id} item={item} />
-            ))}
-          </div>
-        </Container>
-      </Section>
+            <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 md:flex-row">
+              {content.aiExplorations.map((item) => (
+                <AiExplorationCard key={item.id} item={item} />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
 
       {/* ─── MEET RISHABH / ABOUT ─── */}
       <Section id="about" className="section-deferred pb-[40px] pt-[120px] md:pb-[64px] md:pt-[128px] xl:pb-[80px] xl:pt-[160px]">
@@ -225,7 +238,22 @@ export function HomeSections({ content }: HomeSectionsProps) {
             <p className="max-w-lg text-[var(--color-muted)] md:text-lg">{content.galleryIntro}</p>
           </div>
 
-          <div className="mx-auto max-w-[1000px] space-y-2 rounded-3xl bg-[#f5f5f5] p-2">
+          <div className="mx-auto grid max-w-[640px] grid-cols-2 gap-3 md:hidden">
+            {content.gallery.map((item, index) => (
+              <div key={`mobile-gallery-${index}`} className="aspect-square overflow-hidden rounded-full">
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={512}
+                  height={512}
+                  sizes="(max-width: 809px) 44vw, 240px"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="mx-auto hidden max-w-[1000px] space-y-2 rounded-3xl bg-[#f5f5f5] p-2 md:block">
             <div className="flex justify-center gap-2">
               {content.gallery.slice(0, 4).map((item, i) => (
                 <div key={`g1-${i}`} className="aspect-square w-[240px] shrink-0 overflow-hidden rounded-full">
@@ -234,7 +262,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
                     alt={item.alt}
                     width={512}
                     height={512}
-                    sizes="(max-width: 809px) 30vw, 240px"
+                    sizes="(max-width: 1439px) 20vw, 240px"
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -248,7 +276,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
                     alt={item.alt}
                     width={512}
                     height={512}
-                    sizes="(max-width: 809px) 30vw, 240px"
+                    sizes="(max-width: 1439px) 20vw, 240px"
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -262,7 +290,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
                     alt={item.alt}
                     width={512}
                     height={512}
-                    sizes="(max-width: 809px) 30vw, 240px"
+                    sizes="(max-width: 1439px) 20vw, 240px"
                     className="h-full w-full object-cover"
                   />
                 </div>
@@ -283,10 +311,10 @@ export function HomeSections({ content }: HomeSectionsProps) {
 
               <div className="flex flex-col items-center gap-4">
                 <h2 className="text-5xl font-semibold leading-[1.06] tracking-[-0.02em] text-white md:text-[60px] md:leading-[68px]" style={{ fontFamily: '"Aileron", sans-serif' }}>
-                  Ready to work <span className="text-[#8e8e8e]">with me?</span>
+                  {content.funStuffSummary}
                 </h2>
                 <p className="text-2xl leading-8 text-white" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: '-0.01em' }}>
-                  Then pick your phone &amp; call me or not..
+                  {content.contactHeading}
                 </p>
               </div>
 
@@ -295,10 +323,10 @@ export function HomeSections({ content }: HomeSectionsProps) {
               </Link>
             </div>
 
-            <div className="flex w-full items-start justify-between gap-6 md:flex-row">
-              <div className="flex max-w-[320px] flex-col gap-4">
+            <div className="flex w-full flex-col items-center justify-between gap-10 text-center md:flex-row md:items-start md:text-left">
+              <div className="flex max-w-[320px] flex-col items-center gap-4 md:items-start">
                 <p className="text-base leading-6 text-[#e0e0e0]" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: '-0.01em' }}>
-                  Let&apos;s build the future of your product together &amp; better.
+                  {content.contactSubheading}
                 </p>
 
                 <div className="flex items-center gap-4">
@@ -318,7 +346,7 @@ export function HomeSections({ content }: HomeSectionsProps) {
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-2 text-white">
+              <div className="flex flex-col items-center gap-2 text-white md:items-end">
                 <Link href={`mailto:${content.email}`} className="group text-base leading-6 tracking-[-0.01em]" style={{ fontFamily: '"Aileron", sans-serif' }}>
                   <RollingLinkText text={content.email} light />
                 </Link>

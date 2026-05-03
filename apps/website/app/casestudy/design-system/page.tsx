@@ -123,7 +123,7 @@ export default function DesignSystemCaseStudyPage() {
                   Ready to work <span className="text-[#8e8e8e]">with me?</span>
                 </h2>
                 <p className="text-2xl leading-8 text-white" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: '-0.01em' }}>
-                  Then pick your phone &amp; call me or not..
+                  Let&apos;s connect — email or call, your choice.
                 </p>
               </div>
 
@@ -135,7 +135,7 @@ export default function DesignSystemCaseStudyPage() {
             <div className="flex w-full items-start justify-between gap-6 md:flex-row">
               <div className="flex max-w-[320px] flex-col gap-4">
                 <p className="text-base leading-6 text-[#e0e0e0]" style={{ fontFamily: '"Aileron", sans-serif', letterSpacing: '-0.01em' }}>
-                  Let&apos;s build the future of your product together &amp; better.
+                  Let&apos;s build the future of your product, together.
                 </p>
 
                 <div className="flex items-center gap-4">

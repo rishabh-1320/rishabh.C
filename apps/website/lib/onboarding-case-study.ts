@@ -134,13 +134,13 @@ export type OnboardingCaseStudyContent = {
 
 export const onboardingCaseStudy: OnboardingCaseStudyContent = {
   slug: "casestudy/onboarding",
-  metadataTitle: "Redesigning Lokalise User Onboarding | Case Study",
+  metadataTitle: "Redesigning Lingobase User Onboarding | Case Study",
   metadataDescription:
-    "Redesigned Lokalise's onboarding end to end, from homepage to in-product checklist, lifting sign-up, activation, and trial-to-customer conversion.",
-  heroTitle: "Redesigning Lokalise",
-  heroSubtitle: "user onboarding",
+    "Redesigned Lingobase's onboarding end to end, from homepage to in-product checklist, lifting sign-up, activation, and trial-to-customer conversion.",
+  heroTitle: "Redesigning Lingobase",
+  heroSubtitle: "User Onboarding",
   overview:
-    "Redesigned Lokalise's onboarding end to end, from homepage to in-product checklist, lifting sign-up, activation, and trial-to-customer conversion.",
+    "Redesigned Lingobase's onboarding end to end, from homepage to in-product checklist, lifting sign-up, activation, and trial-to-customer conversion.",
   myRole: "Design strategy, UI, UX, User Research.",
   team: ["Me", "PM", "EM", "Data", "UR", "FE", "FE", "BE"],
   timeline: "2024 Q1-Q2",
@@ -148,10 +148,10 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
   heroPoster: "/case-study/onboarding/hero/onboarding-comparison.png",
   impactOverview: [
     {
-      title: "Sign up rate",
+      title: "Sign-up rate",
       value: "+37%",
       description:
-        "Through redesign of homepage and design updates of sign up page, we increased sign-up conversion by 37%."
+        "Through redesign of homepage and design updates of sign-up page, we increased sign-up conversion by 37%."
     },
     {
       title: "Activation rate",
@@ -174,7 +174,7 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
   problemFraming: {
     heading: "Why we started redesigning onboarding?",
     intro: [
-      "Lokalise had massive growth between 2018 to 2022. We doubled our revenue year over year, and raised a $50M Series B funding in 2022.",
+      "Lingobase had massive growth between 2018 to 2022. We doubled our revenue year over year, and raised a $50M Series B funding in 2022.",
       "However, as the market got more competitive, we noticed a massive drop in acquisition and activation rate since late-2022. This is a red flag because activation rate is closely linked to retention, and we are at risk of losing future revenue when looking at the trend."
     ],
     activationFigure: {
@@ -184,9 +184,9 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
     },
     steps: [
       {
-        title: "Step #1 Dogfooding - Mapping out the current onboarding.",
+        title: "Step 1: Dogfooding — Mapping out the current onboarding.",
         body: [
-          "When we first established the Growth team, I was the only team member in the team (Both PM and EM had not started yet). Since I had no one to rely on and plan stuff, I could only rely on my designer colleagues from Lokalise design team.",
+          "When we first established the Growth team, I was the only team member in the team (Both PM and EM had not started yet). Since I had no one to rely on and plan stuff, I could only rely on my designer colleagues from Lingobase design team.",
           "The first thing I did was ask everyone to join me in evaluating the current onboarding (aka, dogfooding). This exercise helped us internally gauge how effective our onboarding process is and kick off discussions on potential improvements."
         ],
         figures: [
@@ -238,11 +238,11 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
   },
   frictionSummary: {
     heading:
-      "Through these steps, we identified 3 major frictions that block users from onboarding successfully in Lokalise.",
+      "Through these steps, we identified 3 major frictions that block users from onboarding successfully in Lingobase.",
     prompt: "Can you guess what those frictions were?",
     figure: {
       src: "/case-study/onboarding/problem-details/quiz-game.png",
-      alt: "Lokalise onboarding screen with three annotated friction points"
+      alt: "Lingobase onboarding screen with three annotated friction points"
     },
     notes: ["Banner blindness", "Interruptive experience", "High cognitive load"]
   },
@@ -252,7 +252,7 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
       {
         title: "1. Cognitive Load",
         body:
-          "Cognitive load refers to the mental effort needed to complete and understand a task. Instead of making it easy to start using Lokalise, we overwhelm users with a long list of actions and calls to action (CTAs), which takes time to process.",
+          "Cognitive load refers to the mental effort needed to complete and understand a task. Instead of making it easy to start using Lingobase, we overwhelm users with a long list of actions and calls to action (CTAs), which takes time to process.",
         figure: {
           src: "/case-study/onboarding/problem-details/heatmap.png",
           alt: "Heatmap showing overloaded onboarding surface."
@@ -264,7 +264,7 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
           "The top banner is something that everyone ignores. In fact, the average click rate of a top banner is just around 0.004%. However, at the same time, this top banner is breaking the user experience.",
         figure: {
           src: "/case-study/onboarding/problem-details/quiz.png",
-          alt: "Lokalise onboarding screen highlighting the confusing top banner"
+          alt: "Lingobase onboarding screen highlighting the confusing top banner"
         },
         note:
           "Users did not understand what the top banner was asking them to do, so it was easy to ignore despite taking up valuable space."
@@ -275,14 +275,14 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
           "Finally, showing users a pop-up that blocks them from accessing the app right away disrupts their flow and can lead to irritation, especially when the pop-up is also cluttered with multiple CTAs.",
         figure: {
           src: "/case-study/onboarding/problem-details/quiz.png",
-          alt: "Lokalise onboarding screen highlighting the interruptive modal"
+          alt: "Lingobase onboarding screen highlighting the interruptive modal"
         },
         note:
           "The blocking modal interrupted the flow before users could explore the product, forcing them to decode a decision before they had any context."
       }
     ],
     additionalProblems: {
-      heading: "And of course, we found even more problems...",
+      heading: "Additional friction points identified",
       figure: {
         src: "/case-study/onboarding/problem-details/more-problems.png",
         alt: "Additional friction points identified through internal dogfooding"
@@ -292,7 +292,7 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
     }
   },
   solution: {
-    heading: "Now, you may ask: Ben, how did you solve the problem then?",
+    heading: "So how did we solve it?",
     intro: "I am glad that you asked. It is boring to continue reading text, so here are visuals to support it.",
     sprint: {
       title: "1. Design Sprint (i.e., Prioritize as a team)",
@@ -363,12 +363,12 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
         id: "jtbd-homepage",
         title: "1. A JTBD-based homepage",
         description:
-          "We rolled out a JTBD-based homepage after discovering that visitors often come to Lokalise to localize specific content types.",
+          "We rolled out a JTBD-based homepage after discovering that visitors often come to Lingobase to localize specific content types.",
         beforeLabel: "Old homepage",
         afterLabel: "New homepage",
         beforeSrc: "/case-study/onboarding/final-design/old-homepage.webp",
         afterSrc: "/case-study/onboarding/final-design/image-249.png",
-        alt: "Before and after comparison of the Lokalise homepage redesign",
+        alt: "Before and after comparison of the Lingobase homepage redesign",
         stats: [
           {
             value: "36% increase in signup attempt rate",
@@ -382,9 +382,9 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
       },
       {
         id: "signup-refresh",
-        title: "2. Light-refresh of our sign up page",
+        title: "2. Sign-up page refresh",
         description:
-          "We dedicated a week to lightly refresh our sign-up pages, showcasing Lokalise features and updating copywriting to better communicate our offerings.",
+          "We dedicated a week to refresh our sign-up page, showcasing Lingobase features and updating copywriting to better communicate our offerings.",
         beforeLabel: "Old sign-up",
         afterLabel: "New sign-up",
         beforeSrc: "/case-study/onboarding/final-design/old-signup.webp",
@@ -432,7 +432,7 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
       "Increase sign-up to AHA rate from 3% to 12.7%",
       "Double the number of trial-to-customer rate"
     ],
-    quote: '"I have never used Lokalise before but I feel like I have used it. That is a weird feeling." - Prospect of Lokalise.'
+    quote: '"I have never used Lingobase before but I feel like I have used it. That is a weird feeling." - Prospect of Lingobase.'
   },
   furtherReading: {
     title: "Published in UXCollective - March, 2024",
@@ -452,25 +452,25 @@ export const onboardingCaseStudy: OnboardingCaseStudyContent = {
     heading: "More case studies",
     cards: [
       {
-        tag: "AI Lokalise",
+        tag: "AI Lingobase",
         title: "AI Translation Review",
         description: "Bringing AI into the translation review workflow to help teams move faster without losing quality.",
         image: "/case-study/onboarding/related/ai-translation-review.webp",
-        href: "https://www.benshih.design/case-study/ai-translation-review"
+        href: "#"
       },
       {
-        tag: "AI Miro",
-        title: "AI-first experience at Miro",
+        tag: "AI Tool",
+        title: "AI-first experience",
         description: "A behavior-first approach to AI entry points, momentum, and collaboration workflows.",
         image: "/case-study/onboarding/related/ai-first-experience.png",
-        href: "https://www.benshih.design/case-study/ai-first-experience"
+        href: "#"
       },
       {
-        tag: "Campaign Miro",
-        title: "Miro recap at scale",
+        tag: "Campaign",
+        title: "Year-in-review at scale",
         description: "How we built a yearly recap experience that scaled to millions while keeping completion high.",
         image: "/case-study/onboarding/related/miro-recap.png",
-        href: "https://www.benshih.design/case-study/miro-recap"
+        href: "#"
       }
     ]
   }

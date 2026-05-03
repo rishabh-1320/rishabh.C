@@ -9,7 +9,7 @@ const HERO_ENTER_MS = 520;
 
 type HeroPhase = "idle" | "exiting" | "entering";
 
-export function HeroRotator({ phrases }: { phrases: string[] }) {
+export function HeroRotator({ phrases, accessibleLabel }: { phrases: string[]; accessibleLabel?: string }) {
   const safePhrases = phrases.length > 0 ? phrases : [""];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<HeroPhase>("idle");
@@ -53,8 +53,8 @@ export function HeroRotator({ phrases }: { phrases: string[] }) {
   const phaseClass = phase === "idle" ? "" : `is-${phase}`;
 
   return (
-    <span className={`hero-rotator ${phaseClass}`} aria-live="polite">
-      <span className="sr-only">{currentPhrase}</span>
+    <span className={`hero-rotator ${phaseClass}`}>
+      <span className="sr-only">{accessibleLabel || currentPhrase}</span>
       <HeroLine text={currentPhrase} phase={phase} />
     </span>
   );
