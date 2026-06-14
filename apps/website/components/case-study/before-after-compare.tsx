@@ -17,14 +17,14 @@ export function BeforeAfterCompare({ beforeSrc, afterSrc, beforeLabel, afterLabe
 
   return (
     <figure className="space-y-2">
-      <div className="relative overflow-hidden rounded-xl border border-[var(--color-border)] bg-white">
+      <div className="relative overflow-hidden rounded-ds-lg border border-ds-border bg-ds-surface-raised">
         <Image
           src={afterSrc}
           alt={`${alt} (after)`}
           width={1600}
           height={1000}
           sizes="(max-width: 809px) 100vw, 860px"
-          className="h-auto max-h-[500px] w-full select-none bg-[#fafafa] object-contain"
+          className="h-auto max-h-[500px] w-full select-none bg-ds-surface-sunken object-contain"
           draggable={false}
         />
         <div className="absolute inset-y-0 left-0 overflow-hidden" style={{ width: `${position}%` }}>
@@ -34,7 +34,7 @@ export function BeforeAfterCompare({ beforeSrc, afterSrc, beforeLabel, afterLabe
               alt={`${alt} (before)`}
               fill
               sizes="(max-width: 809px) 100vw, 860px"
-              className="select-none bg-[#fafafa] object-contain"
+              className="select-none bg-ds-surface-sunken object-contain"
               draggable={false}
             />
           </div>
@@ -42,7 +42,7 @@ export function BeforeAfterCompare({ beforeSrc, afterSrc, beforeLabel, afterLabe
 
         <div className="pointer-events-none absolute inset-y-0" style={{ left: `calc(${position}% - 1px)` }}>
           <div className="h-full w-0.5 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.15)]" />
-          <div className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/75 text-white shadow-md">
+          <div className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-ds-pill border border-white/30 bg-black/75 text-white shadow-md">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M5 4L2 8L5 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M11 4L14 8L11 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -64,10 +64,10 @@ export function BeforeAfterCompare({ beforeSrc, afterSrc, beforeLabel, afterLabe
           aria-label="Before and after comparison slider"
         />
 
-        <div className="pointer-events-none absolute bottom-3 left-3 rounded-md bg-black/60 px-2 py-1 text-xs font-semibold text-white">{beforeLabel}</div>
-        <div className="pointer-events-none absolute bottom-3 right-3 rounded-md bg-black/60 px-2 py-1 text-xs font-semibold text-white">{afterLabel}</div>
+        <div className="pointer-events-none absolute bottom-3 left-3 rounded-ds-sm bg-black/60 px-2 py-1 font-ds-sans text-ds-caption font-semibold text-white">{beforeLabel}</div>
+        <div className="pointer-events-none absolute bottom-3 right-3 rounded-ds-sm bg-black/60 px-2 py-1 font-ds-sans text-ds-caption font-semibold text-white">{afterLabel}</div>
       </div>
-      <figcaption className="text-center text-xs text-[var(--color-muted)] md:text-sm">{alt}</figcaption>
+      <figcaption className="text-center font-ds-sans text-ds-caption text-ds-ink-muted">{alt}</figcaption>
     </figure>
   );
 }

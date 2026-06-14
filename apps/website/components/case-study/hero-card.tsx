@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Card, Heading } from "@packages/ui";
+import { Card, Text } from "@packages/ds-ui";
 import { InfoBlock } from "@/components/case-study/info-block";
 
 type HeroCardProps = {
@@ -13,19 +13,19 @@ type HeroCardProps = {
 };
 
 /**
- * The white-frosted card that sits at the top of every case study.
+ * The card that sits at the top of every case study.
  * Holds the page title, snapshot copy, metadata grid, and optional hero figure.
  */
 export function HeroCard({ title, children, meta, footer }: HeroCardProps) {
   return (
-    <Card className="border-white bg-white/85 p-6 shadow-card-feature md:p-8">
-      <Heading level={1} size="h1">
+    <Card surface="raised" pad="lg" radius="rounded-ds-2xl">
+      <Text variant="h1" as="h1">
         {title}
-      </Heading>
+      </Text>
 
       <div className="mt-5 space-y-3">{children}</div>
 
-      <div className="mt-8 grid gap-6 border-t border-[var(--border-default)] pt-6 md:grid-cols-3 md:gap-8">
+      <div className="mt-8 grid gap-6 border-t border-ds-border pt-6 md:grid-cols-3 md:gap-8">
         {meta.map((cell) => (
           <InfoBlock key={cell.title} title={cell.title} value={cell.value} />
         ))}

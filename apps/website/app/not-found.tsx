@@ -1,19 +1,18 @@
-import Link from "next/link";
-import { Button, Container, Section } from "@packages/ui";
+import { ButtonLink, Container, Section, Text } from "@packages/ds-ui";
 
 export default function NotFound() {
   return (
-    <Section>
-      <Container className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-widest text-[var(--color-muted)]">404</p>
-        <h1 className="mt-3 text-4xl font-bold">Page not found</h1>
-        <p className="mt-3 text-[var(--color-muted)]">This route is not configured yet.</p>
-        <div className="mt-8">
-          <Link href="/">
-            <Button>Back Home</Button>
-          </Link>
-        </div>
-      </Container>
-    </Section>
+    <div className="ds-root">
+      <Section>
+        <Container className="text-center">
+          <Text variant="eyebrow" as="p">404</Text>
+          <Text variant="h1" as="h1" className="mt-3">Page not found</Text>
+          <Text variant="lead" as="p" className="mt-3">This route is not configured yet.</Text>
+          <div className="mt-8 flex justify-center">
+            <ButtonLink href="/">Back Home</ButtonLink>
+          </div>
+        </Container>
+      </Section>
+    </div>
   );
 }

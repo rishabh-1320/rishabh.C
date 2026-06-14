@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Container, Eyebrow, Section } from "@packages/ui";
+import { Container, Eyebrow, Section } from "@packages/ds-ui";
 import { homeContent } from "@/lib/site-content";
 
 const CASE_STUDIES = [
@@ -46,11 +46,11 @@ export function CaseStudyNav({ current }: { current: string }) {
   const others = CASE_STUDIES.filter((cs) => cs.id !== current);
 
   return (
-    <Section className="border-t border-[var(--border-default)] bg-[var(--surface-soft)] py-12 md:py-16">
+    <Section bg="sunken" pad="md" className="border-t border-ds-border">
       <Container>
         <div className="mb-6 flex items-baseline justify-between gap-4">
           <Eyebrow>More case studies</Eyebrow>
-          <span className="text-eyebrow font-medium text-[var(--text-muted)]">Swipe →</span>
+          <span className="font-ds-sans text-ds-caption font-medium text-ds-ink-muted">Swipe →</span>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory">
           {others.map((cs) => {
@@ -61,9 +61,9 @@ export function CaseStudyNav({ current }: { current: string }) {
               <Link
                 key={cs.id}
                 href={cs.href}
-                className="group flex-none snap-start w-80 overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[var(--text-primary)] hover:shadow-card-hover"
+                className="group w-80 flex-none snap-start overflow-hidden rounded-ds-lg border border-ds-border bg-ds-surface-raised transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ds-ink hover:shadow-ds-card-hover"
               >
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#f0f0f0]">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-ds-surface-sunken">
                   {image && (
                     <Image
                       src={image}
@@ -77,26 +77,26 @@ export function CaseStudyNav({ current }: { current: string }) {
 
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-[var(--text-primary)]">
+                    <h3 className="font-ds-sans text-ds-body font-semibold leading-snug text-ds-ink">
                       {cs.title}
                     </h3>
-                    <span className="mt-0.5 flex-none text-base text-[var(--text-muted)] transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-[var(--text-primary)]">
+                    <span className="mt-0.5 flex-none text-ds-ink-muted transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-ds-ink">
                       →
                     </span>
                   </div>
-                  <p className="mt-1 text-[13px] leading-relaxed text-[var(--text-secondary)]">{cs.subtitle}</p>
+                  <p className="mt-1 font-ds-sans text-ds-body-sm leading-relaxed text-ds-ink-soft">{cs.subtitle}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <div className="flex flex-wrap gap-1.5">
                       {cs.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-[var(--color-border)] bg-[#f5f5f5] px-2 py-0.5 text-[11px] font-medium text-[var(--color-muted)]"
+                          className="rounded-ds-pill border border-ds-border bg-ds-surface-sunken px-2 py-0.5 font-ds-sans text-ds-caption font-medium text-ds-ink-muted"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    {cs.year && <p className="text-[11px] text-[var(--color-muted)]">{cs.year}</p>}
+                    {cs.year && <p className="font-ds-sans text-ds-caption text-ds-ink-muted">{cs.year}</p>}
                   </div>
                 </div>
               </Link>

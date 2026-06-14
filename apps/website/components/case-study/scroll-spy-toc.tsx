@@ -100,12 +100,12 @@ export function ScrollSpyToc({ items }: ScrollSpyTocProps) {
             }}
             aria-current={isActive ? "location" : undefined}
             className={`
-              shrink-0 whitespace-nowrap rounded-lg border px-3 py-1.5 text-xs font-medium transition
-              md:relative md:block md:whitespace-normal md:rounded-none md:border-0 md:border-l-2 md:px-0 md:py-1.5 md:pl-3 md:text-[13px] md:leading-snug
+              shrink-0 whitespace-nowrap rounded-ds-md border px-3 py-1.5 font-ds-sans text-ds-caption font-medium transition
+              md:relative md:block md:whitespace-normal md:rounded-none md:border-0 md:border-l-2 md:px-0 md:py-1.5 md:pl-3 md:leading-snug
               ${
                 isActive
-                  ? "border-[var(--color-text)] bg-[var(--color-text)] text-white md:border-[var(--brand-lime)] md:bg-transparent md:font-semibold md:text-[var(--text-primary)]"
-                  : "border-[var(--color-border)] text-[var(--color-text)] hover:bg-[#f5f5f5] md:border-transparent md:text-[var(--text-muted)] md:hover:bg-transparent md:hover:text-[var(--text-primary)]"
+                  ? "border-ds-ink bg-ds-ink text-ds-on-ink md:border-ds-accent md:bg-transparent md:font-semibold md:text-ds-ink"
+                  : "border-ds-border text-ds-ink hover:bg-ds-surface-sunken md:border-transparent md:text-ds-ink-muted md:hover:bg-transparent md:hover:text-ds-ink"
               }
             `}
           >

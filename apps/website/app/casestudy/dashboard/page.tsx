@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, Container, Divider, Eyebrow, Section } from "@packages/ui";
+import { Card, Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
@@ -21,9 +21,9 @@ export default function HrmsDashboardPage() {
     <>
       <ScrollProgressBar />
 
-      <Section className="pb-8 pt-12 md:pb-10 md:pt-16">
+      <Section pad="none" className="pb-8 pt-12 md:pb-10 md:pt-16">
         <Container>
-          <Link href="/" className="text-sm font-semibold text-[var(--color-brand)] hover:underline">
+          <Link href="/" className="text-sm font-semibold text-ds-accent hover:underline">
             ← Back to Home
           </Link>
 
@@ -47,7 +47,7 @@ export default function HrmsDashboardPage() {
         </Container>
       </Section>
 
-      <Section className="py-2 md:py-4">
+      <Section pad="none" className="py-2 md:py-4">
         <Container>
           <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
@@ -100,7 +100,7 @@ export default function HrmsDashboardPage() {
                   I narrowed it through iteration — putting KPIs in, seeing if they earned their place, cutting the ones that didn&apos;t. No formal framework. Trial, error, and judgment.
                 </p>
                 <p className="content-prose mt-4">What survived broke into clear groups:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li><strong>Real-time:</strong> who&apos;s expected, who&apos;s present, who&apos;s absent</li>
                   <li><strong>Workforce:</strong> active, inactive, unmapped, recent joiners and leavers</li>
                   <li><strong>Patterns:</strong> attendance trends, leave patterns, working hours</li>
@@ -200,7 +200,7 @@ export default function HrmsDashboardPage() {
                 <p className="content-prose mt-4">
                   What felt obvious to me — how something should behave, why a chart was built a certain way, what the edge cases were — wasn&apos;t obvious to the people building it. I handed off clean screens and assumed the intent came through. It didn&apos;t.
                 </p>
-                <blockquote className="mt-5 rounded-xl bg-[var(--surface-muted)] px-5 py-4 text-base italic text-[var(--text-primary)]">
+                <blockquote className="mt-5 rounded-ds-lg bg-ds-surface-sunken px-5 py-4 text-base italic text-ds-ink">
                   Now I treat handoff as part of the design, not the end of it. More context, more annotation, more &ldquo;here&apos;s why.&rdquo; Design isn&apos;t done when the Figma file looks right. It&apos;s done when the thing ships the way you meant it to.
                 </blockquote>
               </CaseSection>

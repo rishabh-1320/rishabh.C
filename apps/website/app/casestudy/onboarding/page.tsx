@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, Container, Divider, Eyebrow, Section } from "@packages/ui";
+import { Card, Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
@@ -31,9 +31,9 @@ export default function OnboardingCaseStudyPage() {
     <>
       <ScrollProgressBar />
 
-      <Section className="pb-8 pt-12 md:pb-10 md:pt-16">
+      <Section pad="none" className="pb-8 pt-12 md:pb-10 md:pt-16">
         <Container>
-          <Link href="/" className="text-sm font-semibold text-[var(--color-brand)] hover:underline">
+          <Link href="/" className="text-sm font-semibold text-ds-accent hover:underline">
             ← Back to Home
           </Link>
 
@@ -66,7 +66,7 @@ export default function OnboardingCaseStudyPage() {
         </Container>
       </Section>
 
-      <Section className="py-2 md:py-4">
+      <Section pad="none" className="py-2 md:py-4">
         <Container>
           <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
@@ -83,7 +83,7 @@ export default function OnboardingCaseStudyPage() {
                 <p className="content-prose mt-4">
                   It was built like an <strong>admin panel</strong> — tasks in tables, dense forms, manual document uploads. For a new hire on day one, it was confusing. They couldn&apos;t tell:
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>Where they were in the process</li>
                   <li>What was done</li>
                   <li>What was still pending</li>
@@ -171,7 +171,7 @@ export default function OnboardingCaseStudyPage() {
                 <p className="content-prose">
                   As the sole designer, I brainstormed and iterated over ~2–3 weeks, working from the outside in:
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li><strong>Layout first</strong> — the onboarding home and overall structure; exploring the visual language and step model</li>
                   <li><strong>Then components</strong> — the verification/OTP cards, every state mapped (empty, error, re-enter, success)</li>
                   <li><strong>Then details</strong> — text fields, and the full range of upload states (uploading, reupload, file too large, unsupported, error)</li>

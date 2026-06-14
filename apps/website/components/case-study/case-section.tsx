@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Heading } from "@packages/ui";
+import { Text } from "@packages/ds-ui";
 import { GsapReveal } from "@/components/gsap-reveal";
 
 type CaseSectionProps = {
@@ -20,9 +20,9 @@ export function CaseSection({ id, heading, children, headingSize = "h2", classNa
   return (
     <section id={id} className={`space-y-5 scroll-mt-28 py-8 md:py-10 ${className ?? ""}`}>
       <GsapReveal preset="fadeUp">
-        <Heading level={2} size={headingSize}>
+        <Text variant={headingSize} as="h2">
           {heading}
-        </Heading>
+        </Text>
       </GsapReveal>
       <GsapReveal preset="fadeUp" delay={0.08}>
         <>{children}</>

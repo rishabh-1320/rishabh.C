@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Container, Divider, Eyebrow, Section } from "@packages/ui";
+import { Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
@@ -22,9 +22,9 @@ export default function ChestnutCaseStudyPage() {
     <>
       <ScrollProgressBar />
 
-      <Section className="pb-8 pt-12 md:pb-10 md:pt-16">
+      <Section pad="none" className="pb-8 pt-12 md:pb-10 md:pt-16">
         <Container>
-          <Link href="/" className="text-sm font-semibold text-[var(--color-brand)] hover:underline">
+          <Link href="/" className="text-sm font-semibold text-ds-accent hover:underline">
             ← Back to Home
           </Link>
 
@@ -57,7 +57,7 @@ export default function ChestnutCaseStudyPage() {
         </Container>
       </Section>
 
-      <Section className="py-2 md:py-4">
+      <Section pad="none" className="py-2 md:py-4">
         <Container>
           <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
@@ -90,7 +90,7 @@ export default function ChestnutCaseStudyPage() {
                 <p className="content-prose">
                   <strong>Chestnut wasn&apos;t broken. It wasn&apos;t outdated. It was inconsistent.</strong>
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>The same button showed up in five different styles</li>
                   <li>Tables were designed a dozen different ways</li>
                   <li>The same action — applying a filter, setting a condition — behaved differently depending on where you were</li>
@@ -110,13 +110,13 @@ export default function ChestnutCaseStudyPage() {
                   <strong>You can&apos;t fix inconsistency you haven&apos;t measured.</strong> So I went through the entire product and documented every variation of every element.
                 </p>
                 <p className="content-prose mt-4">Components:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>Every type of button — and every version of the &ldquo;same&rdquo; button</li>
                   <li>Every table and table header — different icons, spacing, padding, sometimes a completely different element doing the same job</li>
                   <li>Every navigation pattern</li>
                 </ul>
                 <p className="content-prose mt-4">Then interactions:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>How many different ways did the product let you do the same thing — apply a filter, set a condition?</li>
                   <li>More than there should&apos;ve been. I recorded all of them.</li>
                 </ul>
@@ -138,7 +138,7 @@ export default function ChestnutCaseStudyPage() {
                   I rebuilt the core components from the ground up — <strong>buttons, tables, headers, and their states</strong> — plus the interaction patterns that tied them together. One source of truth for how Chestnut should look and behave.
                 </p>
 
-                <h3 className="mt-8 text-h3-sm font-semibold tracking-tight md:text-h3">Shipping the system in code</h3>
+                <h3 className="mt-8 font-ds-sans text-ds-h3 font-semibold tracking-tight">Shipping the system in code</h3>
                 <p className="content-prose mt-3">
                   <strong>Here&apos;s where I changed how I work.</strong>
                 </p>
@@ -146,7 +146,7 @@ export default function ChestnutCaseStudyPage() {
                   Normally a designer hands off Figma files and hopes the build matches. I didn&apos;t want that gap. So instead of delivering the system in Figma, I built it in code.
                 </p>
                 <p className="content-prose mt-4">What that looked like:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>Set up a <strong>Storybook</strong> to visualize every component</li>
                   <li>Built out a proper <strong>component library</strong></li>
                   <li>Chestnut&apos;s front-end was already <strong>shadcn-based</strong> — a head start, but the components weren&apos;t complete or built the way we needed</li>
@@ -176,9 +176,9 @@ export default function ChestnutCaseStudyPage() {
               {/* ─── PART 2 CHAPTER OPENER ─── */}
               <div id="part-2" className="my-16 scroll-mt-28 md:my-24">
                 <div className="mb-8 flex items-center gap-4">
-                  <div className="h-px flex-1 bg-[var(--border-default)]" aria-hidden="true" />
-                  <span className="text-eyebrow font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">Part 02</span>
-                  <div className="h-px flex-1 bg-[var(--border-default)]" aria-hidden="true" />
+                  <div className="h-px flex-1 bg-[var(--ds-color-border)]" aria-hidden="true" />
+                  <span className="font-ds-sans text-ds-eyebrow font-bold uppercase tracking-[0.18em] text-ds-ink-muted">Part 02</span>
+                  <div className="h-px flex-1 bg-[var(--ds-color-border)]" aria-hidden="true" />
                 </div>
 
                 <GsapReveal preset="fadeUp">
@@ -227,11 +227,11 @@ export default function ChestnutCaseStudyPage() {
                   For the most careful task in the product, the tool forced a detour at the worst possible moment.
                 </p>
 
-                <h3 className="mt-8 text-h3-sm font-semibold tracking-tight md:text-h3">The tension I was designing against</h3>
+                <h3 className="mt-8 font-ds-sans text-ds-h3 font-semibold tracking-tight">The tension I was designing against</h3>
                 <p className="content-prose mt-3">
                   This is what made it interesting. Two pulls, working against each other:
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li><strong>Make it easier.</strong> Kill the detour. Let people create a variable right where they need it.</li>
                   <li><strong>Don&apos;t make it careless.</strong> Variable creation is risky. The name has to match the system. The logic has to be right. This is no place for a sloppy shortcut.</li>
                 </ul>
@@ -250,7 +250,7 @@ export default function ChestnutCaseStudyPage() {
                   When you build payment logic, you type a variable name and a filtered list of suggestions appears — standard type-ahead the admins use constantly. I added one thing, pinned to the bottom of that list: <strong>&ldquo;+ New variable.&rdquo;</strong>
                 </p>
                 <p className="content-prose mt-4">Why this, and not some big new entry point:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>It rides a behavior people already have — <strong>nothing new to learn</strong></li>
                   <li>It appears exactly when it&apos;s needed — mid-search, mid-thought</li>
                   <li><strong>The payment logic stays open behind it.</strong> No lost work.</li>
@@ -264,14 +264,14 @@ export default function ChestnutCaseStudyPage() {
                   caption="Behind the door: a guided flow, not a blank form."
                 />
 
-                <h3 className="mt-8 text-h3-sm font-semibold tracking-tight md:text-h3">A guided flow through a genuinely hard task</h3>
+                <h3 className="mt-8 font-ds-sans text-ds-h3 font-semibold tracking-tight">A guided flow through a genuinely hard task</h3>
                 <p className="content-prose mt-3">
                   Clicking &ldquo;+ New variable&rdquo; opens a stepped, guided flow — because authoring one of these is genuinely complex, and a blank form would be dangerous.
                 </p>
                 <div className="relative mt-6 pl-14 md:pl-16">
                   {/* connecting rail */}
                   <div
-                    className="pointer-events-none absolute left-[18px] top-[18px] bottom-[18px] w-px bg-[var(--border-default)] md:left-[20px]"
+                    className="pointer-events-none absolute left-[18px] top-[18px] bottom-[18px] w-px bg-[var(--ds-color-border)] md:left-[20px]"
                     aria-hidden="true"
                   />
 
@@ -345,7 +345,7 @@ export default function ChestnutCaseStudyPage() {
                 <p className="content-prose mt-4">
                   The dead end is gone. An admin who hits a missing variable no longer leaves, no longer loses their work, and no longer flies blind. They create exactly what they need, see it work, and keep going.
                 </p>
-                <blockquote className="mt-5 rounded-xl bg-[var(--surface-muted)] px-5 py-4 text-base italic text-[var(--text-primary)]">
+                <blockquote className="mt-5 rounded-ds-lg bg-ds-surface-sunken px-5 py-4 text-base italic text-ds-ink">
                   Make the easy thing easy, and the careful thing safe.
                 </blockquote>
               </CaseSection>
@@ -365,12 +365,12 @@ function NumberedStep({ n, title, children }: { n: number; title: string; childr
   return (
     <div className="relative">
       {/* step number badge */}
-      <div className="absolute -left-14 top-0 flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[var(--brand-lime)] text-base font-bold text-[var(--text-primary)] ring-4 ring-white md:-left-16 md:h-[42px] md:w-[42px]">
+      <div className="absolute -left-14 top-0 flex h-[38px] w-[38px] items-center justify-center rounded-full bg-[var(--ds-color-accent)] text-base font-bold text-ds-on-ink ring-4 ring-white md:-left-16 md:h-[42px] md:w-[42px]">
         {n}
       </div>
 
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 md:p-6">
-        <h4 className="text-[15px] font-semibold tracking-tight text-[var(--text-primary)] md:text-base">{title}</h4>
+      <div className="rounded-ds-lg border border-ds-border bg-ds-surface-raised p-5 md:p-6">
+        <h4 className="text-[15px] font-semibold tracking-tight text-ds-ink md:text-base">{title}</h4>
         <div className="mt-2">{children}</div>
       </div>
     </div>

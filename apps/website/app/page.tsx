@@ -1,6 +1,5 @@
-import { HomeSections } from "@/components/home-sections";
-import { homeContent } from "@/lib/site-content";
+import { DsHome } from "@/components/home-ds/home";
 
 export default function HomePage() {
-  return <HomeSections content={homeContent} />;
+  return <DsHome />;
 }

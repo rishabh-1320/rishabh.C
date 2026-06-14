@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Container, Section } from "@packages/ui";
 
 export const metadata: Metadata = {
   title: "Therapist Coupon Workspace",
@@ -25,9 +24,9 @@ const redemptionRules = [
 export default function TherapistCouponWorkspacePage() {
   return (
     <>
-      <span data-hide-site-header className="hidden" aria-hidden="true" />
-      <Section className="min-h-screen py-6 md:py-10">
-        <Container className="max-w-[920px]">
+      <span data-hide-site-header data-hide-status-bar className="hidden" aria-hidden="true" />
+      <section className="min-h-screen py-6 md:py-10">
+        <div className="mx-auto w-full max-w-[920px] px-4 md:px-6">
         <div className="relative mx-auto max-w-[620px]">
           <div className="relative z-10 flex flex-col items-center text-center">
             <TheraviveLogo />
@@ -116,8 +115,8 @@ export default function TherapistCouponWorkspacePage() {
             </p>
           </div>
         </div>
-        </Container>
-      </Section>
+        </div>
+      </section>
 
       <div
         id="redeem-modal"

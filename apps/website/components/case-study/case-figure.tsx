@@ -21,9 +21,13 @@ export function CaseFigure({ src, alt, caption, width = 1600, height = 900 }: Ca
           width={width}
           height={height}
           sizes="(max-width: 768px) 100vw, 860px"
-          className="case-figure-image w-full rounded-xl object-cover"
+          className="case-figure-image w-full rounded-ds-lg object-cover"
         />
-        {caption && <figcaption className="mt-2 text-center text-sm text-[var(--color-muted)]">{caption}</figcaption>}
+        {caption && (
+          <figcaption className="mt-2 text-center font-ds-sans text-ds-caption text-ds-ink-muted">
+            {caption}
+          </figcaption>
+        )}
       </figure>
     </GsapReveal>
   );

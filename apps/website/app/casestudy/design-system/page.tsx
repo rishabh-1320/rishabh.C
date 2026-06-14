@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Card, Container, Divider, Eyebrow, InlineCode, Section } from "@packages/ui";
+import { Card, Container, Divider, Eyebrow, InlineCode, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
@@ -20,9 +20,9 @@ export default function DesignSystemCaseStudyPage() {
     <>
       <ScrollProgressBar />
 
-      <Section className="pb-8 pt-12 md:pb-10 md:pt-16">
+      <Section pad="none" className="pb-8 pt-12 md:pb-10 md:pt-16">
         <Container>
-          <Link href="/" className="text-sm font-semibold text-[var(--color-brand)] hover:underline">
+          <Link href="/" className="text-sm font-semibold text-ds-accent hover:underline">
             ← Back to Home
           </Link>
 
@@ -55,7 +55,7 @@ export default function DesignSystemCaseStudyPage() {
         </Container>
       </Section>
 
-      <Section className="py-2 md:py-4">
+      <Section pad="none" className="py-2 md:py-4">
         <Container>
           <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
@@ -87,7 +87,7 @@ export default function DesignSystemCaseStudyPage() {
                   Every token reads as <InlineCode>component / variant / property / state</InlineCode>. So <InlineCode>button/primary/fill/resting</InlineCode> is the fill color of a primary button at rest. <InlineCode>button/secondary/content/disabled</InlineCode> is the text color of a disabled secondary button. You can read a token and know exactly where it lives.
                 </p>
                 <p className="content-prose mt-4">A few real ones:</p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[14px] leading-7 font-mono text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[14px] leading-7 font-mono text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>button/primary/fill/resting → #3b82f6</li>
                   <li>button/primary/fill/hover → #2563eb</li>
                   <li>button/secondary/content/resting → #2563eb</li>
@@ -154,7 +154,7 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   The Figma components weren&apos;t a spec to interpret later — they were the source the code was built from. The variant structure carried straight across:
                 </p>
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-[var(--text-secondary)] marker:text-[var(--text-muted)]">
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ds-ink-soft marker:text-ds-ink-muted">
                   <li>In Figma, the Button has three axes — <strong>Class</strong> (primary/secondary), <strong>State</strong> (resting/hover/active/focus), and <strong>Disable</strong>.</li>
                   <li>In code, those became the React props — <InlineCode>propClass</InlineCode>, <InlineCode>state</InlineCode>, <InlineCode>disable</InlineCode> — plus <InlineCode>icon</InlineCode>, <InlineCode>iconLeft</InlineCode>, <InlineCode>iconRight</InlineCode>, and <InlineCode>text</InlineCode>.</li>
                 </ul>
