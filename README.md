@@ -2,7 +2,7 @@
 
 > Design portfolio for Rishabh Choudhary — product designer specialising in B2B enterprise tools.
 
-**Live site**: https://port-26-website.vercel.app
+**Live site**: https://rishabh-c.vercel.app
 
 ---
 

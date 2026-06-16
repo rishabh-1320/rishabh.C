@@ -3,7 +3,7 @@
 The main public portfolio site for Rishabh Choudhary. Built with Next.js 14 App Router, TypeScript, Tailwind CSS, and GSAP.
 
 **Status**: Active — primary workspace  
-**Live URL**: https://port-26-website.vercel.app
+**Live URL**: https://rishabh-c.vercel.app
 
 ---
 

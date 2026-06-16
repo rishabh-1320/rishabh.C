@@ -6,7 +6,7 @@ import { PageTransition } from "@/components/page-transition";
 import { homeContent } from "@/lib/site-content";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://port-26.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rishabh-c.vercel.app";
 
 export const metadata: Metadata = {
   title: {
