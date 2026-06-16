@@ -18,7 +18,7 @@ The buckets share no token names, so they cannot collide or drift into each othe
 packages/ds-ui/src/tokens.ts        ← every visual value, once (the ONLY place raw values live)
    → tokensToCss()                   ← flattens to --ds-* on :root, + .ds-inverted flip + mobile block
    → injected once in app/layout.tsx (<style>)
-packages/ds-ui/tailwind-preset.ts   ← maps ds-* utilities to the --ds-* vars (added via `presets:` in tailwind.config.ts)
+apps/website/tailwind.config.ts     ← `ds-*` utilities map to the --ds-* vars (the canonical namespace)
    → packages/ds-ui/src/*           ← token-only primitives (Text, Button, Card, Section, …)
       → components/home-ds/sections  ← feature sections compose primitives only
          → lib/site-content.ts       ← all copy lives here, shared across every renderer
@@ -29,7 +29,7 @@ A page opts into the system by carrying `.ds-root` (sets the canonical backgroun
 ## Rules (enforced by `scripts/check-drift-ds.mjs`)
 
 1. **No raw values in feature sections** — never a hex/rgb/hsl colour, a `px` value, a `font-family` literal, or a `font-[…]` utility. Use a `ds-*` utility or a primitive.
-2. **New visual values go in `tokens.ts` only** — then expose them in `tailwind-preset.ts`. Never inline.
+2. **New visual values go in `tokens.ts` only** — then expose them as a `ds-*` utility in `apps/website/tailwind.config.ts`. Never inline.
 3. **Sections compose primitives** — `<Text variant>`, `<Section bg pad>`, `<Card>`, `<Button>`, etc. Don't hand-roll typographic/colour utilities in a section when a primitive exists.
 4. **Never use the legacy default namespace** (`bg-surface-*`, `text-text-*`, `text-primary`, `bg-brand-*`, `font-display`) in canonical code — that's the frozen bucket.
 5. **Dark sections** use `<Section bg="ink">` (adds `.ds-inverted`, which flips the ink/accent/border tokens) — never hardcode light-on-dark colours.
@@ -38,7 +38,7 @@ Run the guard: `npm run lint:drift:ds`. (The quarantined systems keep their own 
 
 ## Recipes
 
-- **Add a token:** add it to the right group in `packages/ds-ui/src/tokens.ts`, then add a `ds-*` entry referencing `var(--ds-…)` in `packages/ds-ui/tailwind-preset.ts`.
+- **Add a token:** add it to the right group in `packages/ds-ui/src/tokens.ts`, then add a `ds-*` entry referencing `var(--ds-…)` in `apps/website/tailwind.config.ts`.
 - **Add a primitive:** create `packages/ds-ui/src/<name>.tsx` (consume only `ds-*` utilities), export it from `src/index.ts`.
 - **Add a section:** create `components/home-ds/sections/<name>.tsx`, import primitives from `@packages/ds-ui`, pull copy from `lib/site-content.ts`, compose. No raw values.
 - **Add a new app:** depend on `@packages/ds-ui`, inject `tokensToCss()` in its root layout, add `presets: [dsPreset]` + the package's `content` glob to its tailwind config.

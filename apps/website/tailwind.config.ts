@@ -1,9 +1,6 @@
 import type { Config } from "tailwindcss";
-import dsPreset from "../../packages/ds-ui/tailwind-preset";
 
 const config: Config = {
-  // The canonical `ds-*` namespace comes from the shared design-system package.
-  presets: [dsPreset],
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -53,6 +50,34 @@ const config: Config = {
           strong: "var(--border-strong)",
           subtle: "var(--border-subtle)"
         },
+        // ── canonical design system (values from packages/ds-ui/src/tokens.ts) ──
+        ds: {
+          "surface-page": "var(--ds-color-surface-page)",
+          "surface-raised": "var(--ds-color-surface-raised)",
+          "surface-sunken": "var(--ds-color-surface-sunken)",
+          "surface-cream": "var(--ds-color-surface-cream)",
+          "surface-ink": "var(--ds-color-surface-ink)",
+          "surface-nav": "var(--ds-color-surface-nav)",
+          ink: "var(--ds-color-ink)",
+          "ink-soft": "var(--ds-color-ink-soft)",
+          "ink-muted": "var(--ds-color-ink-muted)",
+          "on-ink": "var(--ds-color-on-ink)",
+          accent: "var(--ds-color-accent)",
+          "accent-hover": "var(--ds-color-accent-hover)",
+          "accent-soft": "var(--ds-color-accent-soft)",
+          positive: "var(--ds-color-positive)",
+          border: "var(--ds-color-border)",
+          "border-strong": "var(--ds-color-border-strong)",
+          "border-subtle": "var(--ds-color-border-subtle)",
+          "tag-lilac-bg": "var(--ds-color-tag-lilac-bg)",
+          "tag-lilac-fg": "var(--ds-color-tag-lilac-fg)",
+          "tag-peach-bg": "var(--ds-color-tag-peach-bg)",
+          "tag-peach-fg": "var(--ds-color-tag-peach-fg)",
+          "tag-mint-bg": "var(--ds-color-tag-mint-bg)",
+          "tag-mint-fg": "var(--ds-color-tag-mint-fg)",
+          "tag-sky-bg": "var(--ds-color-tag-sky-bg)",
+          "tag-sky-fg": "var(--ds-color-tag-sky-fg)"
+        },
         // ── vs3 isolated namespace (quarantined; values from components/styles/vs3/tokens.ts) ──
         vs3: {
           "surface-page": "var(--vs3-color-surface-page)",
@@ -89,6 +114,9 @@ const config: Config = {
         serif: ["var(--font-serif)", "serif"],
         sans: ["var(--font-sans)", "sans-serif"],
         script: ["var(--font-script)", "cursive"],
+        "ds-serif": ["var(--ds-font-serif)", "serif"],
+        "ds-sans": ["var(--ds-font-sans)", "sans-serif"],
+        "ds-script": ["var(--ds-font-script)", "cursive"],
         "vs3-display": ["var(--vs3-font-display)", "sans-serif"],
         "vs3-sans": ["var(--vs3-font-sans)", "sans-serif"],
         "vs3-mono": ["var(--vs3-font-mono)", "monospace"]
@@ -96,6 +124,8 @@ const config: Config = {
       maxWidth: {
         content: "1088px",
         prose: "680px",
+        "ds-content": "var(--ds-layout-container)",
+        "ds-prose": "var(--ds-layout-prose)",
         "vs3-content": "var(--vs3-layout-container)",
         "vs3-prose": "var(--vs3-layout-prose)"
       },
@@ -112,6 +142,12 @@ const config: Config = {
         xl: "var(--radius-xl)",
         "2xl": "var(--radius-2xl)",
         pill: "var(--radius-pill, 999px)",
+        "ds-sm": "var(--ds-radius-sm)",
+        "ds-md": "var(--ds-radius-md)",
+        "ds-lg": "var(--ds-radius-lg)",
+        "ds-xl": "var(--ds-radius-xl)",
+        "ds-2xl": "var(--ds-radius-2xl)",
+        "ds-pill": "var(--ds-radius-pill)",
         "vs3-sm": "var(--vs3-radius-sm)",
         "vs3-md": "var(--vs3-radius-md)",
         "vs3-lg": "var(--vs3-radius-lg)",
@@ -133,6 +169,16 @@ const config: Config = {
         "body-sm": ["var(--text-body-sm-size)", { lineHeight: "var(--text-body-sm-lh)" }],
         caption: ["var(--text-caption-size)", { lineHeight: "var(--text-caption-lh)" }],
         eyebrow: ["var(--text-eyebrow-size)", { lineHeight: "var(--text-eyebrow-lh)" }],
+        "ds-display": ["var(--ds-type-display-size)", { lineHeight: "var(--ds-type-display-lh)" }],
+        "ds-h1": ["var(--ds-type-h1-size)", { lineHeight: "var(--ds-type-h1-lh)" }],
+        "ds-h2": ["var(--ds-type-h2-size)", { lineHeight: "var(--ds-type-h2-lh)" }],
+        "ds-h3": ["var(--ds-type-h3-size)", { lineHeight: "var(--ds-type-h3-lh)" }],
+        "ds-lead": ["var(--ds-type-lead-size)", { lineHeight: "var(--ds-type-lead-lh)" }],
+        "ds-body": ["var(--ds-type-body-size)", { lineHeight: "var(--ds-type-body-lh)" }],
+        "ds-body-sm": ["var(--ds-type-body-sm-size)", { lineHeight: "var(--ds-type-body-sm-lh)" }],
+        "ds-caption": ["var(--ds-type-caption-size)", { lineHeight: "var(--ds-type-caption-lh)" }],
+        "ds-eyebrow": ["var(--ds-type-eyebrow-size)", { lineHeight: "var(--ds-type-eyebrow-lh)" }],
+        "ds-script": ["var(--ds-type-script-size)", { lineHeight: "var(--ds-type-script-lh)" }],
         "vs3-display": ["var(--vs3-type-display-size)", { lineHeight: "var(--vs3-type-display-lh)" }],
         "vs3-h1": ["var(--vs3-type-h1-size)", { lineHeight: "var(--vs3-type-h1-lh)" }],
         "vs3-h2": ["var(--vs3-type-h2-size)", { lineHeight: "var(--vs3-type-h2-lh)" }],
@@ -157,6 +203,9 @@ const config: Config = {
         "chip-lime": "var(--shadow-chip-lime)",
         "glass-card": "var(--shadow-glass-card)",
         nav: "var(--shadow-nav)",
+        "ds-card": "var(--ds-shadow-card)",
+        "ds-card-hover": "var(--ds-shadow-card-hover)",
+        "ds-nav": "var(--ds-shadow-nav)",
         "vs3-card": "var(--vs3-shadow-card)",
         "vs3-card-hover": "var(--vs3-shadow-card-hover)",
         "vs3-nav": "var(--vs3-shadow-nav)"
