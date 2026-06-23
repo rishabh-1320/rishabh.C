@@ -22,7 +22,7 @@ export function DsHome() {
       >
         <DsNav />
         <main>
-          <DsHero hero={homeContent.hero} linkedinUrl={homeContent.footer.linkedinUrl} />
+          <DsHero hero={homeContent.hero} />
           <DsExperience about={homeContent.about} />
           <DsWork heading={homeContent.worksHeading} works={homeContent.works} />
           <DsIdeology

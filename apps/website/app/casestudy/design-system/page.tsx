@@ -4,7 +4,16 @@ import { Card, Container, Divider, Eyebrow, InlineCode, Section } from "@package
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
-import { CaseFigurePlaceholder } from "@/components/case-study/case-figure-placeholder";
+import { MockupFrame } from "@/components/case-study/mockup-frame";
+import {
+  ParityProofMock,
+  TokenTaxonomyMock,
+  TokenTableMock,
+  BrandCompareMock,
+  InputAnatomyMock,
+  FigmaToCodePipelineMock,
+  ArksaberStorybookMock,
+} from "@/components/case-study/mockups/design-system";
 import { CaseSection } from "@/components/case-study/case-section";
 import { CaseStudyNav } from "@/components/case-study/case-study-nav";
 import { HeroCard } from "@/components/case-study/hero-card";
@@ -35,10 +44,9 @@ export default function DesignSystemCaseStudyPage() {
                 { title: "Stack", value: arksaberCaseStudy.stack },
               ]}
               footer={
-                <CaseFigurePlaceholder
-                  description="parity proof — Figma Button matrix beside the code-rendered component, under two brands"
-                  caption="Same component, designed in Figma and rendered from code — under two brands."
-                />
+                <MockupFrame caption="Same component, designed in Figma and rendered from code — under two brands." chrome="none">
+                  <ParityProofMock />
+                </MockupFrame>
               }
             >
               <p className="content-prose">
@@ -57,13 +65,13 @@ export default function DesignSystemCaseStudyPage() {
 
       <Section pad="none" className="py-2 md:py-4">
         <Container>
-          <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
               <Eyebrow className="md:mb-3">On this page</Eyebrow>
               <ScrollSpyToc items={arksaberCaseStudy.toc} />
             </aside>
 
-            <article className="space-y-0">
+            <article className="min-w-0 space-y-0">
 
               <CaseSection id="why" heading="Why I built it">
                 <p className="content-prose">
@@ -96,17 +104,15 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   It&apos;s not just color. Spacing and type are tokenized too — <InlineCode>spacing/button/gap</InlineCode> (8px), <InlineCode>size/label-md</InlineCode> (14px), <InlineCode>family/label-md</InlineCode> (Inter). Nothing in a component is a magic number; everything points back to a named decision.
                 </p>
-                <CaseFigurePlaceholder
-                  description="token taxonomy — the component/variant/property/state convention with real Button examples"
-                  caption="Every value has a name, and the name says exactly where it's used."
-                />
+                <MockupFrame caption="Every value has a name, and the name says exactly where it's used." chrome="none">
+                  <TokenTaxonomyMock />
+                </MockupFrame>
                 <p className="content-prose mt-4">
                   <strong>Why this matters:</strong> this is the layer that makes whitelabel work. The component never hard-codes a color. It asks for a token. So re-skinning a brand isn&apos;t a redesign — it&apos;s a new set of values behind the same names.
                 </p>
-                <CaseFigurePlaceholder
-                  description="token table — name → value → where used, using the real Button tokens"
-                  caption="The tokens that get re-skinned per brand."
-                />
+                <MockupFrame caption="The tokens that get re-skinned per brand." chrome="none">
+                  <TokenTableMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -121,10 +127,9 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   That&apos;s the whole trick, and it&apos;s why the naming had to be disciplined first. Get the token layer right, and theming becomes a config change instead of a rebuild.
                 </p>
-                <CaseFigurePlaceholder
-                  description="the same components under Brand A vs Brand B, side by side"
-                  caption="One system, two brands — only the token values change."
-                />
+                <MockupFrame caption="One system, two brands — only the token values change." chrome="none">
+                  <BrandCompareMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -139,10 +144,9 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   Atoms, molecules, organisms — buttons and inputs up through composed pieces like the modal.
                 </p>
-                <CaseFigurePlaceholder
-                  description="component anatomy — the Input Field's 12 states"
-                  caption="Every state, accounted for — designed once, coded once."
-                />
+                <MockupFrame caption="Every state, accounted for — designed once, coded once." chrome="none">
+                  <InputAnatomyMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -161,10 +165,9 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   One-to-one. The way I structured the component in Figma is the way you call it in React. No translation drift.
                 </p>
-                <CaseFigurePlaceholder
-                  description="Figma → code pipeline: Figma variables/components → token JSON + MCP → AI → CSS tokens + React components → Storybook"
-                  caption="How the design became the code."
-                />
+                <MockupFrame caption="How the design became the code." chrome="none">
+                  <FigmaToCodePipelineMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -196,10 +199,9 @@ export default function DesignSystemCaseStudyPage() {
                 <p className="content-prose mt-4">
                   The next steps are obvious: more components, a hosted Storybook, and docs. But the spine — the token architecture and the design-to-code parity — is already standing.
                 </p>
-                <CaseFigurePlaceholder
-                  description="Storybook — the components running"
-                  caption="The system, running."
-                />
+                <MockupFrame caption="The system, running." chrome="none">
+                  <ArksaberStorybookMock />
+                </MockupFrame>
               </CaseSection>
 
             </article>

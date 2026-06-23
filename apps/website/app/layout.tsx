@@ -10,20 +10,21 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rishabh-c.vercel.ap
 
 export const metadata: Metadata = {
   title: {
-    default: "Rishabh Choudhary — B2B Product Designer",
-    template: "%s | Rishabh Choudhary"
+    default: "rishabh's portfolio",
+    template: "%s | rishabh"
   },
   description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code.",
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Rishabh Choudhary — B2B Product Designer",
+    title: "rishabh's portfolio",
     description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code.",
     type: "website",
+    url: siteUrl,
     images: ["https://framerusercontent.com/images/AqaOpcEcFqtiggHTbjvnqNgu68.png"]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rishabh Choudhary — B2B Product Designer",
+    title: "rishabh's portfolio",
     description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code.",
     images: ["https://framerusercontent.com/images/AqaOpcEcFqtiggHTbjvnqNgu68.png"]
   }

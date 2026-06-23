@@ -4,7 +4,15 @@ import { Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
-import { CaseFigurePlaceholder } from "@/components/case-study/case-figure-placeholder";
+import { MockupFrame } from "@/components/case-study/mockup-frame";
+import {
+  ChestnutHeroMock,
+  BonsaiStorybookMock,
+  PaymentTypeaheadMock,
+  CreateVariableSteps12Mock,
+  ConfigureMetricsMock,
+  LivePreviewMock,
+} from "@/components/case-study/mockups/chestnut";
 import { CaseSection } from "@/components/case-study/case-section";
 import { CaseStudyNav } from "@/components/case-study/case-study-nav";
 import { HeroCard } from "@/components/case-study/hero-card";
@@ -37,10 +45,9 @@ export default function ChestnutCaseStudyPage() {
                 { title: "Tools", value: chestnutCaseStudy.tools },
               ]}
               footer={
-                <CaseFigurePlaceholder
-                  description="Chestnut redesigned screens + the Bonsai design system"
-                  caption="The redesigned product and the design system that standardizes it."
-                />
+                <MockupFrame caption="The redesigned product and the design system that standardizes it.">
+                  <ChestnutHeroMock />
+                </MockupFrame>
               }
             >
               <p className="content-prose">
@@ -59,13 +66,13 @@ export default function ChestnutCaseStudyPage() {
 
       <Section pad="none" className="py-2 md:py-4">
         <Container>
-          <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
               <Eyebrow className="md:mb-3">On this page</Eyebrow>
               <ScrollSpyToc items={chestnutCaseStudy.toc} />
             </aside>
 
-            <article className="space-y-0">
+            <article className="min-w-0 space-y-0">
 
               {/* ─── PART A ─── */}
 
@@ -158,10 +165,9 @@ export default function ChestnutCaseStudyPage() {
                 <p className="content-prose mt-4">
                   <strong>This is where AI earns its place in my workflow.</strong> Prototyping and shipping in code used to be slow — in Figma you place every frame, component, and pixel by hand. With AI, I prompt and the agent builds. It&apos;s faster. And more importantly, it closes the gap between what I design and what ships. <strong>The design system stopped being a picture of components. It became the components.</strong>
                 </p>
-                <CaseFigurePlaceholder
-                  description="Bonsai design system / Storybook — the component library in code"
-                  caption="Bonsai — Chestnut's design system, running in Storybook."
-                />
+                <MockupFrame caption="Bonsai — Chestnut's design system, running in Storybook." chrome="none">
+                  <BonsaiStorybookMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -189,10 +195,9 @@ export default function ChestnutCaseStudyPage() {
 
                 <GsapReveal preset="fadeUp" delay={0.08}>
                   <div className="mt-8">
-                    <CaseFigurePlaceholder
-                      description="the trigger — Payment Logic field with the type-ahead dropdown open, '+ New variable' pinned at the bottom"
-                      caption="The whole feature starts here — a 'New variable' option living inside the search the admin is already using."
-                    />
+                    <MockupFrame caption="The whole feature starts here — a 'New variable' option living inside the search the admin is already using.">
+                      <PaymentTypeaheadMock />
+                    </MockupFrame>
                   </div>
                 </GsapReveal>
               </div>
@@ -259,10 +264,9 @@ export default function ChestnutCaseStudyPage() {
                   The humble part of the feature is humble on purpose. The door is small and familiar. It&apos;s what&apos;s behind it that does the heavy lifting.
                 </p>
 
-                <CaseFigurePlaceholder
-                  description="Step 1 & 2 — Create Variable modal: variable type (Custom / Expression / Analytic) then analytic type (Summation / Growth / Persistency) with plain-language examples"
-                  caption="Behind the door: a guided flow, not a blank form."
-                />
+                <MockupFrame caption="Behind the door: a guided flow, not a blank form." chrome="none">
+                  <CreateVariableSteps12Mock />
+                </MockupFrame>
 
                 <h3 className="mt-8 font-ds-sans text-ds-h3 font-semibold tracking-tight">A guided flow through a genuinely hard task</h3>
                 <p className="content-prose mt-3">
@@ -300,10 +304,9 @@ export default function ChestnutCaseStudyPage() {
                   Progressive disclosure the whole way down. You never face the entire complexity at once; each step asks for one decision and explains it.
                 </p>
 
-                <CaseFigurePlaceholder
-                  description="Step 3 — configure metrics for persistency, with the metric and type-of-date dropdowns and their descriptions"
-                  caption="Every choice explained in plain language — actuarial concepts made selectable."
-                />
+                <MockupFrame caption="Every choice explained in plain language — actuarial concepts made selectable." chrome="none">
+                  <ConfigureMetricsMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -318,10 +321,9 @@ export default function ChestnutCaseStudyPage() {
                 <p className="content-prose mt-4">
                   Before you create the variable that will feed someone&apos;s payout, you watch what it produces. <strong>It turns an act of faith into an act of confirmation.</strong>
                 </p>
-                <CaseFigurePlaceholder
-                  description="Step 4 — period & filters with the live preview loaded — real NPNs and persistency values"
-                  caption="A live preview of real numbers — so a high-stakes decision is confirmed, not guessed."
-                />
+                <MockupFrame caption="A live preview of real numbers — so a high-stakes decision is confirmed, not guessed." chrome="none">
+                  <LivePreviewMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />

@@ -1,31 +1,15 @@
 import type { HeroContent } from "@/lib/types";
-import { Section, Container, Stack, Text, Tag, ButtonLink, PhotoCard } from "@packages/ds-ui";
+import { Section, Container, Stack, Text, ButtonLink, PhotoCard } from "@packages/ds-ui";
 import { heroPhoto } from "../images";
 
-export function DsHero({
-  hero,
-  linkedinUrl
-}: {
-  hero: HeroContent;
-  linkedinUrl: string;
-}) {
+export function DsHero({ hero }: { hero: HeroContent }) {
   return (
     <Section bg="page" pad="lg" className="pt-28 md:pt-32">
       <Container>
-        <div className="grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-16">
-          <div className="flex justify-center md:justify-start">
-            <PhotoCard src={heroPhoto} alt="Portrait of Rishabh" caption="Yeah, you can move it" />
-          </div>
-
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16">
           <Stack gap="lg">
-            <div className="flex flex-wrap gap-2">
-              <Tag color="lilac">Product / UX Designer</Tag>
-              <Tag color="outline">AI Builder</Tag>
-            </div>
-
-            <Text variant="display">
-              <span aria-hidden="true">👋</span>{" "}
-              <span className="text-ds-accent">Hi</span>, I&apos;m Rishabh
+            <Text variant="display" className="md:text-[clamp(3.5rem,7vw,6rem)]">
+              Rishabh
             </Text>
 
             <Text variant="lead" className="max-w-ds-prose">
@@ -36,11 +20,12 @@ export function DsHero({
               <ButtonLink href="#work" variant="primary">
                 Case Studies
               </ButtonLink>
-              <ButtonLink href={linkedinUrl} variant="secondary">
-                Connect on LinkedIn
-              </ButtonLink>
             </div>
           </Stack>
+
+          <div className="flex justify-center md:justify-end">
+            <PhotoCard src={heroPhoto} alt="Portrait of Rishabh" caption="Yeah, you can move it" />
+          </div>
         </div>
       </Container>
     </Section>

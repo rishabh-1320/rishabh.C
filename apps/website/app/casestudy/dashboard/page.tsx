@@ -4,7 +4,12 @@ import { Card, Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
-import { CaseFigurePlaceholder } from "@/components/case-study/case-figure-placeholder";
+import { MockupFrame } from "@/components/case-study/mockup-frame";
+import {
+  ExistingDashboardMock,
+  FinalDashboardMock,
+  ReviewsMock,
+} from "@/components/case-study/mockups/dashboard";
 import { CaseSection } from "@/components/case-study/case-section";
 import { CaseStudyNav } from "@/components/case-study/case-study-nav";
 import { HeroCard } from "@/components/case-study/hero-card";
@@ -49,13 +54,13 @@ export default function HrmsDashboardPage() {
 
       <Section pad="none" className="py-2 md:py-4">
         <Container>
-          <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
               <Eyebrow className="md:mb-3">On this page</Eyebrow>
               <ScrollSpyToc items={dashboardCaseStudy.toc} />
             </aside>
 
-            <article className="space-y-0">
+            <article className="min-w-0 space-y-0">
 
               <CaseSection id="problem" heading="The problem">
                 <p className="content-prose">
@@ -64,10 +69,9 @@ export default function HrmsDashboardPage() {
                 <p className="content-prose mt-4">
                   The company wanted a redesign that did the thinking for the leader. Open it, see what&apos;s happening with your workforce, decide something.
                 </p>
-                <CaseFigurePlaceholder
-                  description="existing dashboard — the 'before'"
-                  caption="The old admin dashboard — a wall of numbers, no clear path to a decision."
-                />
+                <MockupFrame caption="The old admin dashboard — a wall of numbers, no clear path to a decision." tone="legacy" urlLabel="hrms.timelabs.in/admin">
+                  <ExistingDashboardMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -136,10 +140,9 @@ export default function HrmsDashboardPage() {
                     </p>
                   </SubCard>
                 </div>
-                <CaseFigurePlaceholder
-                  description="final dashboard, annotated — the dot plot, the head count table, the smoothened area chart"
-                  caption="The decisions that shaped the dashboard — each chart chosen for what it reveals, not what's familiar."
-                />
+                <MockupFrame caption="The decisions that shaped the dashboard — each chart chosen for what it reveals, not what's familiar.">
+                  <FinalDashboardMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -185,10 +188,9 @@ export default function HrmsDashboardPage() {
                 <p className="content-prose mt-4">
                   I don&apos;t have a clean before/after metric to point to — this was a feature inside a larger HRMS, not a standalone experiment. But it&apos;s live, and there are public reviews that call out the experience.
                 </p>
-                <CaseFigurePlaceholder
-                  description="G2 / software support reviews highlighting the design"
-                  caption="Public reviews calling out the dashboard — to be added."
-                />
+                <MockupFrame caption="Public reviews calling out the dashboard — to be added." chrome="none">
+                  <ReviewsMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />

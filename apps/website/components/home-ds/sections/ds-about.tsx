@@ -7,7 +7,7 @@ export function DsAbout({ about }: { about: HomeContent["about"] }) {
     <Section bg="page" pad="lg" id="about">
       <Container>
         <div className="mb-12 flex flex-col gap-3">
-          <Eyebrow dot>Quick intro</Eyebrow>
+          <Eyebrow dot>B2B Product Designer</Eyebrow>
           <Text variant="h2">Hey! Here&apos;s the short version.</Text>
         </div>
 

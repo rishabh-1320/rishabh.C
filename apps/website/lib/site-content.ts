@@ -4,7 +4,7 @@ export const homeContent: HomeContent = {
   statusBarText: "Open to work · Bangalore, IST (UTC +5:30)",
   siteName: "Rishabh",
   logo: "https://framerusercontent.com/images/HNFmJC5lh17qrHUlZgrQXYCzo.png?width=1969&height=1969",
-  resumeUrl: "https://drive.google.com/file/d/1yuRPDLlRh_Q7rkXvQfxWwoOZYhgisN42/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1yuRPDLlRh_Q7rkXvQfxWwoOZYhgisN42/view?usp=drive_link",
   nav: [
     { label: "Work", href: "/#features" },
     { label: "AI Explorations", href: "/#ai-exploration" },
@@ -13,7 +13,7 @@ export const homeContent: HomeContent = {
 
   hero: {
     h1: "I design complex B2B enterprise software. Then I use AI to ship it in production code.",
-    subLine: "Systems thinker. The niche, regulated, multi-role kind of B2B SaaS that nothing off-the-shelf works for.",
+    subLine: "Bridging the gap between architectural rigor and digital scalability. I design complex workflows for high-stakes environments where clarity is the only metric that matters.",
     metrics: ["5 SaaS products", "5 domains", "1 design system", "AI in production workflow"],
     image: "https://framerusercontent.com/images/evb8WhW5MaVa23RUApiaX1mK1ic.png?width=2290&height=1474"
   },
@@ -29,30 +29,30 @@ export const homeContent: HomeContent = {
     ]
   },
 
-  ideologyHeading: "Design Ideology",
+  ideologyHeading: "Thinking in Systems",
   ideologyPrinciples: [
     {
       id: "01",
-      title: "Function before friendliness.",
-      description: "In B2B, the user is a professional. Power beats polish.",
+      title: "Design systems, not screens.",
+      description: "Any thoughtful system beats a hundred clever tricks.",
       variant: "light"
     },
     {
       id: "02",
-      title: "Design systems, not screens.",
-      description: "One thoughtful pattern beats a hundred clever ones.",
+      title: "Design isn't done at handoff. It's done at production.",
+      description: "The fight for intent is dead. The code is the truth.",
       variant: "brand"
     },
     {
       id: "03",
       title: "AI accelerates. Designers decide.",
-      description: "AI is for velocity. Judgment is still the work.",
+      description: "AI for layouts. Designers set the work.",
       variant: "blue"
     },
     {
       id: "04",
-      title: "Design isn't done at handoff. It's done at production.",
-      description: "The Figma file is intent. The code is the truth.",
+      title: "Function before friendliness.",
+      description: "In B2B, the user is a professional. Power that's usable.",
       variant: "dark"
     }
   ],

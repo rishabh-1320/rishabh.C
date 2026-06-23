@@ -4,7 +4,16 @@ import { Card, Container, Divider, Eyebrow, Section } from "@packages/ds-ui";
 import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
-import { CaseFigurePlaceholder } from "@/components/case-study/case-figure-placeholder";
+import { MockupFrame } from "@/components/case-study/mockup-frame";
+import {
+  OnboardingHomeMock,
+  OldAdminPanelMock,
+  InspirationBoardMock,
+  ProgressSystemMock,
+  DocUploadStepMock,
+  IterationBoardsMock,
+  CompletionMock,
+} from "@/components/case-study/mockups/onboarding";
 import { CaseSection } from "@/components/case-study/case-section";
 import { CaseStudyNav } from "@/components/case-study/case-study-nav";
 import { HeroCard } from "@/components/case-study/hero-card";
@@ -46,10 +55,9 @@ export default function OnboardingCaseStudyPage() {
                 { title: "Timeline", value: "~2–3 weeks design, then build with engineering" },
               ]}
               footer={
-                <CaseFigurePlaceholder
-                  description="redesigned onboarding home — welcome, deadline, days left, % complete, clear step list"
-                  caption="The redesigned onboarding home — you always know where you are and what's next."
-                />
+                <MockupFrame caption="The redesigned onboarding home — you always know where you are and what's next.">
+                  <OnboardingHomeMock />
+                </MockupFrame>
               }
             >
               <p className="content-prose">
@@ -68,13 +76,13 @@ export default function OnboardingCaseStudyPage() {
 
       <Section pad="none" className="py-2 md:py-4">
         <Container>
-          <div className="grid gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-5 md:grid-cols-[220px_minmax(0,860px)] md:gap-10">
             <aside className="md:sticky md:top-28 md:h-fit">
               <Eyebrow className="md:mb-3">On this page</Eyebrow>
               <ScrollSpyToc items={toc} />
             </aside>
 
-            <article className="space-y-0">
+            <article className="min-w-0 space-y-0">
 
               <CaseSection id="problem" heading="The problem: a digital flow nobody used">
                 <p className="content-prose">
@@ -92,10 +100,9 @@ export default function OnboardingCaseStudyPage() {
                 <p className="content-prose mt-4">
                   So candidates avoided it. And when candidates don&apos;t self-serve, the work doesn&apos;t disappear — it lands on HR, who completed onboarding by hand for every new hire. A digital product that created manual work.
                 </p>
-                <CaseFigurePlaceholder
-                  description="old admin-panel onboarding — task-table dashboard and a dense form screen"
-                  caption="The old flow — tables, dense forms, and no sense of progress."
-                />
+                <MockupFrame caption="The old flow — tables, dense forms, and no sense of progress." tone="legacy" urlLabel="hrms.timelabs.in/onboarding">
+                  <OldAdminPanelMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -121,10 +128,9 @@ export default function OnboardingCaseStudyPage() {
                 <p className="content-prose mt-4">
                   I studied how mature products handle account setup, verification, and documents — Zoho, Gusto, and others. How they show progress, handle verification, manage uploads, and close out completion. That became my playbook for what &ldquo;good&rdquo; looked like.
                 </p>
-                <CaseFigurePlaceholder
-                  description="inspiration board — collected references from Zoho, Gusto, and similar products"
-                  caption="References, not research — studying how mature products guide people through setup."
-                />
+                <MockupFrame caption="References, not research — studying how mature products guide people through setup." chrome="none">
+                  <InspirationBoardMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -155,14 +161,12 @@ export default function OnboardingCaseStudyPage() {
                     </p>
                   </SubCard>
                 </div>
-                <CaseFigurePlaceholder
-                  description="the progress system — step list and progress tracker, with status and % always visible"
-                  caption="The core fix — you always know where you are and what's next."
-                />
-                <CaseFigurePlaceholder
-                  description="a key step — the document-upload step with Aadhar/PAN parsing"
-                  caption="Same capabilities as before — now one clear step at a time."
-                />
+                <MockupFrame caption="The core fix — you always know where you are and what's next." chrome="none">
+                  <ProgressSystemMock />
+                </MockupFrame>
+                <MockupFrame caption="Same capabilities as before — now one clear step at a time.">
+                  <DocUploadStepMock />
+                </MockupFrame>
               </CaseSection>
 
               <Divider />
@@ -177,10 +181,9 @@ export default function OnboardingCaseStudyPage() {
                   <li><strong>Then details</strong> — text fields, and the full range of upload states (uploading, reupload, file too large, unsupported, error)</li>
                   <li><strong>Then the refined flow</strong> — pulling it together with parsing, per-section progress, and completion moments</li>
                 </ul>
-                <CaseFigurePlaceholder
-                  description="iteration boards side by side — layout explorations → verification cards → field/upload states"
-                  caption="Layout, then components, then states — working from the structure inward."
-                />
+                <MockupFrame caption="Layout, then components, then states — working from the structure inward." chrome="none">
+                  <IterationBoardsMock />
+                </MockupFrame>
                 <p className="content-prose mt-4">
                   Then I partnered with developers to build it.
                 </p>
@@ -195,10 +198,9 @@ export default function OnboardingCaseStudyPage() {
                 <p className="content-prose mt-4">
                   The biggest shift wasn&apos;t visual — it was <em>who does the work</em>. Candidates could finally self-serve, so HR moved from <strong>completing</strong> onboarding to <strong>approving</strong> it. The digital flow started doing the job it was built for.
                 </p>
-                <CaseFigurePlaceholder
-                  description="the 'Good Job Filling' completion celebration or completed-onboarding state"
-                  caption="Onboarding that candidates actually finish — on their own."
-                />
+                <MockupFrame caption="Onboarding that candidates actually finish — on their own." chrome="none">
+                  <CompletionMock />
+                </MockupFrame>
               </CaseSection>
 
             </article>
