@@ -96,12 +96,12 @@ export function CtaFooter({
       <div className="py-12">
         <SectionRow>
         <Block width="wide" border="none" pad="none">
-          <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
+          <div className="flex flex-col items-start justify-between gap-3 text-left md:flex-row md:items-center">
             <p className="font-ds-inter text-[20px] font-light">
               <span className="text-ds-on-ink-warm">Portfolio website</span>
               <span className="text-ds-accent">.</span>
             </p>
-            <div className="flex items-center gap-2 font-ds-inter text-[16px] font-light text-ds-on-ink-faint">
+            <div className="flex flex-col gap-1 font-ds-inter text-[16px] font-light text-ds-on-ink-faint sm:flex-row sm:items-center sm:gap-2">
               <span>{footerNote}</span>
               <span>{location}</span>
             </div>

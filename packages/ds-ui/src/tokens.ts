@@ -103,7 +103,7 @@ export const dsTokens = {
   font: {
     serif: '"Fraunces", "Times New Roman", Georgia, serif',
     sans: '"Hanken Grotesk", "Inter", "Segoe UI", sans-serif',
-    script: '"Caveat Brush", "Comic Sans MS", cursive',
+    script: '"Caveat", "Comic Sans MS", cursive',
     // Homepage 2026 refresh — primary sans for the new identity
     inter: '"Inter", "Segoe UI", sans-serif'
   },
@@ -122,8 +122,8 @@ export const dsTokens = {
     eyebrow: { size: "12px", lh: "1.4", weight: "600", tracking: "0.18em", family: "sans" },
     // Homepage-only reuse: neither role is referenced outside the home-ds hero/CTA,
     // so both are safely repointed to the 2026 refresh's handwritten-accent sizing.
-    script: { size: "48px", lh: "1.1", weight: "400", tracking: "0em", family: "script" },
-    "display-script": { size: "64px", lh: "0.9", weight: "400", tracking: "-0.015em", family: "script" },
+    script: { size: "48px", lh: "1.1", weight: "600", tracking: "0em", family: "script" },
+    "display-script": { size: "64px", lh: "0.9", weight: "600", tracking: "-0.015em", family: "script" },
     stat: { size: "52px", lh: "1.0", weight: "400", tracking: "-0.02em", family: "serif" },
 
     // Homepage 2026 refresh — new roles only; existing roles above are untouched

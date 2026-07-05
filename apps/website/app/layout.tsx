@@ -49,10 +49,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
         />
-        {/* Signature theme fonts: Fraunces (serif display), Hanken Grotesk (sans), Caveat Brush (handwritten accent) */}
+        {/* Signature theme fonts: Fraunces (serif display), Hanken Grotesk (sans), Caveat (handwritten accent) */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat+Brush&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
         />
         {/* vs3 theme fonts: Figtree (light refined grotesk display), Inter (body) —
             homepage 2026 refresh uses Inter as its primary sans, hence 300/500/600 too */}
