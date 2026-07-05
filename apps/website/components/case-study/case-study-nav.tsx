@@ -1,7 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Container, Eyebrow, Section } from "@packages/ds-ui";
+import { Text } from "@packages/ds-ui";
 import { homeContent } from "@/lib/site-content";
+import { CaseShell } from "./case-shell";
+import { CaseStudyCard } from "../home-ds/ui/case-study-card";
+import { HRule } from "../home-ds/ui/h-rule";
 
 const CASE_STUDIES = [
   {
@@ -42,68 +43,54 @@ const CASE_STUDIES = [
   },
 ] as const;
 
+/**
+ * "More case studies" — reuses the homepage's own `CaseStudyCard` (compact
+ * variant) so this teaser row is pixel-identical to the Projects row on the
+ * homepage, instead of hand-rolled card markup that could drift from it.
+ */
 export function CaseStudyNav({ current }: { current: string }) {
   const others = CASE_STUDIES.filter((cs) => cs.id !== current);
 
   return (
-    <Section bg="sunken" pad="md" className="border-t border-ds-border">
-      <Container>
-        <div className="mb-6 flex items-baseline justify-between gap-4">
-          <Eyebrow>More case studies</Eyebrow>
-          <span className="font-ds-sans text-ds-caption font-medium text-ds-ink-muted">Swipe →</span>
+    <div className="bg-ds-surface-paper py-16 md:py-18">
+      <HRule className="mb-16 md:mb-18" />
+      <CaseShell>
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <Text variant="hp-eyebrow-loose">More</Text>
+            <Text variant="hp-heading" as="p">
+              Case studies
+            </Text>
+          </div>
+          <Text variant="hp-eyebrow" as="span">
+            Swipe →
+          </Text>
         </div>
-        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory">
-          {others.map((cs) => {
-            const workCard = homeContent.works.find((w) => w.id === cs.workId);
-            const image = workCard?.image;
 
-            return (
-              <Link
-                key={cs.id}
-                href={cs.href}
-                className="group w-80 flex-none snap-start overflow-hidden rounded-ds-lg border border-ds-border bg-ds-surface-raised transition-all duration-300 ease-out hover:-translate-y-1 hover:border-ds-ink hover:shadow-ds-card-hover"
-              >
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-ds-surface-sunken">
-                  {image && (
-                    <Image
-                      src={image}
-                      alt={cs.title}
-                      fill
-                      sizes="288px"
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                    />
-                  )}
-                </div>
+        <div className="overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex w-max gap-6 snap-x snap-mandatory md:w-full md:grid md:grid-cols-3">
+            {others.map((cs) => {
+              const workCard = homeContent.works.find((w) => w.id === cs.workId);
+              const image = workCard?.image;
+              if (!image) return null;
 
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-ds-sans text-ds-body font-semibold leading-snug text-ds-ink">
-                      {cs.title}
-                    </h3>
-                    <span className="mt-0.5 flex-none text-ds-ink-muted transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-ds-ink">
-                      →
-                    </span>
-                  </div>
-                  <p className="mt-1 font-ds-sans text-ds-body-sm leading-relaxed text-ds-ink-soft">{cs.subtitle}</p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <div className="flex flex-wrap gap-1.5">
-                      {cs.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-ds-pill border border-ds-border bg-ds-surface-sunken px-2 py-0.5 font-ds-sans text-ds-caption font-medium text-ds-ink-muted"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    {cs.year && <p className="font-ds-sans text-ds-caption text-ds-ink-muted">{cs.year}</p>}
-                  </div>
+              return (
+                <div key={cs.id} className="w-[26rem] flex-none snap-start md:w-auto">
+                  <CaseStudyCard
+                    variant="compact"
+                    image={image}
+                    alt={cs.title}
+                    tags={[...cs.tags]}
+                    title={cs.title}
+                    description={cs.subtitle}
+                    href={cs.href}
+                  />
                 </div>
-              </Link>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </Container>
-    </Section>
+      </CaseShell>
+    </div>
   );
 }

@@ -34,7 +34,10 @@ export type TextVariant =
   | "hp-meta"
   | "hp-caption"
   | "hp-subtitle"
-  | "hp-lede";
+  | "hp-lede"
+  // Case-study restyle — reading-context roles
+  | "hp-heading"
+  | "hp-prose";
 
 const VARIANT: Record<TextVariant, string> = {
   display:
@@ -77,7 +80,13 @@ const VARIANT: Record<TextVariant, string> = {
   "hp-subtitle":
     "font-ds-inter text-ds-hp-subtitle font-[var(--ds-type-hp-subtitle-weight)] tracking-[var(--ds-type-hp-subtitle-tracking)] text-ds-heading",
   "hp-lede":
-    "font-ds-inter text-ds-hp-lede font-[var(--ds-type-hp-lede-weight)] tracking-[var(--ds-type-hp-lede-tracking)] text-ds-caption-muted"
+    "font-ds-inter text-ds-hp-lede font-[var(--ds-type-hp-lede-weight)] tracking-[var(--ds-type-hp-lede-tracking)] text-ds-caption-muted",
+
+  // Case-study restyle — reading-context roles
+  "hp-heading":
+    "font-ds-inter text-ds-hp-heading font-[var(--ds-type-hp-heading-weight)] tracking-[var(--ds-type-hp-heading-tracking)] text-ds-heading",
+  "hp-prose":
+    "font-ds-inter text-ds-hp-prose font-[var(--ds-type-hp-prose-weight)] tracking-[var(--ds-type-hp-prose-tracking)] text-ds-body-muted"
 };
 
 const DEFAULT_TAG: Record<TextVariant, ElementType> = {
@@ -104,7 +113,9 @@ const DEFAULT_TAG: Record<TextVariant, ElementType> = {
   "hp-meta": "span",
   "hp-caption": "p",
   "hp-subtitle": "p",
-  "hp-lede": "p"
+  "hp-lede": "p",
+  "hp-heading": "h2",
+  "hp-prose": "p"
 };
 
 export function Text({

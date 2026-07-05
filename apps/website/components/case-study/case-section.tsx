@@ -6,21 +6,20 @@ type CaseSectionProps = {
   id: string;
   heading: string;
   children: ReactNode;
-  /** Override the heading visual size — defaults to h2. */
-  headingSize?: "h1" | "h2" | "h3";
   className?: string;
 };
 
 /**
- * One article section inside a case study. Renders the section anchor,
- * a heading with the standard fade-up reveal, then the body content
- * (also wrapped in a fade-up reveal so it animates after the heading).
+ * One article section inside a case study — mapped from the homepage's
+ * Inter/cool-palette identity (`hp-heading` + the Inter `content-prose`
+ * treatment) instead of the legacy serif h2. Renders the anchor, the heading
+ * (fade-up reveal), then the body (also fade-up, delayed so it follows).
  */
-export function CaseSection({ id, heading, children, headingSize = "h2", className }: CaseSectionProps) {
+export function CaseSection({ id, heading, children, className }: CaseSectionProps) {
   return (
-    <section id={id} className={`space-y-5 scroll-mt-28 py-8 md:py-10 ${className ?? ""}`}>
+    <section id={id} className={`space-y-5 scroll-mt-28 py-10 md:py-12 ${className ?? ""}`}>
       <GsapReveal preset="fadeUp">
-        <Text variant={headingSize} as="h2">
+        <Text variant="hp-heading" as="h2">
           {heading}
         </Text>
       </GsapReveal>

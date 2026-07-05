@@ -6,18 +6,24 @@ import { Text, cn } from "@packages/ds-ui";
 import { SectionRow } from "./section-row";
 import { Block } from "./block";
 
-const LINKS = [
+const HOME_LINKS = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
   { label: "Journey", href: "#journey" }
 ];
 
+type NavLink = { label: string; href: string };
+
 /**
- * The homepage's own nav shell — a floating rounded-16 pill that's transparent
+ * The site's own nav shell — a floating rounded-16 pill that's transparent
  * over the hero and frosts in once the page scrolls past it. Self-contained
- * (content + frost state) so `home.tsx` just drops it in.
+ * (content + frost state) so any page just drops it in.
+ *
+ * `links` defaults to the homepage's in-page anchors; pages away from home
+ * (case studies) pass absolute anchors (e.g. `/#work`) so the same nav works
+ * from any route.
  */
-export function NavBar({ resumeUrl }: { resumeUrl: string }) {
+export function NavBar({ resumeUrl, links = HOME_LINKS }: { resumeUrl: string; links?: NavLink[] }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,7 +50,7 @@ export function NavBar({ resumeUrl }: { resumeUrl: string }) {
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
-            {LINKS.map((l) => (
+            {links.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
@@ -94,7 +100,7 @@ export function NavBar({ resumeUrl }: { resumeUrl: string }) {
         {open && (
           <div className="mt-2 rounded-ds-card border border-ds-hairline bg-ds-surface-paper p-4 md:hidden">
             <div className="flex flex-col">
-              {LINKS.map((l) => (
+              {links.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}

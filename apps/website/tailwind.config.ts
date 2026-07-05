@@ -223,6 +223,8 @@ const config: Config = {
         "ds-hp-caption": ["var(--ds-type-hp-caption-size)", { lineHeight: "var(--ds-type-hp-caption-lh)" }],
         "ds-hp-subtitle": ["var(--ds-type-hp-subtitle-size)", { lineHeight: "var(--ds-type-hp-subtitle-lh)" }],
         "ds-hp-lede": ["var(--ds-type-hp-lede-size)", { lineHeight: "var(--ds-type-hp-lede-lh)" }],
+        "ds-hp-heading": ["var(--ds-type-hp-heading-size)", { lineHeight: "var(--ds-type-hp-heading-lh)" }],
+        "ds-hp-prose": ["var(--ds-type-hp-prose-size)", { lineHeight: "var(--ds-type-hp-prose-lh)" }],
         "vs3-display": ["var(--vs3-type-display-size)", { lineHeight: "var(--vs3-type-display-lh)" }],
         "vs3-h1": ["var(--vs3-type-h1-size)", { lineHeight: "var(--vs3-type-h1-lh)" }],
         "vs3-h2": ["var(--vs3-type-h2-size)", { lineHeight: "var(--vs3-type-h2-lh)" }],

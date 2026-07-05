@@ -139,7 +139,12 @@ export const dsTokens = {
     "hp-meta": { size: "12px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
     "hp-caption": { size: "13px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-subtitle": { size: "16px", lh: "1.2", weight: "500", tracking: "-0.025em", family: "inter" },
-    "hp-lede": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" }
+    "hp-lede": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
+
+    // Case-study restyle — reading-context roles (section headings + long-form
+    // body copy); additive, only used inside components/case-study/*.
+    "hp-heading": { size: "30px", lh: "1.25", weight: "400", tracking: "-0.02em", family: "inter" },
+    "hp-prose": { size: "17px", lh: "1.7", weight: "400", tracking: "-0.01em", family: "inter" }
   },
 
   // Mobile display overrides (applied via the :root media block in tokensToCss)
@@ -152,7 +157,9 @@ export const dsTokens = {
     script: "36px",
     "hp-title": "32px",
     "hp-headline": "26px",
-    "hp-lede": "18px"
+    "hp-lede": "18px",
+    "hp-heading": "24px",
+    "hp-prose": "16px"
   },
 
   shadow: {

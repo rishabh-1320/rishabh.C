@@ -537,9 +537,29 @@ body {
   font-family: var(--ds-font-sans);
 }
 
-/* Prose paragraphs inside the design system adopt the canonical body-soft ink. */
+/*
+ * Case-study restyle (2026-07) — reading body copy now matches the homepage's
+ * Inter identity instead of the legacy Hanken Grotesk/ink-soft treatment.
+ * `.content-prose` is only used inside components/case-study/*, so this is a
+ * safe global repoint (see hp-prose in tokens.ts for the same values as a
+ * <Text variant="hp-prose"> role, used by newly-written case-study markup).
+ */
 .ds-root .content-prose {
-  color: var(--ds-color-ink-soft);
+  font-family: var(--ds-font-inter);
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ds-color-body-muted);
+}
+
+.ds-root .content-prose strong {
+  color: var(--ds-color-heading);
+  font-weight: 600;
+}
+
+@media (max-width: 809px) {
+  .ds-root .content-prose {
+    font-size: 16px;
+  }
 }
 
 /* Reading-progress bar on canonical (case-study) pages uses the ds accent. */
