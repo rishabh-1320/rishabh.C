@@ -9,6 +9,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        // Homepage 2026 refresh — Figma's asymmetric section padding (pt-24/pb-72)
+        // isn't on Tailwind's default scale; named here so sections never need
+        // an arbitrary `[72px]` bracket (which the ds drift-lint disallows).
+        "18": "4.5rem"
+      },
       colors: {
         surface: {
           base: "var(--surface-base)",
@@ -76,7 +82,23 @@ const config: Config = {
           "tag-mint-bg": "var(--ds-color-tag-mint-bg)",
           "tag-mint-fg": "var(--ds-color-tag-mint-fg)",
           "tag-sky-bg": "var(--ds-color-tag-sky-bg)",
-          "tag-sky-fg": "var(--ds-color-tag-sky-fg)"
+          "tag-sky-fg": "var(--ds-color-tag-sky-fg)",
+          // Homepage 2026 refresh (additive)
+          "surface-paper": "var(--ds-color-surface-paper)",
+          "surface-mist": "var(--ds-color-surface-mist)",
+          heading: "var(--ds-color-heading)",
+          "body-muted": "var(--ds-color-body-muted)",
+          "nav-muted": "var(--ds-color-nav-muted)",
+          "caption-muted": "var(--ds-color-caption-muted)",
+          "tag-muted": "var(--ds-color-tag-muted)",
+          hairline: "var(--ds-color-hairline)",
+          "hairline-faint": "var(--ds-color-hairline-faint)",
+          "hairline-dark": "var(--ds-color-hairline-dark)",
+          "hairline-on-ink": "var(--ds-color-hairline-on-ink)",
+          "surface-veil": "var(--ds-color-surface-veil)",
+          "accent-wash": "var(--ds-color-accent-wash)",
+          "on-ink-warm": "var(--ds-color-on-ink-warm)",
+          "on-ink-faint": "var(--ds-color-on-ink-faint)"
         },
         // ── vs3 isolated namespace (quarantined; values from components/styles/vs3/tokens.ts) ──
         vs3: {
@@ -117,6 +139,7 @@ const config: Config = {
         "ds-serif": ["var(--ds-font-serif)", "serif"],
         "ds-sans": ["var(--ds-font-sans)", "sans-serif"],
         "ds-script": ["var(--ds-font-script)", "cursive"],
+        "ds-inter": ["var(--ds-font-inter)", "sans-serif"],
         "vs3-display": ["var(--vs3-font-display)", "sans-serif"],
         "vs3-sans": ["var(--vs3-font-sans)", "sans-serif"],
         "vs3-mono": ["var(--vs3-font-mono)", "monospace"]
@@ -126,6 +149,8 @@ const config: Config = {
         prose: "680px",
         "ds-content": "var(--ds-layout-container)",
         "ds-prose": "var(--ds-layout-prose)",
+        "ds-hp": "var(--ds-layout-hp)",
+        "ds-hp-wide": "var(--ds-layout-hp-wide)",
         "vs3-content": "var(--vs3-layout-container)",
         "vs3-prose": "var(--vs3-layout-prose)"
       },
@@ -148,6 +173,11 @@ const config: Config = {
         "ds-xl": "var(--ds-radius-xl)",
         "ds-2xl": "var(--ds-radius-2xl)",
         "ds-pill": "var(--ds-radius-pill)",
+        "ds-tag": "var(--ds-radius-tag)",
+        "ds-control": "var(--ds-radius-control)",
+        "ds-card": "var(--ds-radius-card)",
+        "ds-chrome": "var(--ds-radius-chrome)",
+        "ds-shell": "var(--ds-radius-shell)",
         "vs3-sm": "var(--vs3-radius-sm)",
         "vs3-md": "var(--vs3-radius-md)",
         "vs3-lg": "var(--vs3-radius-lg)",
@@ -179,6 +209,20 @@ const config: Config = {
         "ds-caption": ["var(--ds-type-caption-size)", { lineHeight: "var(--ds-type-caption-lh)" }],
         "ds-eyebrow": ["var(--ds-type-eyebrow-size)", { lineHeight: "var(--ds-type-eyebrow-lh)" }],
         "ds-script": ["var(--ds-type-script-size)", { lineHeight: "var(--ds-type-script-lh)" }],
+        "ds-display-script": ["var(--ds-type-display-script-size)", { lineHeight: "var(--ds-type-display-script-lh)" }],
+        "ds-stat": ["var(--ds-type-stat-size)", { lineHeight: "var(--ds-type-stat-lh)" }],
+        "ds-hp-eyebrow": ["var(--ds-type-hp-eyebrow-size)", { lineHeight: "var(--ds-type-hp-eyebrow-lh)" }],
+        "ds-hp-eyebrow-loose": ["var(--ds-type-hp-eyebrow-loose-size)", { lineHeight: "var(--ds-type-hp-eyebrow-loose-lh)" }],
+        "ds-hp-title": ["var(--ds-type-hp-title-size)", { lineHeight: "var(--ds-type-hp-title-lh)" }],
+        "ds-hp-headline": ["var(--ds-type-hp-headline-size)", { lineHeight: "var(--ds-type-hp-headline-lh)" }],
+        "ds-hp-card-title": ["var(--ds-type-hp-card-title-size)", { lineHeight: "var(--ds-type-hp-card-title-lh)" }],
+        "ds-hp-body": ["var(--ds-type-hp-body-size)", { lineHeight: "var(--ds-type-hp-body-lh)" }],
+        "ds-hp-year": ["var(--ds-type-hp-year-size)", { lineHeight: "var(--ds-type-hp-year-lh)" }],
+        "ds-hp-bio": ["var(--ds-type-hp-bio-size)", { lineHeight: "var(--ds-type-hp-bio-lh)" }],
+        "ds-hp-meta": ["var(--ds-type-hp-meta-size)", { lineHeight: "var(--ds-type-hp-meta-lh)" }],
+        "ds-hp-caption": ["var(--ds-type-hp-caption-size)", { lineHeight: "var(--ds-type-hp-caption-lh)" }],
+        "ds-hp-subtitle": ["var(--ds-type-hp-subtitle-size)", { lineHeight: "var(--ds-type-hp-subtitle-lh)" }],
+        "ds-hp-lede": ["var(--ds-type-hp-lede-size)", { lineHeight: "var(--ds-type-hp-lede-lh)" }],
         "vs3-display": ["var(--vs3-type-display-size)", { lineHeight: "var(--vs3-type-display-lh)" }],
         "vs3-h1": ["var(--vs3-type-h1-size)", { lineHeight: "var(--vs3-type-h1-lh)" }],
         "vs3-h2": ["var(--vs3-type-h2-size)", { lineHeight: "var(--vs3-type-h2-lh)" }],

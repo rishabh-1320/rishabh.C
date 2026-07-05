@@ -9,10 +9,16 @@ export type SocialLink = {
 };
 
 export type HeroContent = {
+  eyebrow: string;
   h1: string;
   subLine: string;
   metrics: string[];
   image: string;
+};
+
+export type StatItem = {
+  value: string;
+  label: string;
 };
 
 export type IdeologyPrinciple = {
@@ -34,6 +40,7 @@ export type WorkCard = {
   active: boolean;
   href?: string;
   tags: string[];
+  metric?: string;
 };
 
 export type AIExplorationCard = {
@@ -89,7 +96,9 @@ export type HomeContent = {
     heading: string;
     logos: LogoItem[];
   };
+  stats: StatItem[];
   ideologyHeading: string;
+  ideologyIntro: string;
   ideologyPrinciples: IdeologyPrinciple[];
   worksHeading: string;
   works: WorkCard[];
@@ -104,6 +113,7 @@ export type HomeContent = {
   aiExplorations: AIExplorationCard[];
   about: {
     heading: string;
+    intro: string;
     bio: string[];
     currentlyLine: string;
     photoSrc?: string;

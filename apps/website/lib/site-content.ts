@@ -12,14 +12,15 @@ export const homeContent: HomeContent = {
   ],
 
   hero: {
-    h1: "I design complex B2B enterprise software. Then I use AI to ship it in production code.",
+    eyebrow: "Product Designer",
+    h1: "I design B2B enterprise tools where clarity is the only metric that matters.",
     subLine: "Bridging the gap between architectural rigor and digital scalability. I design complex workflows for high-stakes environments where clarity is the only metric that matters.",
     metrics: ["5 SaaS products", "5 domains", "1 design system", "AI in production workflow"],
     image: "https://framerusercontent.com/images/evb8WhW5MaVa23RUApiaX1mK1ic.png?width=2290&height=1474"
   },
 
   logoStrip: {
-    heading: "Products I have designed.",
+    heading: "product designs where I have contributed",
     logos: [
       { name: "Chestnut" },
       { name: "Cricmac" },
@@ -29,7 +30,15 @@ export const homeContent: HomeContent = {
     ]
   },
 
-  ideologyHeading: "Thinking in Systems",
+  stats: [
+    { value: "5", label: "Products shipped" },
+    { value: "5", label: "Industry domains" },
+    { value: "100k+", label: "Users reached" },
+    { value: "4 yrs", label: "Designing B2B" }
+  ],
+
+  ideologyHeading: "Thinking in systems",
+  ideologyIntro: "Four convictions that shape how I work, from first sketch to production code.",
   ideologyPrinciples: [
     {
       id: "01",
@@ -57,7 +66,7 @@ export const homeContent: HomeContent = {
     }
   ],
 
-  worksHeading: "Selected Works",
+  worksHeading: "Case studies, end to end",
   works: [
     {
       id: "work-placeholder",
@@ -82,7 +91,8 @@ export const homeContent: HomeContent = {
       href: "/casestudy/chestnut",
       ctaLabel: "View case study",
       active: true,
-      tags: ["Product", "B2B", "Design System"]
+      tags: ["Product", "B2B", "Design System"],
+      metric: "30–40% fewer UX inconsistencies"
     },
     {
       id: "work-hrms",
@@ -95,7 +105,8 @@ export const homeContent: HomeContent = {
       ctaLabel: "View case study",
       active: true,
       href: "/casestudy/dashboard",
-      tags: ["Dashboard", "Analytics", "Enterprise"]
+      tags: ["Dashboard", "Analytics", "Enterprise"],
+      metric: "2,000+ employees tracked live"
     },
     {
       id: "work-onboarding",
@@ -108,7 +119,8 @@ export const homeContent: HomeContent = {
       ctaLabel: "View case study",
       active: true,
       href: "/casestudy/onboarding",
-      tags: ["Onboarding", "HRMS", "Flow"]
+      tags: ["Onboarding", "HRMS", "Flow"],
+      metric: "Onboarding time cut by half"
     },
     {
       id: "work-design-system",
@@ -121,7 +133,8 @@ export const homeContent: HomeContent = {
       ctaLabel: "View case study",
       active: true,
       href: "/casestudy/design-system",
-      tags: ["Design System", "Tokens", "Whitelabel"]
+      tags: ["Design System", "Tokens", "Whitelabel"],
+      metric: "One token architecture, any brand"
     }
   ],
 
@@ -192,7 +205,8 @@ export const homeContent: HomeContent = {
   ],
 
   about: {
-    heading: "About",
+    heading: "About Me",
+    intro: "This is all about me and my career till now, and the work I have done.",
     bio: [
       "Hi, I'm Rishabh. I design complex B2B software for industries like insurance, HRMS, sports management, performance marketing, and SEO. These products are dense and full of rules. So I build the design patterns they need from scratch.",
       "I think in systems. I use AI to brainstorm, prototype, and sometimes ship code. The goal isn't to use AI everywhere. The goal is to keep what I design close to what gets built."
@@ -229,7 +243,7 @@ export const homeContent: HomeContent = {
   },
 
   footer: {
-    closingLine: "Got something complex to design? Let's talk.",
+    closingLine: "Five products, five domains, one design system. Let's talk.",
     email: "rishabh1320@gmail.com",
     linkedinUrl: "https://www.linkedin.com/in/rishabh-choudhary-43a81b158/",
     location: "Bangalore, IST (UTC +5:30)"

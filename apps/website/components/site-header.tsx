@@ -34,6 +34,7 @@ export function SiteHeader({ content }: SiteHeaderProps) {
 
   return (
     <header
+      data-site-header
       className={`sticky top-0 z-40 font-ds-sans transition-all duration-[400ms] ease-[var(--ds-ease-out-quart)] ${
         isScrolled
           ? "border-b border-ds-border bg-ds-surface-nav backdrop-blur-[12px]"

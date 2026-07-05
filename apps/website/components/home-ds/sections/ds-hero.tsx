@@ -1,33 +1,42 @@
 import type { HeroContent } from "@/lib/types";
-import { Section, Container, Stack, Text, ButtonLink, PhotoCard } from "@packages/ds-ui";
-import { heroPhoto } from "../images";
+import { Section } from "@packages/ds-ui";
+import { Parallax } from "../scroll/parallax";
+import { HeroTitle } from "../ui/hero-title";
+import { SectionRow } from "../ui/section-row";
+import { Block } from "../ui/block";
 
 export function DsHero({ hero }: { hero: HeroContent }) {
   return (
-    <Section bg="page" pad="lg" className="pt-28 md:pt-32">
-      <Container>
-        <div className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16">
-          <Stack gap="lg">
-            <Text variant="display" className="md:text-[clamp(3.5rem,7vw,6rem)]">
-              Rishabh
-            </Text>
+    <Section bg="paper" pad="none" id="hero">
+      <SectionRow>
+        <Block border="none" pad="open-top">
+          <Parallax speed={0.25}>
+            <HeroTitle
+              name="Rishabh"
+              eyebrow={hero.eyebrow}
+              headline={hero.h1}
+              emphasize={["B2B enterprise tools", "clarity"]}
+            />
+          </Parallax>
+        </Block>
+      </SectionRow>
 
-            <Text variant="lead" className="max-w-ds-prose">
-              {hero.subLine}
-            </Text>
-
-            <div className="flex flex-wrap gap-3 pt-2">
-              <ButtonLink href="#work" variant="primary">
-                Case Studies
-              </ButtonLink>
-            </div>
-          </Stack>
-
-          <div className="flex justify-center md:justify-end">
-            <PhotoCard src={heroPhoto} alt="Portrait of Rishabh" caption="Yeah, you can move it" />
-          </div>
-        </div>
-      </Container>
+      <div className="bg-gradient-to-b from-white to-ds-surface-mist">
+        <SectionRow>
+          <Block border="none" pad="open-bottom">
+            <Parallax speed={0.1}>
+              <div className="overflow-hidden rounded-ds-chrome shadow-ds-card-hover">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={hero.image}
+                  alt="B2B enterprise analytics dashboard designed by Rishabh"
+                  className="block w-full"
+                />
+              </div>
+            </Parallax>
+          </Block>
+        </SectionRow>
+      </div>
     </Section>
   );
 }

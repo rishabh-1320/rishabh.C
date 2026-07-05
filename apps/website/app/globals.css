@@ -670,7 +670,9 @@ img {
   max-width: 100%;
 }
 
-body:has([data-hide-site-header]) header {
+/* Hide only the root layout's SiteHeader on themed routes — scoped by marker so
+   a route's own <header> (e.g. the home DsNav) is not caught. */
+body:has([data-hide-site-header]) [data-site-header] {
   display: none !important;
 }
 
