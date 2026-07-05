@@ -6,10 +6,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      // Quarantined experiments + the private coupon page are noindex at the
-      // route level too; disallow here as belt-and-suspenders.
-      disallow: ["/styles/", "/vs2", "/vs3/", "/styleguide", "/therapist-coupon-ops-b7k3m9"]
+      allow: "/"
     },
     sitemap: `${base}/sitemap.xml`
   };
