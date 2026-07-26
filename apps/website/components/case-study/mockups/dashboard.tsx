@@ -1,4 +1,4 @@
-import { MockTable, MockBadge, MockDotPlot, MockAreaChart } from "./ui-kit";
+import { MockTable, MockDotPlot, MockAreaChart } from "./ui-kit";
 
 /* 1 — The "before": a wall of numbers with no hierarchy. */
 export function ExistingDashboardMock() {
@@ -83,29 +83,3 @@ export function FinalDashboardMock() {
   );
 }
 
-/* 3 — Public reviews (illustrative copy — real quotes to be dropped in). */
-export function ReviewsMock() {
-  const reviews = [
-    { quote: "The dashboard finally tells us what's happening with attendance at a glance.", who: "HR Director", src: "G2" },
-    { quote: "Clean, readable charts — we stopped exporting to spreadsheets to understand our own data.", who: "Ops Lead", src: "G2" },
-  ];
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="grid gap-3 sm:grid-cols-2">
-        {reviews.map((r) => (
-          <div key={r.who} className="flex flex-col gap-2 rounded-ds-md border border-ds-border bg-ds-surface-raised p-4">
-            <span className="text-ds-accent" aria-label="5 out of 5 stars">★★★★★</span>
-            <p className="font-ds-sans text-ds-caption text-ds-ink">&ldquo;{r.quote}&rdquo;</p>
-            <div className="flex items-center justify-between">
-              <span className="font-ds-sans text-[12px] font-semibold text-ds-ink-soft">{r.who}</span>
-              <MockBadge tone="sky">{r.src}</MockBadge>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="text-center font-ds-sans text-[11px] italic text-ds-ink-muted">
-        Illustrative — replace with the real G2 / support quotes.
-      </p>
-    </div>
-  );
-}

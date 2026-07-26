@@ -11,8 +11,10 @@ const SECTION_BG: Record<SectionBg, string> = {
   cream: "bg-ds-surface-cream",
   // ds-inverted flips the token vars, so child primitives auto-invert.
   ink: "bg-ds-surface-ink ds-inverted",
-  // Homepage 2026 refresh — pure-white bg, additive (page/sunken/cream/ink unchanged)
-  paper: "bg-ds-surface-paper"
+  // Homepage refresh — uniform #FCFCFC bg, additive (page/sunken/cream/ink unchanged).
+  // `paper` is consumed only by components/home-ds/sections/*, so repointing it here
+  // (rather than patching every section) keeps the whole homepage one flat color.
+  paper: "bg-ds-hp-page"
 };
 
 // "none" lets a page own its own vertical padding (e.g. bespoke case-study layouts).

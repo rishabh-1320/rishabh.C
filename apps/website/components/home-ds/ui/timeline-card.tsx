@@ -22,7 +22,7 @@ export function TimelineCard({
           <Text variant="hp-card-title">{company}</Text>
           {current && <MinimalBadge tone="filled">Current</MinimalBadge>}
         </div>
-        <Text variant="hp-meta" as="span" className="whitespace-nowrap uppercase">
+        <Text variant="hp-meta" as="span" className="whitespace-nowrap uppercase !text-ds-hp-muted">
           {period}
         </Text>
       </div>
@@ -30,7 +30,9 @@ export function TimelineCard({
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <MinimalBadge key={tag}>{tag}</MinimalBadge>
+            <MinimalBadge key={tag} tone="outline">
+              {tag}
+            </MinimalBadge>
           ))}
         </div>
       )}

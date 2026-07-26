@@ -13,7 +13,11 @@ const config: Config = {
         // Homepage 2026 refresh — Figma's asymmetric section padding (pt-24/pb-72)
         // isn't on Tailwind's default scale; named here so sections never need
         // an arbitrary `[72px]` bracket (which the ds drift-lint disallows).
-        "18": "4.5rem"
+        "18": "4.5rem",
+        // Homepage 6 — section-title top padding (Figma pt-120 / pb-24)
+        "30": "7.5rem",
+        // Homepage final — section-title top padding grew to 140px on the 1200 grid
+        "35": "8.75rem"
       },
       colors: {
         surface: {
@@ -98,7 +102,16 @@ const config: Config = {
           "surface-veil": "var(--ds-color-surface-veil)",
           "accent-wash": "var(--ds-color-accent-wash)",
           "on-ink-warm": "var(--ds-color-on-ink-warm)",
-          "on-ink-faint": "var(--ds-color-on-ink-faint)"
+          "on-ink-faint": "var(--ds-color-on-ink-faint)",
+          dot: "var(--ds-color-dot)",
+          "dot-on-ink": "var(--ds-color-dot-on-ink)",
+          "stripe-line": "var(--ds-color-stripe-line)",
+          "hp-muted": "var(--ds-color-hp-muted)",
+          "hp-page": "var(--ds-color-hp-page)",
+          "hero-blue": "var(--ds-color-hero-blue)",
+          "on-accent": "var(--ds-color-on-accent)",
+          "mockup-bg": "var(--ds-color-mockup-bg)",
+          "mockup-bar": "var(--ds-color-mockup-bar)"
         },
         // ── vs3 isolated namespace (quarantined; values from components/styles/vs3/tokens.ts) ──
         vs3: {
@@ -178,6 +191,7 @@ const config: Config = {
         "ds-card": "var(--ds-radius-card)",
         "ds-chrome": "var(--ds-radius-chrome)",
         "ds-shell": "var(--ds-radius-shell)",
+        "ds-mockup": "var(--ds-radius-mockup)",
         "vs3-sm": "var(--vs3-radius-sm)",
         "vs3-md": "var(--vs3-radius-md)",
         "vs3-lg": "var(--vs3-radius-lg)",
@@ -211,6 +225,12 @@ const config: Config = {
         "ds-script": ["var(--ds-type-script-size)", { lineHeight: "var(--ds-type-script-lh)" }],
         "ds-display-script": ["var(--ds-type-display-script-size)", { lineHeight: "var(--ds-type-display-script-lh)" }],
         "ds-stat": ["var(--ds-type-stat-size)", { lineHeight: "var(--ds-type-stat-lh)" }],
+        "ds-hp-label": ["var(--ds-type-hp-label-size)", { lineHeight: "var(--ds-type-hp-label-lh)" }],
+        "ds-hp-section-title": ["var(--ds-type-hp-section-title-size)", { lineHeight: "var(--ds-type-hp-section-title-lh)" }],
+        "ds-hp-card-title-lg": ["var(--ds-type-hp-card-title-lg-size)", { lineHeight: "var(--ds-type-hp-card-title-lg-lh)" }],
+        "ds-hp-card-title-sm": ["var(--ds-type-hp-card-title-sm-size)", { lineHeight: "var(--ds-type-hp-card-title-sm-lh)" }],
+        "ds-hp-metric": ["var(--ds-type-hp-metric-size)", { lineHeight: "var(--ds-type-hp-metric-lh)" }],
+        "ds-hp-brand": ["var(--ds-type-hp-brand-size)", { lineHeight: "var(--ds-type-hp-brand-lh)" }],
         "ds-hp-eyebrow": ["var(--ds-type-hp-eyebrow-size)", { lineHeight: "var(--ds-type-hp-eyebrow-lh)" }],
         "ds-hp-eyebrow-loose": ["var(--ds-type-hp-eyebrow-loose-size)", { lineHeight: "var(--ds-type-hp-eyebrow-loose-lh)" }],
         "ds-hp-title": ["var(--ds-type-hp-title-size)", { lineHeight: "var(--ds-type-hp-title-lh)" }],
@@ -267,12 +287,20 @@ const config: Config = {
         reveal: "900ms"
       },
       animation: {
-        "fade-up": "fade-up 0.7s var(--ease-out-quart) forwards"
+        "fade-up": "fade-up 0.7s var(--ease-out-quart) forwards",
+        // Very slow, ambient — moving by exactly one copy-width (25% of the
+        // 4x track, see Marquee) takes 59s. motion-safe: only so it's inert
+        // under prefers-reduced-motion.
+        marquee: "marquee 59s linear infinite"
       },
       keyframes: {
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" }
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-25%)" }
         }
       }
     }

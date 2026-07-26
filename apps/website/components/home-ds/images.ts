@@ -8,8 +8,6 @@
 const base = (id: string, w = 1200) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
 
-export const heroPhoto = base("1558730234-d8b2281b0d00", 900); // B&W portrait
-
 /** Work case-study cards, keyed by WorkCard.id */
 export const workImages: Record<string, string> = {
   "work-chestnut": base("1560264280-88b68371db39"), // insurance / producer platform
@@ -32,6 +30,9 @@ export const galleryImages = [
   { src: base("1581291518633-83b4ebd1d83e"), alt: "Wireframe sketches" },
   { src: base("1487338875411-8880f74114a2"), alt: "Desk and notes" }
 ];
+
+/** About's career-timeline portrait — distinct from the gallery above */
+export const timelineImage = { src: base("1517245386807-bb43f82c33c4", 900), alt: "Career timeline" };
 
 /** Fallback for any slot without an explicit image */
 export const fallbackImage = base("1551288049-bebda4e38f71");

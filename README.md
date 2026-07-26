@@ -23,16 +23,21 @@
 
 ### Website component layers
 
-The `apps/website` codebase follows atomic-design conventions:
+The live site (`apps/website`) renders on **one** canonical design system, `ds`
+(see [apps/website/DESIGN_SYSTEM.md](apps/website/DESIGN_SYSTEM.md)). It follows
+atomic-design conventions, smallest to largest:
 
 | Layer | Location | Examples |
 |-------|----------|----------|
-| **Tokens** | `apps/website/app/globals.css` + `tailwind.config.ts` | Type scale (`text-h1` … `text-h4`), shadow scale (`shadow-card-rest` …), color & motion tokens |
-| **Atoms** | `packages/ui/src/primitives/` | `Heading`, `Text`, `Eyebrow`, `Badge`, `Divider`, `Button`, `Card`, `InlineCode` |
-| **Layout primitives** | `packages/ui/src/layout/` | `Container`, `Section` |
-| **Case-study molecules** | `apps/website/components/case-study/` | `HeroCard`, `CaseSection`, `SubCard`, `InfoBlock`, `MetricCard`, `CaseFigurePlaceholder`, `ScrollSpyToc`, `CaseStudyNav`, `CaseStudyFooter` |
-| **Homepage sections** | `apps/website/components/home/` | `HeroSection`, `IdeologySection`, `WorksSection`, `AiWorkflowSection`, `AiExplorationsSection`, `AboutSection`, `FooterSection` |
-| **Behavior wrappers** | `apps/website/components/` | `GsapReveal`, `MagneticButton`, `SplitTextReveal`, `ScrollProgressBar`, `HeroShaderCanvas`, `HeroMockupWrapper` |
+| **Tokens** | `packages/ds-ui/src/tokens.ts` | Every raw colour, type size, spacing, shadow & motion value — the single source of truth, injected as `--ds-*` vars |
+| **Primitives (atoms)** | `packages/ds-ui/src/` | `Text`, `Button`, `Card`, `Tag`, `Divider`, `Eyebrow`, `TextLink`, `IconBadge`, `InlineCode`, `PhotoCard`, `Row`, `Gallery` |
+| **Layout primitives** | `packages/ds-ui/src/layout.tsx` | `Section`, `Container`, `Stack` |
+| **Case-study molecules** | `apps/website/components/case-study/` | `HeroCard`, `CaseSection`, `CaseShell`, `SubCard`, `InfoBlock`, `NumberedStep`, `ResultBand`, `MockupFrame`, `ScrollSpyToc`, `CaseStudyNav`, `CaseStudyFooter` |
+| **Homepage sections** | `apps/website/components/home-ds/sections/` | `DsNav`, `DsHero`, `DsMetrics`, `DsWork`, `DsSkill`, `DsProjects`, `DsAbout`, `DsCtaFooter` |
+| **Behaviour wrappers** | `apps/website/components/` | `GsapReveal`, `PageTransition`, `ScrollProgressBar`, `SiteHeader`, `StatusBar` |
+
+> `packages/ui` is a separate **legacy** primitive set, kept only for the planned
+> `apps/webapp` / `apps/ai-tool`. The live site never imports it.
 
 See [CHANGELOG.md](CHANGELOG.md) for recent visual and structural changes.
 

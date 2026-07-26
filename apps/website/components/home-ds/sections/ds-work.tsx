@@ -7,25 +7,19 @@ import { SectionRow } from "../ui/section-row";
 import { Block } from "../ui/block";
 import { HRule } from "../ui/h-rule";
 
-function metricParts(metric?: string) {
-  if (!metric) return { value: undefined, label: undefined };
-  const match = metric.match(/^(\S+)\s+(.*)$/);
-  return match ? { value: match[1], label: match[2] } : { value: metric, label: undefined };
-}
-
 export function DsWork({ heading, works }: { heading: string; works: WorkCard[] }) {
   const featured = works.filter((w) => w.active);
   const [hero, ...rest] = featured;
 
   return (
     <Section bg="paper" pad="none" id="work">
-      <HRule />
+      <HRule dots />
       <SectionRow>
-        <Block pad="both">
+        <Block pad="both" padX="wide">
           <SectionHeader eyebrow="Selected work" title={heading} accent="end to end" />
         </Block>
       </SectionRow>
-      <HRule />
+      <HRule dots />
 
       {hero && (
         <SectionRow>
@@ -37,12 +31,15 @@ export function DsWork({ heading, works }: { heading: string; works: WorkCard[] 
               tags={hero.tags}
               title={hero.title}
               description={hero.description}
-              {...metricParts(hero.metric)}
               href={hero.href}
+              metric={hero.metric}
+              metricLabel={hero.metricLabel}
             />
           </Block>
         </SectionRow>
       )}
+
+      <HRule dots />
 
       <SectionRow>
         <Block pad="open-bottom">
@@ -56,8 +53,9 @@ export function DsWork({ heading, works }: { heading: string; works: WorkCard[] 
                 tags={work.tags}
                 title={work.title}
                 description={work.description}
-                {...metricParts(work.metric)}
                 href={work.href}
+                metric={work.metric}
+                metricLabel={work.metricLabel}
               />
             ))}
           </div>

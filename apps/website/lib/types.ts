@@ -3,11 +3,6 @@ export type NavItem = {
   href: string;
 };
 
-export type SocialLink = {
-  label: string;
-  href: string;
-};
-
 export type HeroContent = {
   eyebrow: string;
   h1: string;
@@ -26,13 +21,13 @@ export type IdeologyPrinciple = {
   title: string;
   description: string;
   variant: "light" | "brand" | "blue" | "dark";
+  icon?: "systems" | "production" | "ai" | "function";
 };
 
 export type WorkCard = {
   id: string;
   title: string;
   description: string;
-  image: string;
   role: string;
   year: string;
   company: string;
@@ -41,13 +36,13 @@ export type WorkCard = {
   href?: string;
   tags: string[];
   metric?: string;
+  metricLabel?: string;
 };
 
 export type AIExplorationCard = {
   id: string;
   title: string;
   description: string;
-  image: string;
   status: "Live" | "Prototype" | "Archived";
   builtWith: string[];
   year: number;
@@ -65,6 +60,8 @@ export type LogoItem = {
 export type AiWorkflowTool = {
   name: string;
   description: string;
+  /** Path to the tool's real logo mark in public/ai-tools/. */
+  icon?: string;
 };
 
 export type ExperienceProject = {
@@ -80,15 +77,16 @@ export type ExperienceEntry = {
   projects?: ExperienceProject[];
 };
 
-export type SkillGroup = {
-  category: string;
-  items: string;
+export type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  href?: string;
 };
 
 export type HomeContent = {
   statusBarText: string;
   siteName: string;
-  logo: string;
   resumeUrl: string;
   nav: NavItem[];
   hero: HeroContent;
@@ -118,7 +116,7 @@ export type HomeContent = {
     currentlyLine: string;
     photoSrc?: string;
     experiences: ExperienceEntry[];
-    skills: SkillGroup[];
+    testimonials: Testimonial[];
   };
   footer: {
     closingLine: string;
@@ -127,23 +125,4 @@ export type HomeContent = {
     location: string;
   };
   footerNote: string;
-};
-
-export type CaseStudyStep = {
-  title: string;
-  description: string;
-  image: string;
-  alt: string;
-};
-
-export type CaseStudyContent = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  role: string;
-  duration: string;
-  overview: string;
-  steps: CaseStudyStep[];
-  thanksNote: string;
-  toc?: Array<{ id: string; label: string }>;
 };

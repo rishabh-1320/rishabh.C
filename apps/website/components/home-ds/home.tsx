@@ -14,7 +14,11 @@ export function DsHome() {
   return (
     <LenisProvider>
       <div
-        className="ds-root bg-ds-surface-paper"
+        // `!bg-ds-hp-page` (important) makes the whole homepage a uniform #FCFCFC,
+        // beating the global `.ds-root { background: surface-page }` rule. Sections
+        // below are transparent so this base shows through everywhere (nav band,
+        // gaps, behind cards) with no seam.
+        className="ds-root !bg-ds-hp-page"
         data-hide-site-header
         data-hide-status-bar
         style={{ minHeight: "100vh" }}

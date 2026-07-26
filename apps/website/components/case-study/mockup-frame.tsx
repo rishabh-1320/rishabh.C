@@ -9,7 +9,7 @@ type MockupFrameProps = {
   chrome?: "browser" | "none";
   /** "legacy" renders a muted surface — used for "before" / old-product scenes. */
   tone?: "default" | "legacy";
-  /** Faux address-bar label, only shown with chrome="browser". */
+  /** Faux address-bar label — only rendered with chrome="browser" AND when provided (no default, so a product's URL is never wrong). */
   urlLabel?: string;
   className?: string;
   /** Override padding/layout of the inner content region. */
@@ -17,11 +17,17 @@ type MockupFrameProps = {
 };
 
 /**
- * Consistent visual chrome for the code-rendered case-study mockups — mapped
- * from the homepage's card language: hairline border, no shadow, cool mist
- * chrome bar instead of the legacy warm sunken surface. Uses `radius-shell`
- * (16px) rather than the homepage card's 8px since these are large framed
- * panels, not content cards.
+ * Consistent visual chrome for the code-rendered case-study mockups — traced
+ * from the Figma case-study template's "window" frame: 12px radius, hairline
+ * border, a 32px chrome bar (near-invisible black-2% tint) with three 8px
+ * traffic-light dots, warm-cream body behind the screenshot.
+ *
+ * Capped at 1400px, centered: these mocks are hand-built React/CSS "fake
+ * screenshots" (not real photos), so unlike a real image they can't be
+ * cropped to a fixed aspect-ratio with object-fit — their internal
+ * grid/flex layout would just reflow/distort at arbitrary widths instead.
+ * A width cap keeps their proportions sane even inside a full-bleed section,
+ * without risking clipped content.
  */
 export function MockupFrame({
   children,
@@ -36,24 +42,26 @@ export function MockupFrame({
 
   return (
     <GsapReveal preset="scaleUp">
-      <figure className="my-8">
+      <figure className="mx-auto my-8 max-w-[1400px]">
         <div
-          className={`overflow-hidden rounded-ds-shell border border-ds-hairline ${
-            isLegacy ? "bg-ds-surface-mist" : "bg-ds-surface-paper"
+          className={`overflow-hidden rounded-ds-mockup border border-ds-hairline ${
+            isLegacy ? "bg-ds-surface-mist" : "bg-ds-mockup-bg"
           } ${className ?? ""}`}
         >
           {chrome === "browser" && (
-            <div className="flex items-center gap-3 border-b border-ds-hairline bg-ds-surface-mist px-4 py-2.5">
-              <div className="flex items-center gap-1.5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-ds-pill bg-ds-hairline" />
-                <span className="h-2.5 w-2.5 rounded-ds-pill bg-ds-hairline" />
-                <span className="h-2.5 w-2.5 rounded-ds-pill bg-ds-hairline" />
+            <div className="flex h-8 items-center gap-2 bg-ds-mockup-bar px-4">
+              <div className="flex items-center gap-2" aria-hidden="true">
+                <span className="size-2 rounded-full bg-ds-hairline" />
+                <span className="size-2 rounded-full bg-ds-hairline" />
+                <span className="size-2 rounded-full bg-ds-hairline" />
               </div>
-              <div className="flex min-w-0 flex-1 items-center rounded-ds-pill border border-ds-hairline bg-ds-surface-paper px-3 py-1">
-                <Text variant="hp-caption" as="span" className="truncate">
-                  {urlLabel ?? "app.chestnut.com"}
-                </Text>
-              </div>
+              {urlLabel && (
+                <div className="flex min-w-0 flex-1 items-center rounded-ds-pill border border-ds-hairline bg-ds-surface-paper px-3 py-1">
+                  <Text variant="hp-caption" as="span" className="truncate">
+                    {urlLabel}
+                  </Text>
+                </div>
+              )}
             </div>
           )}
 

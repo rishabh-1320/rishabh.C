@@ -49,11 +49,11 @@ export default function OnboardingCaseStudyPage() {
               tags={["UX", "Enterprise"]}
               meta={[
                 { title: "Role", value: "UX Designer (sole designer)" },
-                { title: "Company", value: "Timelabs · 2024–2025" },
+                { title: "Company", value: "Cynosure Technologies (Timelabs) · 2024–2025" },
                 { title: "Timeline", value: "~2–3 weeks design, then build with engineering" },
               ]}
               footer={
-                <MockupFrame caption="The redesigned onboarding home — you always know where you are and what's next.">
+                <MockupFrame caption="The redesigned onboarding home — you always know where you are and what's next." urlLabel="hrms.timelabs.in/onboarding">
                   <OnboardingHomeMock />
                 </MockupFrame>
               }
@@ -156,7 +156,7 @@ export default function OnboardingCaseStudyPage() {
             <MockupFrame caption="The core fix — you always know where you are and what's next." chrome="none">
               <ProgressSystemMock />
             </MockupFrame>
-            <MockupFrame caption="Same capabilities as before — now one clear step at a time.">
+            <MockupFrame caption="Same capabilities as before — now one clear step at a time." urlLabel="hrms.timelabs.in/onboarding">
               <DocUploadStepMock />
             </MockupFrame>
           </CaseSection>

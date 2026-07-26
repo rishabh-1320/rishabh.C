@@ -44,11 +44,13 @@ export function HeroTitle({
 }) {
   return (
     <div className="flex flex-col items-center gap-3 text-center">
+      <Text variant="hp-eyebrow-loose" className="uppercase text-ds-accent">
+        {eyebrow}
+      </Text>
       <Text variant="display-script">
         {name}
         <span className="text-ds-accent">.</span>
       </Text>
-      <Text variant="hp-eyebrow-loose">{eyebrow}</Text>
       <Text variant="hp-headline" as="p" className="mx-auto mt-3 w-full max-w-3xl text-balance">
         <EmphasizedHeadline text={headline} emphasize={emphasize} />
       </Text>

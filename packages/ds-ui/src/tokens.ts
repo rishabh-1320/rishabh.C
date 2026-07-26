@@ -67,7 +67,22 @@ export const dsTokens = {
     "surface-veil": "rgba(255, 255, 255, 0.1)", // CTA secondary button bg/border
     "accent-wash": "rgba(224, 107, 58, 0.1)", // "CURRENT" badge bg
     "on-ink-warm": "#FEF6F2", // footer logo text on dark
-    "on-ink-faint": "rgba(255, 255, 255, 0.5)" // footer copyright text on dark
+    "on-ink-faint": "rgba(255, 255, 255, 0.5)", // footer copyright text on dark
+    "on-accent": "#F4F4F5", // text/icon on the orange accent pill (nav Resume/LinkedIn buttons)
+
+    // Homepage 6 refresh (additive) — ledger intersection dots + striped panel
+    "dot": "#000000", // intersection-dot fill — black, with a page-colored mask hiding lines around it
+    "dot-on-ink": "rgba(255, 255, 255, 0.25)", // intersection-dot fill on dark sections
+    "stripe-line": "rgba(30, 21, 21, 0.05)", // AI-tools panel pinstripe
+
+    // Homepage final — uniform page background (#FCFCFC) + hero blue wash
+    "hp-page": "#FCFCFC", // the whole homepage background; also the dot line-mask color
+    "hero-blue": "#EDF5FF", // hero lower-area gradient blue (light) — tune vs Figma render
+
+    // Case-study template — mockup window-chrome frame
+    "mockup-bg": "#F4F1EC", // warm cream body behind a mockup screenshot
+    "mockup-bar": "rgba(0, 0, 0, 0.02)", // the 32px chrome bar above the screenshot
+    "hp-muted": "#A5A19C" // THE single muted-text grey in Homepage 6 (eyebrows, descriptions, badges, meta)
   },
 
   // 4-based spacing — the rationalization of the reference's messy values
@@ -97,7 +112,10 @@ export const dsTokens = {
     control: "6px",
     card: "8px",
     chrome: "10px",
-    shell: "16px"
+    shell: "16px",
+
+    // Case-study template — mockup window-chrome frame
+    mockup: "12px"
   },
 
   font: {
@@ -131,8 +149,8 @@ export const dsTokens = {
     "hp-eyebrow": { size: "14px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
     "hp-eyebrow-loose": { size: "14px", lh: "1.4", weight: "300", tracking: "0.1em", family: "inter" },
     "hp-title": { size: "48px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
-    "hp-headline": { size: "36px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
-    "hp-card-title": { size: "24px", lh: "1.1", weight: "500", tracking: "-0.025em", family: "inter" },
+    "hp-headline": { size: "36px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-card-title": { size: "24px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-body": { size: "15px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-year": { size: "32px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
     "hp-bio": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
@@ -140,6 +158,15 @@ export const dsTokens = {
     "hp-caption": { size: "13px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-subtitle": { size: "16px", lh: "1.2", weight: "500", tracking: "-0.025em", family: "inter" },
     "hp-lede": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
+
+    // Homepage 6 refresh — new roles traced from the Figma export (Inter, weight 400,
+    // ‑0.025em everywhere except hp-metric which Figma sets to 0 tracking)
+    "hp-label": { size: "14px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-section-title": { size: "40px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-card-title-lg": { size: "32px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-card-title-sm": { size: "20px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-metric": { size: "48px", lh: "1", weight: "400", tracking: "0em", family: "inter" },
+    "hp-brand": { size: "64px", lh: "0.9", weight: "400", tracking: "-0.025em", family: "inter" },
 
     // Case-study restyle — reading-context roles (section headings + long-form
     // body copy); additive, only used inside components/case-study/*.
@@ -156,6 +183,9 @@ export const dsTokens = {
     stat: "40px",
     script: "36px",
     "hp-title": "32px",
+    "hp-section-title": "30px",
+    "hp-card-title-lg": "26px",
+    "hp-brand": "48px",
     "hp-headline": "26px",
     "hp-lede": "18px",
     "hp-heading": "24px",
@@ -181,7 +211,7 @@ export const dsTokens = {
     "prose": "680px",
     // Homepage 2026 refresh — new widths only; `container`/`prose` untouched
     // since other routes (case studies, nav, footer) rely on those values.
-    "hp": "1000px",
+    "hp": "1200px",
     "hp-wide": "1200px"
   }
 } as const;

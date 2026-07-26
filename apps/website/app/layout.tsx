@@ -19,14 +19,14 @@ export const metadata: Metadata = {
     title: "rishabh's portfolio",
     description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code.",
     type: "website",
-    url: siteUrl,
-    images: ["https://framerusercontent.com/images/AqaOpcEcFqtiggHTbjvnqNgu68.png"]
+    url: siteUrl
+    // og:image comes from app/opengraph-image.tsx (self-hosted, generated card)
   },
   twitter: {
     card: "summary_large_image",
     title: "rishabh's portfolio",
-    description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code.",
-    images: ["https://framerusercontent.com/images/AqaOpcEcFqtiggHTbjvnqNgu68.png"]
+    description: "B2B enterprise product designer. Systems thinker. Uses AI to ship designs in production code."
+    // twitter:image falls back to app/opengraph-image.tsx
   }
 };
 

@@ -35,6 +35,13 @@ export type TextVariant =
   | "hp-caption"
   | "hp-subtitle"
   | "hp-lede"
+  // Homepage 6 refresh — additive roles
+  | "hp-label"
+  | "hp-section-title"
+  | "hp-card-title-lg"
+  | "hp-card-title-sm"
+  | "hp-metric"
+  | "hp-brand"
   // Case-study restyle — reading-context roles
   | "hp-heading"
   | "hp-prose";
@@ -68,11 +75,11 @@ const VARIANT: Record<TextVariant, string> = {
   "hp-card-title":
     "font-ds-inter text-ds-hp-card-title font-[var(--ds-type-hp-card-title-weight)] tracking-[var(--ds-type-hp-card-title-tracking)] text-ds-heading",
   "hp-body":
-    "font-ds-inter text-ds-hp-body font-[var(--ds-type-hp-body-weight)] tracking-[var(--ds-type-hp-body-tracking)] text-ds-body-muted",
+    "font-ds-inter text-ds-hp-body font-[var(--ds-type-hp-body-weight)] tracking-[var(--ds-type-hp-body-tracking)] text-ds-hp-muted",
   "hp-year":
     "font-ds-inter text-ds-hp-year font-[var(--ds-type-hp-year-weight)] tracking-[var(--ds-type-hp-year-tracking)] text-ds-heading",
   "hp-bio":
-    "font-ds-inter text-ds-hp-bio font-[var(--ds-type-hp-bio-weight)] tracking-[var(--ds-type-hp-bio-tracking)] text-ds-tag-muted",
+    "font-ds-inter text-ds-hp-bio font-[var(--ds-type-hp-bio-weight)] tracking-[var(--ds-type-hp-bio-tracking)] text-ds-hp-muted",
   "hp-meta":
     "font-ds-inter text-ds-hp-meta font-[var(--ds-type-hp-meta-weight)] tracking-[var(--ds-type-hp-meta-tracking)] text-ds-tag-muted",
   "hp-caption":
@@ -81,6 +88,20 @@ const VARIANT: Record<TextVariant, string> = {
     "font-ds-inter text-ds-hp-subtitle font-[var(--ds-type-hp-subtitle-weight)] tracking-[var(--ds-type-hp-subtitle-tracking)] text-ds-heading",
   "hp-lede":
     "font-ds-inter text-ds-hp-lede font-[var(--ds-type-hp-lede-weight)] tracking-[var(--ds-type-hp-lede-tracking)] text-ds-caption-muted",
+
+  // Homepage 6 refresh — additive roles
+  "hp-label":
+    "font-ds-inter text-ds-hp-label font-[var(--ds-type-hp-label-weight)] tracking-[var(--ds-type-hp-label-tracking)] uppercase text-ds-hp-muted",
+  "hp-section-title":
+    "font-ds-inter text-ds-hp-section-title font-[var(--ds-type-hp-section-title-weight)] tracking-[var(--ds-type-hp-section-title-tracking)] text-ds-heading",
+  "hp-card-title-lg":
+    "font-ds-inter text-ds-hp-card-title-lg font-[var(--ds-type-hp-card-title-lg-weight)] tracking-[var(--ds-type-hp-card-title-lg-tracking)] text-ds-heading",
+  "hp-card-title-sm":
+    "font-ds-inter text-ds-hp-card-title-sm font-[var(--ds-type-hp-card-title-sm-weight)] tracking-[var(--ds-type-hp-card-title-sm-tracking)] text-ds-heading",
+  "hp-metric":
+    "font-ds-inter text-ds-hp-metric font-[var(--ds-type-hp-metric-weight)] tracking-[var(--ds-type-hp-metric-tracking)] text-ds-heading",
+  "hp-brand":
+    "font-ds-inter text-ds-hp-brand font-[var(--ds-type-hp-brand-weight)] tracking-[var(--ds-type-hp-brand-tracking)] text-ds-heading",
 
   // Case-study restyle — reading-context roles
   "hp-heading":
@@ -114,6 +135,12 @@ const DEFAULT_TAG: Record<TextVariant, ElementType> = {
   "hp-caption": "p",
   "hp-subtitle": "p",
   "hp-lede": "p",
+  "hp-label": "p",
+  "hp-section-title": "h2",
+  "hp-card-title-lg": "h3",
+  "hp-card-title-sm": "h3",
+  "hp-metric": "span",
+  "hp-brand": "p",
   "hp-heading": "h2",
   "hp-prose": "p"
 };

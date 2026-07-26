@@ -7,7 +7,6 @@ import { MockupFrame } from "@/components/case-study/mockup-frame";
 import {
   ExistingDashboardMock,
   FinalDashboardMock,
-  ReviewsMock,
 } from "@/components/case-study/mockups/dashboard";
 import { CaseSection } from "@/components/case-study/case-section";
 import { CaseStudyNav } from "@/components/case-study/case-study-nav";
@@ -132,7 +131,7 @@ export default function HrmsDashboardPage() {
                 </p>
               </SubCard>
             </div>
-            <MockupFrame caption="The decisions that shaped the dashboard — each chart chosen for what it reveals, not what's familiar.">
+            <MockupFrame caption="The decisions that shaped the dashboard — each chart chosen for what it reveals, not what's familiar." urlLabel="hrms.timelabs.in/dashboard">
               <FinalDashboardMock />
             </MockupFrame>
           </CaseSection>
@@ -172,11 +171,8 @@ export default function HrmsDashboardPage() {
               The dashboard shipped. Leaders use it to read their workforce at a glance instead of doing the analysis themselves.
             </p>
             <p className="content-prose mt-4">
-              I don&apos;t have a clean before/after metric to point to — this was a feature inside a larger HRMS, not a standalone experiment. But it&apos;s live, and there are public reviews that call out the experience.
+              I don&apos;t have a clean before/after metric to point to — this was a feature inside a larger HRMS, not a standalone experiment. But it shipped, and it&apos;s in active use by business leaders today.
             </p>
-            <MockupFrame caption="Public reviews calling out the dashboard — to be added." chrome="none">
-              <ReviewsMock />
-            </MockupFrame>
           </CaseSection>
 
           <CaseSection id="reflection" heading="What I'd do differently">

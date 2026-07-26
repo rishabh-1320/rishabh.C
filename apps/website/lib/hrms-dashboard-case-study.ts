@@ -4,7 +4,7 @@ export const dashboardCaseStudy = {
     "How I redesigned the Timelabs HRMS admin dashboard into an analytics platform that surfaces attendance patterns and workforce insights for enterprise leaders.",
   title: "An HR analytics dashboard for an HRMS industry leader",
   role: "UX Designer",
-  company: "Timelabs",
+  company: "Cynosure Technologies (Timelabs)",
   year: "2023–2024",
   timeline: "~2–3 weeks design · ~1 month build, QA, and launch",
   team: "Rishabh (design), a data engineer, a frontend developer, stakeholders (PMs, CTO, CEO)",

@@ -2,7 +2,8 @@ import type { HomeContent } from "@/lib/types";
 import { Section, Text } from "@packages/ds-ui";
 import { SectionHeader } from "../ui/section-header";
 import { MethodologyGrid } from "../ui/methodology-grid";
-import { LogoStrip } from "../ui/logo-strip";
+import { Marquee } from "../ui/marquee";
+import { AiToolTile } from "../ui/ai-tool-tile";
 import { SectionRow } from "../ui/section-row";
 import { Block } from "../ui/block";
 import { HRule } from "../ui/h-rule";
@@ -20,41 +21,47 @@ export function DsSkill({
 }) {
   return (
     <Section bg="paper" pad="none" id="skill">
-      <HRule />
+      <HRule dots />
       <SectionRow>
-        <Block pad="both">
+        <Block pad="both" padX="wide">
           <SectionHeader eyebrow="Process & principles" title={heading} accent="systems" intro={intro} />
         </Block>
       </SectionRow>
-      <HRule />
+      <HRule dots />
 
       <SectionRow>
-        <Block pad="joint">
+        <Block pad="none" padX="none">
           <MethodologyGrid principles={principles} />
         </Block>
       </SectionRow>
+      <HRule dots />
+
+      {/* Empty rail-bounded spacer, matching the Figma gap before the AI-workflow content. */}
+      <SectionRow>
+        <Block pad="none" padX="wide" className="h-35" />
+      </SectionRow>
+      <HRule dots />
 
       <SectionRow>
-        <Block pad="open-bottom">
-          <LogoStrip
-            heading={aiWorkflow.heading === "AI in my workflow" ? "AI tools that I use" : aiWorkflow.heading}
-            items={aiWorkflow.tools.map((t) => t.name)}
-            size="lg"
-          />
-
-          {/* Preserve each tool's description (Figma shows only the logo row) as a
-              compact list below it, so no content is lost in the visual refresh. */}
-          <div className="mx-auto mt-10 grid max-w-2xl gap-4 sm:grid-cols-2">
-            {aiWorkflow.tools.map((tool) => (
-              <div key={tool.name} className="flex flex-col gap-1">
-                <Text variant="hp-subtitle">{tool.name}</Text>
-                <Text variant="hp-body">{tool.description}</Text>
-              </div>
-            ))}
+        {/* Left-aligned title + support, then a marquee row — no
+            stripe/vertical-line treatment. The per-tool descriptions/closing
+            line from the copy deck aren't in this design, so intentionally
+            not rendered. The marquee stays inside this same rail-bounded
+            Block (not full-bleed) so it never extends past where the
+            heading/support text above it stops. */}
+        <Block pad="none" padX="wide" className="flex flex-col gap-18 py-18">
+          <div className="flex flex-col gap-2">
+            <Text variant="hp-headline" className="!text-ds-heading">
+              {aiWorkflow.heading}
+            </Text>
+            <Text variant="hp-body">{aiWorkflow.intro}</Text>
           </div>
-          <Text variant="hp-body" className="mx-auto mt-8 max-w-2xl text-center italic">
-            {aiWorkflow.closingLine}
-          </Text>
+
+          <Marquee>
+            {aiWorkflow.tools.map((tool) =>
+              tool.icon ? <AiToolTile key={tool.name} name={tool.name} icon={tool.icon} /> : null
+            )}
+          </Marquee>
         </Block>
       </SectionRow>
     </Section>

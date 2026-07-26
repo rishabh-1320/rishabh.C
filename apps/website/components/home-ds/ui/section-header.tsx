@@ -22,15 +22,15 @@ export function SectionHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-10", className)}>
+    <div className={cn("flex flex-col items-start gap-3 md:flex-row md:items-end md:justify-between md:gap-10", className)}>
       <div className="flex flex-1 flex-col gap-3">
-        <Text variant="hp-eyebrow">{eyebrow}</Text>
-        <Text variant="hp-title">
+        <Text variant="hp-label">{eyebrow}</Text>
+        <Text variant="hp-section-title">
           <AccentText text={title} accent={accent} />
         </Text>
       </div>
       {intro && (
-        <Text variant="hp-eyebrow" className="max-w-sm md:text-right">
+        <Text variant="hp-label" className="w-full max-w-[392px] shrink-0">
           {intro}
         </Text>
       )}

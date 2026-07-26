@@ -296,40 +296,6 @@ export function MockProgress({
   );
 }
 
-export function MockTokenRow({
-  name,
-  value,
-  usage,
-  swatch,
-}: {
-  name: string;
-  value: string;
-  usage: string;
-  swatch?: string;
-}) {
-  return (
-    <tr className="bg-ds-surface-raised">
-      <td className="border-t border-ds-border px-3 py-2">
-        <code className="font-mono text-[12px] text-ds-ink">{name}</code>
-      </td>
-      <td className="border-t border-ds-border px-3 py-2">
-        <span className="inline-flex items-center gap-2">
-          {swatch && (
-            <span
-              className="h-3.5 w-3.5 rounded-ds-sm ring-1 ring-ds-border"
-              style={{ background: swatch }}
-            />
-          )}
-          <code className="font-mono text-[12px] text-ds-ink-soft">{value}</code>
-        </span>
-      </td>
-      <td className="border-t border-ds-border px-3 py-2 font-ds-sans text-ds-caption text-ds-ink-muted">
-        {usage}
-      </td>
-    </tr>
-  );
-}
-
 /** App shell: optional left rail + topbar wrapping a content slot. */
 export function MockWindow({
   title,
@@ -425,18 +391,6 @@ export function MockAreaChart({ className }: { className?: string }) {
         strokeWidth="2"
         strokeLinecap="round"
       />
-    </svg>
-  );
-}
-
-export function MockBars({ className }: { className?: string }) {
-  const bars = [40, 64, 52, 78, 60, 88, 70];
-  return (
-    <svg viewBox="0 0 240 120" className={`w-full ${className ?? ""}`} role="img" aria-label="Bar chart">
-      <line x1="10" y1="100" x2="232" y2="100" stroke={BORDER} strokeWidth="1" />
-      {bars.map((b, i) => (
-        <rect key={i} x={20 + i * 30} y={100 - b} width="18" height={b} rx="3" fill={i === 5 ? ACCENT : INK_MUTED} opacity={i === 5 ? 1 : 0.35} />
-      ))}
     </svg>
   );
 }

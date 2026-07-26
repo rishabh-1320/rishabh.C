@@ -29,18 +29,25 @@ npm run dev
 
 ```
 apps/website/
-├── app/               # Next.js App Router (pages and layouts)
-│   ├── page.tsx       # Homepage
-│   └── casestudy/     # Case study pages (dashboard, onboarding, design-system)
-├── components/        # React components
-│   └── case-study/    # Components used only in case study pages
-├── lib/               # All site content as typed data + utilities
-│   ├── site-content.ts           # Homepage content
-│   ├── onboarding-case-study.ts  # Lingobase case study content
-│   ├── design-system-case-study.ts
-│   └── types.ts
-├── hooks/             # Custom React hooks
-└── public/            # Static assets (case study images, videos)
+├── app/                        # Next.js App Router — one folder = one URL
+│   ├── page.tsx                # Homepage (/)
+│   ├── layout.tsx              # Shared shell (fonts, header, page transitions)
+│   └── casestudy/              # Case-study pages
+│       ├── chestnut/           #   /casestudy/chestnut
+│       ├── dashboard/          #   /casestudy/dashboard
+│       ├── design-system/      #   /casestudy/design-system
+│       └── onboarding/         #   /casestudy/onboarding
+├── components/                 # React building blocks
+│   ├── home-ds/                # Homepage: big sections/ + small ui/ pieces
+│   └── case-study/             # Pieces used to build case-study pages
+├── lib/                        # All content (words) + data + utilities
+│   ├── site-content.ts               # Homepage copy
+│   ├── chestnut-case-study.ts        # Chestnut case-study content
+│   ├── hrms-dashboard-case-study.ts  # Dashboard case-study content
+│   ├── arksaber-case-study.ts        # Design-system case-study content
+│   └── types.ts                      # Shapes for the content above
+├── hooks/                      # Custom React hooks (use-gsap-reveal.ts)
+└── public/                     # Static assets (case-study images, icons)
 ```
 
 See [`docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md) for the full codebase guide.
@@ -49,14 +56,16 @@ See [`docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md) for the full codebase g
 
 ## Updating content
 
-All site text, images, and structured data lives in `apps/website/lib/`. You never need to touch component files to update content.
+Most site text and structured data lives in `apps/website/lib/`, so you rarely
+need to touch component files to change wording.
 
 | What you want to change | File to edit |
 |-------------------------|-------------|
 | Homepage text, hero, work cards | `lib/site-content.ts` |
-| HRMS dashboard case study | `lib/site-content.ts` (hrmsCaseStudy) |
-| Lingobase onboarding case study | `lib/onboarding-case-study.ts` |
-| Plasma design system case study | `lib/design-system-case-study.ts` |
+| Chestnut case study | `lib/chestnut-case-study.ts` |
+| HRMS dashboard case study | `lib/hrms-dashboard-case-study.ts` |
+| Design-system case study | `lib/arksaber-case-study.ts` |
+| Onboarding case study | `app/casestudy/onboarding/page.tsx` (content is inline here) |
 
 ---
 

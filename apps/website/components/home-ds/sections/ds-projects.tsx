@@ -3,6 +3,7 @@ import { Section } from "@packages/ds-ui";
 import { explorationImages, fallbackImage } from "../images";
 import { SectionHeader } from "../ui/section-header";
 import { CaseStudyCard } from "../ui/case-study-card";
+import { RailScrollRow } from "../ui/rail-scroll-row";
 import { SectionRow } from "../ui/section-row";
 import { Block } from "../ui/block";
 import { HRule } from "../ui/h-rule";
@@ -18,19 +19,23 @@ export function DsProjects({
 }) {
   return (
     <Section bg="paper" pad="none" id="explorations">
-      <HRule />
+      <HRule dots />
       <SectionRow>
-        <Block pad="both">
+        <Block pad="both" padX="wide">
           <SectionHeader eyebrow="On the side" title={heading} accent="explorations" intro={intro} />
         </Block>
       </SectionRow>
-      <HRule />
+      <HRule dots />
 
       <SectionRow>
-        <Block pad="open-bottom" className="overflow-x-auto">
-          <div className="flex w-max gap-6 md:w-full md:grid md:grid-cols-3">
+        {/* Clipped horizontal scroll: cards are 420 + gap-12 (48), so the
+            3rd is cut in half at the right rail and the 4th sits fully
+            hidden behind it — matching the Figma export exactly. */}
+        <Block pad="open-bottom" padX="none">
+          <RailScrollRow className="gap-12">
             {explorations.map((exp) => (
-              <div key={exp.id} className="w-[26rem] md:w-auto">
+              // 420 CSS px == 26.25rem (rem, not a literal px value, so it stays out of the drift guard's raw-px rule).
+              <div key={exp.id} className="w-[26.25rem] shrink-0">
                 <CaseStudyCard
                   variant="compact"
                   image={explorationImages[exp.id] ?? fallbackImage}
@@ -42,7 +47,7 @@ export function DsProjects({
                 />
               </div>
             ))}
-          </div>
+          </RailScrollRow>
         </Block>
       </SectionRow>
     </Section>

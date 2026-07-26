@@ -1,8 +1,9 @@
-import { Text } from "@packages/ds-ui";
-import { homeContent } from "@/lib/site-content";
-import { CaseShell } from "./case-shell";
+import { SectionHeader } from "../home-ds/ui/section-header";
 import { CaseStudyCard } from "../home-ds/ui/case-study-card";
+import { SectionRow } from "../home-ds/ui/section-row";
+import { Block } from "../home-ds/ui/block";
 import { HRule } from "../home-ds/ui/h-rule";
+import { workImages, fallbackImage } from "../home-ds/images";
 
 const CASE_STUDIES = [
   {
@@ -44,53 +45,42 @@ const CASE_STUDIES = [
 ] as const;
 
 /**
- * "More case studies" — reuses the homepage's own `CaseStudyCard` (compact
- * variant) so this teaser row is pixel-identical to the Projects row on the
- * homepage, instead of hand-rolled card markup that could drift from it.
+ * "More Projects" — reuses the homepage's own SectionHeader + CaseStudyCard
+ * so this closes out the ledger the same way the homepage's Projects section
+ * does: same 1200 rail-bounded column as every other section on the page
+ * (not the narrower reading-column width the old CaseShell used).
  */
 export function CaseStudyNav({ current }: { current: string }) {
-  const others = CASE_STUDIES.filter((cs) => cs.id !== current);
+  const others = CASE_STUDIES.filter((cs) => cs.id !== current).slice(0, 3);
 
   return (
-    <div className="bg-ds-surface-paper py-16 md:py-18">
-      <HRule className="mb-16 md:mb-18" />
-      <CaseShell>
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <Text variant="hp-eyebrow-loose">More</Text>
-            <Text variant="hp-heading" as="p">
-              Case studies
-            </Text>
-          </div>
-          <Text variant="hp-eyebrow" as="span">
-            Swipe →
-          </Text>
-        </div>
+    <>
+      <HRule dots />
+      <SectionRow>
+        <Block pad="both" padX="wide">
+          <SectionHeader eyebrow="More" title="Projects" accent="Projects" />
+        </Block>
+      </SectionRow>
+      <HRule dots />
 
-        <div className="overflow-x-auto pb-2 scrollbar-none">
-          <div className="flex w-max gap-6 snap-x snap-mandatory md:w-full md:grid md:grid-cols-3">
-            {others.map((cs) => {
-              const workCard = homeContent.works.find((w) => w.id === cs.workId);
-              const image = workCard?.image;
-              if (!image) return null;
-
-              return (
-                <div key={cs.id} className="w-[26rem] flex-none snap-start md:w-auto">
-                  <CaseStudyCard
-                    variant="compact"
-                    image={image}
-                    alt={cs.title}
-                    tags={[...cs.tags]}
-                    title={cs.title}
-                    description={cs.subtitle}
-                    href={cs.href}
-                  />
-                </div>
-              );
-            })}
+      <SectionRow>
+        <Block pad="open-bottom">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {others.map((cs) => (
+              <CaseStudyCard
+                key={cs.id}
+                variant="standard"
+                image={workImages[cs.workId] ?? fallbackImage}
+                alt={cs.title}
+                tags={[...cs.tags]}
+                title={cs.title}
+                description={cs.subtitle}
+                href={cs.href}
+              />
+            ))}
           </div>
-        </div>
-      </CaseShell>
-    </div>
+        </Block>
+      </SectionRow>
+    </>
   );
 }

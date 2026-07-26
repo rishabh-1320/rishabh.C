@@ -1,42 +1,43 @@
 import type { HeroContent } from "@/lib/types";
 import { Section } from "@packages/ds-ui";
-import { Parallax } from "../scroll/parallax";
 import { HeroTitle } from "../ui/hero-title";
+import { StripePanel } from "../ui/stripe-panel";
 import { SectionRow } from "../ui/section-row";
 import { Block } from "../ui/block";
 
+// Static hero: no scroll-parallax on the title/dashboard, so the hero scrolls
+// away normally instead of lagging behind and being covered by the next
+// section. Every other section keeps its own scroll effects (Reveal, etc.).
 export function DsHero({ hero }: { hero: HeroContent }) {
   return (
     <Section bg="paper" pad="none" id="hero">
       <SectionRow>
         <Block border="none" pad="open-top">
-          <Parallax speed={0.25}>
-            <HeroTitle
-              name="Rishabh"
-              eyebrow={hero.eyebrow}
-              headline={hero.h1}
-              emphasize={["B2B enterprise tools", "clarity"]}
-            />
-          </Parallax>
+          <HeroTitle
+            name="Rishabh"
+            eyebrow={hero.eyebrow}
+            headline={hero.h1}
+            emphasize={["B2B enterprise tools", "clarity"]}
+          />
         </Block>
       </SectionRow>
 
-      <div className="bg-gradient-to-b from-white to-ds-surface-mist">
+      {/* Lower hero wash: a light blue gradient with faint vertical pinstripe
+          lines behind the dashboard image. */}
+      <StripePanel background="linear-gradient(to bottom, var(--ds-color-surface-paper), var(--ds-color-hero-blue))">
         <SectionRow>
           <Block border="none" pad="open-bottom">
-            <Parallax speed={0.1}>
-              <div className="overflow-hidden rounded-ds-chrome shadow-ds-card-hover">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={hero.image}
-                  alt="B2B enterprise analytics dashboard designed by Rishabh"
-                  className="block w-full"
-                />
-              </div>
-            </Parallax>
+            <div className="overflow-hidden rounded-ds-chrome shadow-ds-card-hover">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={hero.image}
+                alt="B2B enterprise analytics dashboard designed by Rishabh"
+                className="block w-full"
+              />
+            </div>
           </Block>
         </SectionRow>
-      </div>
+      </StripePanel>
     </Section>
   );
 }

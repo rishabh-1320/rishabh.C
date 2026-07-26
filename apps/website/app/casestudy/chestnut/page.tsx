@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import { Text } from "@packages/ds-ui";
-import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
+import { Section, Text } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
+import { CaseStudyCard } from "@/components/home-ds/ui/case-study-card";
+import { workImages, fallbackImage } from "@/components/home-ds/images";
+import { CaseHero } from "@/components/case-study/case-hero";
+import { CaseMetrics } from "@/components/case-study/case-metrics";
+import { CaseChapter } from "@/components/case-study/case-chapter";
+import { NumberedRow } from "@/components/case-study/numbered-row";
+import { PullQuote } from "@/components/case-study/pull-quote";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
+import { FullWidth } from "@/components/case-study/full-width";
 import {
   ChestnutHeroMock,
   BonsaiStorybookMock,
@@ -12,14 +19,7 @@ import {
   ConfigureMetricsMock,
   LivePreviewMock,
 } from "@/components/case-study/mockups/chestnut";
-import { CaseSection } from "@/components/case-study/case-section";
-import { CaseStudyNav } from "@/components/case-study/case-study-nav";
-import { CaseShell } from "@/components/case-study/case-shell";
-import { HeroCard } from "@/components/case-study/hero-card";
-import { ResultBand } from "@/components/case-study/result-band";
-import { NumberedStep } from "@/components/case-study/numbered-step";
-import { HRule } from "@/components/home-ds/ui/h-rule";
-import { GsapReveal } from "@/components/gsap-reveal";
+import { SectionHeader } from "@/components/home-ds/ui/section-header";
 import { chestnutCaseStudy } from "@/lib/chestnut-case-study";
 
 export const metadata: Metadata = {
@@ -27,328 +27,182 @@ export const metadata: Metadata = {
   description: chestnutCaseStudy.metadataDescription,
 };
 
+const chapterById = (id: string) => {
+  const chapter = chestnutCaseStudy.chapters.find((c) => c.id === id);
+  if (!chapter) throw new Error(`Missing chapter: ${id}`);
+  return chapter;
+};
+
+// "More Projects" — Chestnut-only, so the shared CaseStudyNav (still used by
+// the other 3 case studies, which keep the old ledger-line template) never
+// changes. Same cards, just laid out full-width with no rails.
+const MORE_PROJECTS = [
+  {
+    id: "dashboard",
+    workId: "work-hrms",
+    title: "HR Analytics Dashboard",
+    subtitle: "Attendance & workforce insights for enterprise",
+    tags: ["Data", "Enterprise"],
+    href: "/casestudy/dashboard"
+  },
+  {
+    id: "onboarding",
+    workId: "work-onboarding",
+    title: "HRMS Candidate Onboarding",
+    subtitle: "From admin-panel nobody used to self-service flow",
+    tags: ["UX", "Enterprise"],
+    href: "/casestudy/onboarding"
+  },
+  {
+    id: "design-system",
+    workId: "work-design-system",
+    title: "Arksaber Design System",
+    subtitle: "Whitelabel design system, Figma to code",
+    tags: ["Design System", "Code"],
+    href: "/casestudy/design-system"
+  }
+] as const;
+
 export default function ChestnutCaseStudyPage() {
   return (
     <>
       <ScrollProgressBar />
 
-      <div className="bg-gradient-to-b from-ds-surface-mist to-white pb-16 pt-10 md:pb-20 md:pt-14">
-        <CaseShell>
-          <div id="snapshot" className="scroll-mt-28">
-            <HeroCard
-              title={chestnutCaseStudy.title}
-              accent="design system in code"
-              tags={["Product", "Design System"]}
-              meta={[
-                { title: "Role", value: chestnutCaseStudy.role },
-                { title: "Company", value: `${chestnutCaseStudy.company} · ${chestnutCaseStudy.year}` },
-                { title: "Tools", value: chestnutCaseStudy.tools },
-              ]}
-              footer={
-                <MockupFrame caption="The redesigned product and the design system that standardizes it.">
-                  <ChestnutHeroMock />
-                </MockupFrame>
-              }
-            >
-              <p className="content-prose">
-                <strong>Chestnut is a producer performance management platform for the insurance world.</strong> It worked — but it was inconsistent and hard to use. The same action looked different on every screen, and simple things felt complicated.
-              </p>
-              <p className="content-prose">
-                I audited the entire product, catalogued every inconsistency, and rebuilt it into one standardized system of components and patterns. Then I took it further: instead of handing developers Figma files, I built the design system in code.
-              </p>
-              <p className="content-prose">
-                <strong>The result:</strong> 30–40% fewer UX inconsistencies, and 20–25% less design-to-dev rework.
-              </p>
-            </HeroCard>
-          </div>
-        </CaseShell>
-      </div>
+      <Section bg="paper" pad="none" id="hero">
+        <FullWidth className="pt-16 pb-6">
+          <CaseHero
+            tags={chestnutCaseStudy.hero.tags}
+            title={chestnutCaseStudy.hero.title}
+            accent={chestnutCaseStudy.hero.accent}
+            subtitle={chestnutCaseStudy.hero.subtitle}
+            mockup={
+              <MockupFrame caption="The redesigned product and the design system that standardizes it." urlLabel="app.chestnut.com">
+                <ChestnutHeroMock />
+              </MockupFrame>
+            }
+          />
+        </FullWidth>
 
-      <CaseShell sidebar className="py-2 md:py-4">
-        <aside className="md:sticky md:top-28 md:h-fit">
-          <Text variant="hp-eyebrow" as="p" className="md:mb-3">
-            On this page
-          </Text>
-          <ScrollSpyToc items={chestnutCaseStudy.toc} />
-        </aside>
+        <FullWidth className="py-16">
+          <CaseMetrics stats={chestnutCaseStudy.stats} />
+        </FullWidth>
+      </Section>
 
-        <article className="min-w-0 space-y-0">
+      {/* ─── PART 1 ─── */}
 
-          {/* ─── PART A ─── */}
+      <CaseChapter {...chapterById("what-chestnut-is")} />
+      <CaseChapter {...chapterById("problem")} />
+      <CaseChapter {...chapterById("audit")} />
+      <CaseChapter {...chapterById("unified-system")} />
+      <CaseChapter {...chapterById("shipping-in-code")} />
 
-          <CaseSection id="what-chestnut-is" heading="First, what Chestnut actually is">
-            <p className="content-prose">
-              <strong>Insurance gets sold through middlemen.</strong> An insurance company rarely sells a policy directly to you. They sell through carriers, agencies, and IMOs.
-            </p>
-            <p className="content-prose mt-4">
-              Those middlemen hire producers (agents) who sell the policies to real customers.
-            </p>
-            <p className="content-prose mt-4">
-              <strong>Chestnut is the software those middlemen use to manage their producers</strong> — tracking compliance, payouts, and performance. Day-to-day, it&apos;s used by admins and managers, not the agents themselves.
-            </p>
-            <p className="content-prose mt-4">
-              The terminology — carriers, producers, IMOs — is the language the clients use. I had to learn it to design for it.
-            </p>
-          </CaseSection>
+      <FullWidth className="!px-0 pb-16">
+        <MockupFrame caption="Bonsai — Chestnut's design system, running in Storybook." chrome="none">
+          <BonsaiStorybookMock />
+        </MockupFrame>
+      </FullWidth>
 
-          <CaseSection id="problem" heading="The problem: a product at war with itself">
-            <p className="content-prose">
-              <strong>Chestnut wasn&apos;t broken. It wasn&apos;t outdated. It was inconsistent.</strong>
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>The same button showed up in five different styles</li>
-              <li>Tables were designed a dozen different ways</li>
-              <li>The same action — applying a filter, setting a condition — behaved differently depending on where you were</li>
-            </ul>
-            <p className="content-prose mt-4">
-              You could feel it just using the thing. Nothing was technically wrong, but nothing agreed with anything else.
-            </p>
-            <p className="content-prose mt-4">
-              <strong>That inconsistency is what made it hard to use.</strong> Every screen quietly asked the user to relearn it.
-            </p>
-          </CaseSection>
+      {/* ─── PART 2 DIVIDER ─── */}
+      <FullWidth className="py-16">
+        <SectionHeader
+          eyebrow="Part 02"
+          title="Creating a complex variable — without leaving your work"
+          accent="without leaving your work"
+        />
+      </FullWidth>
 
-          <CaseSection id="audit" heading="The audit: cataloguing the chaos">
-            <p className="content-prose">
-              <strong>You can&apos;t fix inconsistency you haven&apos;t measured.</strong> So I went through the entire product and documented every variation of every element.
-            </p>
-            <p className="content-prose mt-4">Components:</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>Every type of button — and every version of the &ldquo;same&rdquo; button</li>
-              <li>Every table and table header — different icons, spacing, padding, sometimes a completely different element doing the same job</li>
-              <li>Every navigation pattern</li>
-            </ul>
-            <p className="content-prose mt-4">Then interactions:</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>How many different ways did the product let you do the same thing — apply a filter, set a condition?</li>
-              <li>More than there should&apos;ve been. I recorded all of them.</li>
-            </ul>
-            <p className="content-prose mt-4">
-              <strong>By the end, the mess wasn&apos;t a feeling anymore. It was a documented list</strong> — every component and every pattern, in one place.
-            </p>
-          </CaseSection>
+      <FullWidth className="!px-0 py-16">
+        <MockupFrame caption="The whole feature starts here — a 'New variable' option living inside the search the admin is already using." urlLabel="app.chestnut.com">
+          <PaymentTypeaheadMock />
+        </MockupFrame>
+      </FullWidth>
 
-          <CaseSection id="unified-system" heading="The goal and the system">
-            <p className="content-prose">
-              With every inconsistency catalogued, the job got clear: <strong>collapse all those variations into one standardized set of components and patterns — and make them better than the originals.</strong>
-            </p>
-            <p className="content-prose mt-4">
-              Not &ldquo;pick one of the five buttons.&rdquo; Design the right button, the right table, the right filter pattern — once.
-            </p>
-            <p className="content-prose mt-4">
-              I rebuilt the core components from the ground up — <strong>buttons, tables, headers, and their states</strong> — plus the interaction patterns that tied them together. One source of truth for how Chestnut should look and behave.
-            </p>
+      <CaseChapter {...chapterById("setup")} />
+      <CaseChapter {...chapterById("dead-end")} />
+      <CaseChapter {...chapterById("flow")} />
 
-            <Text variant="hp-subtitle" as="h3" className="mt-8">
-              Shipping the system in code
-            </Text>
-            <p className="content-prose mt-3">
-              <strong>Here&apos;s where I changed how I work.</strong>
-            </p>
-            <p className="content-prose mt-4">
-              Normally a designer hands off Figma files and hopes the build matches. I didn&apos;t want that gap. So instead of delivering the system in Figma, I built it in code.
-            </p>
-            <p className="content-prose mt-4">What that looked like:</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>Set up a <strong>Storybook</strong> to visualize every component</li>
-              <li>Built out a proper <strong>component library</strong></li>
-              <li>Chestnut&apos;s front-end was already <strong>shadcn-based</strong> — a head start, but the components weren&apos;t complete or built the way we needed</li>
-              <li>Modified them into Chestnut&apos;s own design system: <strong>Bonsai</strong></li>
-            </ul>
-            <p className="content-prose mt-4">
-              Once Bonsai existed, I started delivering my designs in code instead of Figma.
-            </p>
-            <p className="content-prose mt-4">
-              <strong>This is where AI earns its place in my workflow.</strong> Prototyping and shipping in code used to be slow — in Figma you place every frame, component, and pixel by hand. With AI, I prompt and the agent builds. It&apos;s faster. And more importantly, it closes the gap between what I design and what ships. <strong>The design system stopped being a picture of components. It became the components.</strong>
-            </p>
-            <MockupFrame caption="Bonsai — Chestnut's design system, running in Storybook." chrome="none">
-              <BonsaiStorybookMock />
-            </MockupFrame>
-          </CaseSection>
+      <FullWidth className="!px-0 pb-9">
+        <MockupFrame caption="Behind the door: a guided flow, not a blank form." chrome="none">
+          <CreateVariableSteps12Mock />
+        </MockupFrame>
+      </FullWidth>
 
-          <CaseSection id="impact" heading="The impact">
-            <ResultBand
-              stats={[
-                { value: "30–40%", label: "fewer UX inconsistencies across the product" },
-                { value: "20–25%", label: "less design-to-dev rework — because the system shipped as code, not as a spec" },
-              ]}
+      {/* Body text (not an image), so it follows the same 3-col reading grid
+          as every CaseChapter instead of running full-bleed. */}
+      <FullWidth className="pb-9">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr]">
+          <div className="flex max-w-[680px] flex-col gap-9 md:col-start-2">
+            <Text variant="hp-card-title-sm">A guided flow through a genuinely hard task</Text>
+            <NumberedRow n={1} title="Variable type" description="Custom, Expression, or Analytic." />
+            <NumberedRow
+              n={2}
+              title="Analytic type"
+              description={'Summation, Growth, or Persistency — each with a one-line, plain-English example ("13th-month policy retention rate"). Translating dense actuarial concepts into language a person can actually choose between.'}
             />
-          </CaseSection>
-
-          {/* ─── PART 2 CHAPTER OPENER ─── */}
-          <div id="part-2" className="my-16 scroll-mt-28 md:my-20">
-            <GsapReveal preset="fadeUp">
-              <div className="mb-8 flex items-center gap-4">
-                <HRule className="flex-1" />
-                <Text variant="hp-eyebrow-loose" as="span">
-                  Part 02
-                </Text>
-                <HRule className="flex-1" />
-              </div>
-              <Text variant="hp-title" as="h2" className="text-center">
-                Creating a complex variable — without leaving your work
-              </Text>
-            </GsapReveal>
-
-            <GsapReveal preset="fadeUp" delay={0.08}>
-              <div className="mt-8">
-                <MockupFrame caption="The whole feature starts here — a 'New variable' option living inside the search the admin is already using.">
-                  <PaymentTypeaheadMock />
-                </MockupFrame>
-              </div>
-            </GsapReveal>
+            <NumberedRow
+              n={3}
+              title="Configure metrics"
+              description="For a persistency variable: name it, choose how persistency is measured, and the type of date it keys off. Every option carries a description, so the admin isn't guessing at meaning."
+            />
+            <NumberedRow
+              n={4}
+              title="Period & filters"
+              description="Set the baseline period, the persistency window, and optional filters — line of business, product, policy status, producer level."
+            />
           </div>
+        </div>
+      </FullWidth>
 
-          <CaseSection id="setup" heading="The setup">
-            <p className="content-prose">
-              Remember what Chestnut does: it works out what insurance producers get paid.
-            </p>
-            <p className="content-prose mt-4">
-              Admins build that math as <strong>payment logic</strong> — a formula assembled from <strong>variables</strong>. A variable might be a policy field, a producer attribute, or a calculated value that combines several of them. Premium, agent code, policy year, a persistency rate — these are the building blocks of a payout.
-            </p>
-            <p className="content-prose mt-4">
-              So configuring payment logic is one of the highest-stakes things you can do in the product. <strong>Get it wrong and a producer gets paid the wrong amount — real money, at scale.</strong> The people doing it are admins who know the platform, the variables, and the insurance industry cold.
-            </p>
-          </CaseSection>
+      <FullWidth className="!px-0 pb-16">
+        <MockupFrame caption="Every choice explained in plain language — actuarial concepts made selectable." chrome="none">
+          <ConfigureMetricsMock />
+        </MockupFrame>
+      </FullWidth>
 
-          <CaseSection id="dead-end" heading="The dead end">
-            <p className="content-prose">
-              Here&apos;s the moment that broke the flow.
-            </p>
-            <p className="content-prose mt-4">
-              You&apos;re deep in building a payment logic. You reach for a variable — and it doesn&apos;t exist yet. Maybe it&apos;s a brand-new attribute. Maybe it&apos;s a value that combines several others.
-            </p>
-            <p className="content-prose mt-4">
-              In the old world, you had one option: <strong>stop, leave, and lose your work.</strong> Go to Settings → Variables, pick a type, create it, then come back and rebuild your payment logic.
-            </p>
-            <p className="content-prose mt-4">
-              For the most careful task in the product, the tool forced a detour at the worst possible moment.
-            </p>
+      <CaseChapter {...chapterById("preview")} />
 
-            <Text variant="hp-subtitle" as="h3" className="mt-8">
-              The tension I was designing against
+      <FullWidth className="!px-0 pb-16">
+        <MockupFrame caption="A live preview of real numbers — so a high-stakes decision is confirmed, not guessed." chrome="none">
+          <LivePreviewMock />
+        </MockupFrame>
+      </FullWidth>
+
+      <CaseChapter {...chapterById("part2-outcome")} />
+
+      <FullWidth className="pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr]">
+          <div className="max-w-[680px] md:col-start-2">
+            <PullQuote label="Takeaway" quote="Make the easy thing easy, and the careful thing safe." />
+          </div>
+        </div>
+      </FullWidth>
+
+      {/* ─── MORE PROJECTS ─── */}
+      <FullWidth className="py-16">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <Text variant="hp-eyebrow-loose">More</Text>
+            <Text variant="hp-heading" as="p">
+              Projects
             </Text>
-            <p className="content-prose mt-3">
-              This is what made it interesting. Two pulls, working against each other:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li><strong>Make it easier.</strong> Kill the detour. Let people create a variable right where they need it.</li>
-              <li><strong>Don&apos;t make it careless.</strong> Variable creation is risky. The name has to match the system. The logic has to be right. This is no place for a sloppy shortcut.</li>
-            </ul>
-            <p className="content-prose mt-4">
-              <strong>Easy entry, but a rigorous flow.</strong> That was the line to walk.
-            </p>
-          </CaseSection>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {MORE_PROJECTS.map((cs) => (
+            <CaseStudyCard
+              key={cs.id}
+              variant="standard"
+              image={workImages[cs.workId] ?? fallbackImage}
+              alt={cs.title}
+              tags={[...cs.tags]}
+              title={cs.title}
+              description={cs.subtitle}
+              href={cs.href}
+            />
+          ))}
+        </div>
+      </FullWidth>
 
-          <CaseSection id="flow" heading="The door, and the flow behind it">
-            <p className="content-prose">
-              I didn&apos;t invent a new place to go. I used the one the admin was already standing in.
-            </p>
-            <p className="content-prose mt-4">
-              When you build payment logic, you type a variable name and a filtered list of suggestions appears — standard type-ahead the admins use constantly. I added one thing, pinned to the bottom of that list: <strong>&ldquo;+ New variable.&rdquo;</strong>
-            </p>
-            <p className="content-prose mt-4">Why this, and not some big new entry point:</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>It rides a behavior people already have — <strong>nothing new to learn</strong></li>
-              <li>It appears exactly when it&apos;s needed — mid-search, mid-thought</li>
-              <li><strong>The payment logic stays open behind it.</strong> No lost work.</li>
-            </ul>
-            <p className="content-prose mt-4">
-              The humble part of the feature is humble on purpose. The door is small and familiar. It&apos;s what&apos;s behind it that does the heavy lifting.
-            </p>
-
-            <MockupFrame caption="Behind the door: a guided flow, not a blank form." chrome="none">
-              <CreateVariableSteps12Mock />
-            </MockupFrame>
-
-            <Text variant="hp-subtitle" as="h3" className="mt-8">
-              A guided flow through a genuinely hard task
-            </Text>
-            <p className="content-prose mt-3">
-              Clicking &ldquo;+ New variable&rdquo; opens a stepped, guided flow — because authoring one of these is genuinely complex, and a blank form would be dangerous.
-            </p>
-            <div className="relative mt-6 pl-14 md:pl-16">
-              {/* connecting rail */}
-              <div
-                className="pointer-events-none absolute left-[18px] top-[18px] bottom-[18px] w-px bg-ds-hairline md:left-[20px]"
-                aria-hidden="true"
-              />
-
-              <div className="flex flex-col gap-4">
-                <NumberedStep n={1} title="Variable type">
-                  <p className="content-prose">Custom, Expression, or Analytic.</p>
-                </NumberedStep>
-                <NumberedStep n={2} title="Analytic type">
-                  <p className="content-prose">
-                    Summation, Growth, or Persistency — each with a one-line, plain-English example (&ldquo;13th-month policy retention rate&rdquo;). I leaned on this the whole way: <strong>translating dense actuarial concepts into language a person can actually choose between.</strong>
-                  </p>
-                </NumberedStep>
-                <NumberedStep n={3} title="Configure metrics">
-                  <p className="content-prose">
-                    For a persistency variable: name it, choose how persistency is measured (% of policies retained, dollar value of premium retained, recurring premium persistency…), and the type of date it keys off. Every option carries a description, so the admin isn&apos;t guessing at meaning.
-                  </p>
-                </NumberedStep>
-                <NumberedStep n={4} title="Period & filters">
-                  <p className="content-prose">
-                    Set the baseline period, the persistency window, and optional filters — line of business, product, policy status, producer level.
-                  </p>
-                </NumberedStep>
-              </div>
-            </div>
-            <p className="content-prose mt-4">
-              Progressive disclosure the whole way down. You never face the entire complexity at once; each step asks for one decision and explains it.
-            </p>
-
-            <MockupFrame caption="Every choice explained in plain language — actuarial concepts made selectable." chrome="none">
-              <ConfigureMetricsMock />
-            </MockupFrame>
-          </CaseSection>
-
-          <CaseSection id="preview" heading="The preview: seeing before you commit">
-            <p className="content-prose">
-              This was my call, and it&apos;s the part I&apos;m most sure about.
-            </p>
-            <p className="content-prose mt-4">
-              When the stakes are this high, the admin shouldn&apos;t have to imagine the outcome — they should <strong>see it</strong>. So Step 4 ends in a live preview: apply the configuration, and Chestnut shows real producers (by NPN) with their actual persistency values.
-            </p>
-            <p className="content-prose mt-4">
-              Before you create the variable that will feed someone&apos;s payout, you watch what it produces. <strong>It turns an act of faith into an act of confirmation.</strong>
-            </p>
-            <MockupFrame caption="A live preview of real numbers — so a high-stakes decision is confirmed, not guessed." chrome="none">
-              <LivePreviewMock />
-            </MockupFrame>
-          </CaseSection>
-
-          <CaseSection id="part2-outcome" heading="How it was built, and where it landed">
-            <p className="content-prose">
-              I designed the entire flow — all four steps, every state.
-            </p>
-            <p className="content-prose mt-4">
-              The <strong>analytic variable</strong> type itself was new. Engineering created it, and I was in from the start, designing the experience around it as it took shape. It worked well enough that it was later added to Settings too — the same creation flow, now living in both places.
-            </p>
-            <p className="content-prose mt-4">
-              I built on <strong>Bonsai</strong> (the design system from Part A) wherever I could, but this feature pushed past it. Several pieces had to be <strong>custom</strong>: the variable-type cards, the second set of radio selectors, and a few more — patterns Bonsai didn&apos;t have yet.
-            </p>
-            <p className="content-prose mt-4">
-              I worked closely with the <strong>Chestnut PM</strong> through design, then with the <strong>engineers</strong> through the build — largely making sure the design decisions survived into the shipped product.
-            </p>
-            <p className="content-prose mt-4">
-              <strong>It shipped, and it&apos;s live.</strong> The full flow — the in-context trigger, the four steps, the preview — is in the product.
-            </p>
-            <p className="content-prose mt-4">
-              The dead end is gone. An admin who hits a missing variable no longer leaves, no longer loses their work, and no longer flies blind. They create exactly what they need, see it work, and keep going.
-            </p>
-            <blockquote className="mt-5 rounded-ds-card border border-ds-hairline bg-ds-surface-mist px-5 py-4">
-              <Text variant="hp-body" className="italic text-ds-heading">
-                Make the easy thing easy, and the careful thing safe.
-              </Text>
-            </blockquote>
-          </CaseSection>
-
-        </article>
-      </CaseShell>
-
-      <CaseStudyNav current="chestnut" />
       <CaseStudyFooter />
     </>
   );

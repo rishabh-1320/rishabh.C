@@ -12,19 +12,20 @@ export type CaseStudyCardProps = {
   tags: string[];
   title: string;
   description: string;
-  /** Featured/standard only — Figma's numeric metric row ("2,000+ employees tracked live"). */
-  metric?: string;
-  metricLabel?: string;
   href?: string;
   className?: string;
+  metric?: string;
+  metricLabel?: string;
 };
 
 /**
  * The one case-study card definition for the whole homepage — Work's featured
  * + standard cards and Projects' compact cards all render through this single
- * component so radius/border/padding/type can never drift between them.
- * Chrome is identical across variants (rounded-ds-card, hairline border,
- * clipped corners); only the image orientation and bottom-row content differ.
+ * component so radius/type/padding can never drift between them. Traced from
+ * the Figma export: cards are BORDERLESS (rounded-8 image + padded content on
+ * the page surface), content padding is px-48 py-32, and the featured/standard
+ * body uses a 72/36/16 gap rhythm (text→metric / title-block→desc / badges→
+ * title). Only image aspect + whether a metric row shows differ per variant.
  */
 export function CaseStudyCard({
   variant,
@@ -33,82 +34,80 @@ export function CaseStudyCard({
   tags,
   title,
   description,
-  metric,
-  metricLabel,
   href,
-  className
+  className,
+  metric,
+  metricLabel
 }: CaseStudyCardProps) {
   const isFeatured = variant === "featured";
   const isCompact = variant === "compact";
 
   const body = (
-    <div
-      className={cn(
-        "group flex overflow-hidden rounded-ds-card border border-ds-hairline bg-ds-surface-paper",
-        isFeatured ? "flex-col md:flex-row" : "flex-col",
-        className
-      )}
-    >
+    <div className={cn("flex flex-col", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image}
         alt={alt}
         loading="lazy"
         className={cn(
-          "w-full object-cover transition-transform duration-[var(--ds-dur-slow)] ease-[var(--ds-ease-out-expo)] group-hover:scale-[1.03]",
-          isFeatured ? "aspect-square md:h-auto md:w-1/2" : isCompact ? "aspect-[7/5]" : "aspect-[16/11]"
+          "w-full rounded-ds-card object-cover",
+          isFeatured ? "aspect-[1152/556]" : isCompact ? "aspect-[7/5]" : "aspect-[16/9]"
         )}
       />
 
-      <div
-        className={cn(
-          "flex flex-1 flex-col gap-6 p-8",
-          isFeatured ? "justify-between" : isCompact ? "justify-start" : "justify-between"
-        )}
-      >
-        <div className="flex flex-col gap-4">
+      {isCompact ? (
+        <div className="flex flex-col gap-4 px-12 py-8">
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <MinimalBadge key={tag}>{tag}</MinimalBadge>
+              <MinimalBadge key={tag} tone="bare">
+                {tag}
+              </MinimalBadge>
             ))}
           </div>
           <Text variant="hp-card-title">{title}</Text>
-          {isCompact && (
-            <div className="flex items-center gap-4">
-              <Text variant="hp-body" className="flex-1">
-                {description}
-              </Text>
-              <ArrowCircleButton />
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            <Text variant="hp-body" className="flex-1">
+              {description}
+            </Text>
+            <ArrowCircleButton />
+          </div>
         </div>
-
-        {!isCompact && (
-          <>
-            <Text variant="hp-body">{description}</Text>
-            <div className="flex items-center justify-between">
-              {metric ? (
-                <div className="flex items-baseline gap-3">
-                  <Text variant="hp-eyebrow" as="span" className="text-[24px] normal-case tracking-[-0.025em] text-ds-tag-muted">
-                    {metric}
-                  </Text>
-                  <Text variant="hp-body" as="span" className="w-[7.5rem]">
-                    {metricLabel}
-                  </Text>
-                </div>
-              ) : (
-                <span />
-              )}
-              <ArrowCircleButton />
+      ) : (
+        <div className="flex flex-1 flex-col gap-18 px-12 py-8">
+          <div className="flex flex-col gap-9">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <MinimalBadge key={tag} tone="bare">
+                    {tag}
+                  </MinimalBadge>
+                ))}
+              </div>
+              <Text variant="hp-card-title-lg">{title}</Text>
             </div>
-          </>
-        )}
-      </div>
+            <Text variant="hp-body">{description}</Text>
+          </div>
+
+          <div className="flex items-end justify-between">
+            {metric && (
+              <div className="flex items-center gap-3">
+                <Text variant="hp-card-title" className="!text-ds-hp-muted">
+                  {metric}
+                </Text>
+                <Text variant="hp-body" className="max-w-[120px]">
+                  {metricLabel}
+                </Text>
+              </div>
+            )}
+            <ArrowCircleButton className={metric ? undefined : "ml-auto"} />
+          </div>
+        </div>
+      )}
     </div>
   );
 
   return href ? (
-    <Link href={href} className="block">
+    <Link href={href} className="block cursor-pointer">
       {body}
     </Link>
   ) : (

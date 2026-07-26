@@ -17,7 +17,11 @@ const CASE_STUDY_NAV_LINKS = [
 export default function CaseStudyLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="ds-root bg-ds-surface-paper" data-hide-site-header data-hide-status-bar>
-      <NavBar resumeUrl={homeContent.resumeUrl} links={CASE_STUDY_NAV_LINKS} />
+      <NavBar
+        resumeUrl={homeContent.resumeUrl}
+        linkedinUrl={homeContent.footer.linkedinUrl}
+        links={CASE_STUDY_NAV_LINKS}
+      />
       {children}
     </div>
   );
