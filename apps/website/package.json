@@ -9,9 +9,11 @@
     "start": "next start",
     "lint": "next lint",
     "lint:drift:ds": "node scripts/check-drift-ds.mjs",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "db:migrate": "node --env-file=.env.local scripts/migrate.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@packages/ds-ui": "file:../../packages/ds-ui",
     "@vercel/analytics": "^2.0.1",
     "gsap": "^3.15.0",

@@ -38,3 +38,4 @@ Content dump/
 # Claude Code local config (machine-specific)
 .claude/settings.local.json
 .claude/worktrees/
+.env*
