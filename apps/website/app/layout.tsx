@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { tokensToCss } from "@packages/ds-ui";
 import { SiteHeader } from "@/components/site-header";
 import { StatusBar } from "@/components/status-bar";
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteHeader content={homeContent} />
           <main id="main">{children}</main>
         </PageTransition>
+        <Analytics />
       </body>
     </html>
   );
