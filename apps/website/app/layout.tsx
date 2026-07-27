@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { tokensToCss } from "@packages/ds-ui";
 import { SiteHeader } from "@/components/site-header";
@@ -8,6 +9,7 @@ import { homeContent } from "@/lib/site-content";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rishabh-c.vercel.app";
+const CLARITY_PROJECT_ID = "xsvkj8z011";
 
 export const metadata: Metadata = {
   title: {
@@ -70,6 +72,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main">{children}</main>
         </PageTransition>
         <Analytics />
+        <Script id="ms-clarity" strategy="afterInteractive">
+          {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`}
+        </Script>
       </body>
     </html>
   );
