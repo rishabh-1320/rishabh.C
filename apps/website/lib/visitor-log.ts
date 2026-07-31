@@ -1,6 +1,8 @@
 import "server-only";
 import { sql } from "./db";
 
+export const VISITOR_EXCLUDE_COOKIE = "vt_exclude";
+
 export type VisitorLogInput = {
   ip: string | null;
   country: string | null;

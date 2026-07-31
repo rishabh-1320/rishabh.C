@@ -1,5 +1,5 @@
 import { NextResponse, userAgent, type NextFetchEvent, type NextRequest } from "next/server";
-import { insertVisitorLog } from "@/lib/visitor-log";
+import { insertVisitorLog, VISITOR_EXCLUDE_COOKIE } from "@/lib/visitor-log";
 
 function decodeHeader(value: string | null): string | null {
   if (!value) return null;
@@ -72,7 +72,8 @@ export function middleware(request: NextRequest, event: NextFetchEvent) {
     return isAdminAuthorized(request) ? NextResponse.next() : unauthorized();
   }
 
-  if (!isPrefetch(request)) {
+  const isExcluded = request.cookies.get(VISITOR_EXCLUDE_COOKIE)?.value === "1";
+  if (!isPrefetch(request) && !isExcluded) {
     event.waitUntil(logVisit(request));
   }
   return NextResponse.next();
