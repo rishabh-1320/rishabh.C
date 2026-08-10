@@ -1,66 +1,42 @@
 import type { WorkCard } from "@/lib/types";
 import { Section } from "@packages/ds-ui";
 import { workImages, fallbackImage } from "../images";
-import { SectionHeader } from "../ui/section-header";
-import { CaseStudyCard } from "../ui/case-study-card";
-import { SectionRow } from "../ui/section-row";
-import { Block } from "../ui/block";
-import { HRule } from "../ui/h-rule";
+import { TitleContainer } from "../library/texts/title-container";
+import { CaseStudyCard } from "../library/cards/case-study-card";
+import { ContainerBlock } from "../library/blocks/container-block";
+import { ContentBlock } from "../library/blocks/content-block";
 
+/**
+ * Figma's Section-work stacks 3 identical full-width case-study-card rows
+ * (not a "featured + 2-col grid" mix) — first 3 active works, in data order.
+ */
 export function DsWork({ heading, works }: { heading: string; works: WorkCard[] }) {
-  const featured = works.filter((w) => w.active);
-  const [hero, ...rest] = featured;
+  const featured = works.filter((w) => w.active).slice(0, 3);
 
   return (
     <Section bg="paper" pad="none" id="work">
-      <HRule dots />
-      <SectionRow>
-        <Block pad="both" padX="wide">
-          <SectionHeader eyebrow="Selected work" title={heading} accent="end to end" />
-        </Block>
-      </SectionRow>
-      <HRule dots />
+      <ContainerBlock>
+        <ContentBlock padTop="title">
+          <TitleContainer typeText="Selected work" heading={heading} accent="end to end" />
+        </ContentBlock>
+      </ContainerBlock>
 
-      {hero && (
-        <SectionRow>
-          <Block pad="joint">
+      {featured.map((work) => (
+        <ContainerBlock key={work.id}>
+          <ContentBlock>
             <CaseStudyCard
-              variant="featured"
-              image={workImages[hero.id] ?? fallbackImage}
-              alt={hero.title}
-              tags={hero.tags}
-              title={hero.title}
-              description={hero.description}
-              href={hero.href}
-              metric={hero.metric}
-              metricLabel={hero.metricLabel}
+              image={workImages[work.id] ?? fallbackImage}
+              alt={work.title}
+              tags={work.tags}
+              title={work.title}
+              description={work.description}
+              metric={work.metric}
+              metricLabel={work.metricLabel}
+              href={work.href}
             />
-          </Block>
-        </SectionRow>
-      )}
-
-      <HRule dots />
-
-      <SectionRow>
-        <Block pad="open-bottom">
-          <div className="grid gap-6 md:grid-cols-2">
-            {rest.map((work) => (
-              <CaseStudyCard
-                key={work.id}
-                variant="standard"
-                image={workImages[work.id] ?? fallbackImage}
-                alt={work.title}
-                tags={work.tags}
-                title={work.title}
-                description={work.description}
-                href={work.href}
-                metric={work.metric}
-                metricLabel={work.metricLabel}
-              />
-            ))}
-          </div>
-        </Block>
-      </SectionRow>
+          </ContentBlock>
+        </ContainerBlock>
+      ))}
     </Section>
   );
 }

@@ -503,11 +503,6 @@ html {
 .theme-spatial { background: var(--surface-base); color: var(--text-primary); font-family: var(--font-display); }
 .theme-atelier { background: var(--surface-base); color: var(--text-primary); font-family: var(--font-body); }
 
-/* Hide the root layout's StatusBar on themed routes (header already has data-attribute opt-out) */
-body:has([data-hide-status-bar]) [data-status-bar] {
-  display: none !important;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -688,12 +683,6 @@ a {
 img {
   display: block;
   max-width: 100%;
-}
-
-/* Hide only the root layout's SiteHeader on themed routes — scoped by marker so
-   a route's own <header> (e.g. the home DsNav) is not caught. */
-body:has([data-hide-site-header]) [data-site-header] {
-  display: none !important;
 }
 
 .redemption-modal {

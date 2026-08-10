@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Section, Text } from "@packages/ds-ui";
+import { Section } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
-import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
-import { CaseStudyCard } from "@/components/home-ds/ui/case-study-card";
-import { workImages, fallbackImage } from "@/components/home-ds/images";
-import { CaseHero } from "@/components/case-study/case-hero";
-import { CaseMetrics } from "@/components/case-study/case-metrics";
-import { CaseChapter } from "@/components/case-study/case-chapter";
-import { NumberedRow } from "@/components/case-study/numbered-row";
-import { PullQuote } from "@/components/case-study/pull-quote";
+import { CtaFooter } from "@/components/home-ds/site-components/cta-footer";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
-import { FullWidth } from "@/components/case-study/full-width";
+import { MoreProjects } from "@/components/case-study/more-projects";
 import {
   ChestnutHeroMock,
   BonsaiStorybookMock,
@@ -19,8 +12,15 @@ import {
   ConfigureMetricsMock,
   LivePreviewMock,
 } from "@/components/case-study/mockups/chestnut";
-import { SectionHeader } from "@/components/home-ds/ui/section-header";
+import { CaseHero } from "@/components/case-study/template/case-hero";
+import { CaseMetrics } from "@/components/case-study/template/case-metrics";
+import { CaseChapter } from "@/components/case-study/template/case-chapter";
+import { CasePullQuote } from "@/components/case-study/template/case-pull-quote";
+import { CaseStandaloneSteps } from "@/components/case-study/template/case-standalone-steps";
+import { ThreeColumnBlock } from "@/components/home-ds/library/case-study-blocks/three-column-block";
+import { TextContainerCase } from "@/components/home-ds/library/texts/text-container-case";
 import { chestnutCaseStudy } from "@/lib/chestnut-case-study";
+import { homeContent } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: chestnutCaseStudy.metadataTitle,
@@ -33,59 +33,24 @@ const chapterById = (id: string) => {
   return chapter;
 };
 
-// "More Projects" — Chestnut-only, so the shared CaseStudyNav (still used by
-// the other 3 case studies, which keep the old ledger-line template) never
-// changes. Same cards, just laid out full-width with no rails.
-const MORE_PROJECTS = [
-  {
-    id: "dashboard",
-    workId: "work-hrms",
-    title: "HR Analytics Dashboard",
-    subtitle: "Attendance & workforce insights for enterprise",
-    tags: ["Data", "Enterprise"],
-    href: "/casestudy/dashboard"
-  },
-  {
-    id: "onboarding",
-    workId: "work-onboarding",
-    title: "HRMS Candidate Onboarding",
-    subtitle: "From admin-panel nobody used to self-service flow",
-    tags: ["UX", "Enterprise"],
-    href: "/casestudy/onboarding"
-  },
-  {
-    id: "design-system",
-    workId: "work-design-system",
-    title: "Arksaber Design System",
-    subtitle: "Whitelabel design system, Figma to code",
-    tags: ["Design System", "Code"],
-    href: "/casestudy/design-system"
-  }
-] as const;
-
 export default function ChestnutCaseStudyPage() {
   return (
     <>
       <ScrollProgressBar />
 
       <Section bg="paper" pad="none" id="hero">
-        <FullWidth className="pt-16 pb-6">
-          <CaseHero
-            tags={chestnutCaseStudy.hero.tags}
-            title={chestnutCaseStudy.hero.title}
-            accent={chestnutCaseStudy.hero.accent}
-            subtitle={chestnutCaseStudy.hero.subtitle}
-            mockup={
-              <MockupFrame caption="The redesigned product and the design system that standardizes it." urlLabel="app.chestnut.com">
-                <ChestnutHeroMock />
-              </MockupFrame>
-            }
-          />
-        </FullWidth>
+        <CaseHero
+          tags={chestnutCaseStudy.hero.tags}
+          title={chestnutCaseStudy.hero.title}
+          accent={chestnutCaseStudy.hero.accent}
+          subtitle={chestnutCaseStudy.hero.subtitle}
+        >
+          <MockupFrame caption="The redesigned product and the design system that standardizes it." urlLabel="app.chestnut.com">
+            <ChestnutHeroMock />
+          </MockupFrame>
+        </CaseHero>
 
-        <FullWidth className="py-16">
-          <CaseMetrics stats={chestnutCaseStudy.stats} />
-        </FullWidth>
+        {chestnutCaseStudy.stats && <CaseMetrics stats={chestnutCaseStudy.stats} />}
       </Section>
 
       {/* ─── PART 1 ─── */}
@@ -96,114 +61,72 @@ export default function ChestnutCaseStudyPage() {
       <CaseChapter {...chapterById("unified-system")} />
       <CaseChapter {...chapterById("shipping-in-code")} />
 
-      <FullWidth className="!px-0 pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Bonsai — Chestnut's design system, running in Storybook." chrome="none">
           <BonsaiStorybookMock />
         </MockupFrame>
-      </FullWidth>
+      </ThreeColumnBlock>
 
       {/* ─── PART 2 DIVIDER ─── */}
-      <FullWidth className="py-16">
-        <SectionHeader
-          eyebrow="Part 02"
-          title="Creating a complex variable — without leaving your work"
-          accent="without leaving your work"
-        />
-      </FullWidth>
+      <ThreeColumnBlock columns>
+        <div className="flex flex-col items-start gap-6">
+          <TextContainerCase type="Caption">Part 02</TextContainerCase>
+          <TextContainerCase type="H1">
+            Creating a complex variable — <span className="text-ds-accent">without leaving your work</span>
+          </TextContainerCase>
+        </div>
+      </ThreeColumnBlock>
 
-      <FullWidth className="!px-0 py-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The whole feature starts here — a 'New variable' option living inside the search the admin is already using." urlLabel="app.chestnut.com">
           <PaymentTypeaheadMock />
         </MockupFrame>
-      </FullWidth>
+      </ThreeColumnBlock>
 
       <CaseChapter {...chapterById("setup")} />
       <CaseChapter {...chapterById("dead-end")} />
       <CaseChapter {...chapterById("flow")} />
 
-      <FullWidth className="!px-0 pb-9">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Behind the door: a guided flow, not a blank form." chrome="none">
           <CreateVariableSteps12Mock />
         </MockupFrame>
-      </FullWidth>
+      </ThreeColumnBlock>
 
-      {/* Body text (not an image), so it follows the same 3-col reading grid
-          as every CaseChapter instead of running full-bleed. */}
-      <FullWidth className="pb-9">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr]">
-          <div className="flex max-w-[680px] flex-col gap-9 md:col-start-2">
-            <Text variant="hp-card-title-sm">A guided flow through a genuinely hard task</Text>
-            <NumberedRow n={1} title="Variable type" description="Custom, Expression, or Analytic." />
-            <NumberedRow
-              n={2}
-              title="Analytic type"
-              description={'Summation, Growth, or Persistency — each with a one-line, plain-English example ("13th-month policy retention rate"). Translating dense actuarial concepts into language a person can actually choose between.'}
-            />
-            <NumberedRow
-              n={3}
-              title="Configure metrics"
-              description="For a persistency variable: name it, choose how persistency is measured, and the type of date it keys off. Every option carries a description, so the admin isn't guessing at meaning."
-            />
-            <NumberedRow
-              n={4}
-              title="Period & filters"
-              description="Set the baseline period, the persistency window, and optional filters — line of business, product, policy status, producer level."
-            />
-          </div>
-        </div>
-      </FullWidth>
+      {chestnutCaseStudy.standaloneSteps && <CaseStandaloneSteps {...chestnutCaseStudy.standaloneSteps} />}
 
-      <FullWidth className="!px-0 pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Every choice explained in plain language — actuarial concepts made selectable." chrome="none">
           <ConfigureMetricsMock />
         </MockupFrame>
-      </FullWidth>
+      </ThreeColumnBlock>
 
       <CaseChapter {...chapterById("preview")} />
 
-      <FullWidth className="!px-0 pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="A live preview of real numbers — so a high-stakes decision is confirmed, not guessed." chrome="none">
           <LivePreviewMock />
         </MockupFrame>
-      </FullWidth>
+      </ThreeColumnBlock>
 
       <CaseChapter {...chapterById("part2-outcome")} />
 
-      <FullWidth className="pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr_1fr]">
-          <div className="max-w-[680px] md:col-start-2">
-            <PullQuote label="Takeaway" quote="Make the easy thing easy, and the careful thing safe." />
-          </div>
-        </div>
-      </FullWidth>
+      {chestnutCaseStudy.closingQuote && (
+        <ThreeColumnBlock columns>
+          <CasePullQuote label={chestnutCaseStudy.closingQuote.label} quote={chestnutCaseStudy.closingQuote.quote} />
+        </ThreeColumnBlock>
+      )}
 
-      {/* ─── MORE PROJECTS ─── */}
-      <FullWidth className="py-16">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <Text variant="hp-eyebrow-loose">More</Text>
-            <Text variant="hp-heading" as="p">
-              Projects
-            </Text>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {MORE_PROJECTS.map((cs) => (
-            <CaseStudyCard
-              key={cs.id}
-              variant="standard"
-              image={workImages[cs.workId] ?? fallbackImage}
-              alt={cs.title}
-              tags={[...cs.tags]}
-              title={cs.title}
-              description={cs.subtitle}
-              href={cs.href}
-            />
-          ))}
-        </div>
-      </FullWidth>
+      <MoreProjects current="chestnut" />
 
-      <CaseStudyFooter />
+      <CtaFooter
+        closingLine={homeContent.footer.closingLine}
+        email={homeContent.footer.email}
+        linkedinUrl={homeContent.footer.linkedinUrl}
+        resumeUrl={homeContent.resumeUrl}
+        footerNote={homeContent.footerNote}
+        location={homeContent.footer.location}
+      />
     </>
   );
 }

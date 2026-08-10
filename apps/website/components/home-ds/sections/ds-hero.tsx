@@ -1,9 +1,9 @@
 import type { HeroContent } from "@/lib/types";
 import { Section } from "@packages/ds-ui";
-import { HeroTitle } from "../ui/hero-title";
-import { StripePanel } from "../ui/stripe-panel";
-import { SectionRow } from "../ui/section-row";
-import { Block } from "../ui/block";
+import { HeroTitle } from "../site-components/hero-title";
+import { StripePanel } from "../site-components/stripe-panel";
+import { SectionRow } from "../site-components/section-row";
+import { Block } from "../site-components/block";
 
 // Static hero: no scroll-parallax on the title/dashboard, so the hero scrolls
 // away normally instead of lagging behind and being covered by the next

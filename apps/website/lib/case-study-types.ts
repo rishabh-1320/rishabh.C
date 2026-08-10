@@ -48,8 +48,14 @@ export type CaseStudyChapter = {
   sideCards?: CaseStudySideCard[];
 };
 
-/** The homepage-style SectionHeader divider marking a new "part" mid-article. */
-export type CaseStudyDivider = { eyebrow: string; title: string; accent: string };
+/**
+ * A step-list that isn't attached to any chapter's `paragraphs` — e.g. one
+ * that needs to render between two mockups mid-narrative, where a chapter's
+ * fixed paragraphs-then-steps order doesn't fit. Kept as data (title + a
+ * typed `steps` array) rather than a copy string hand-written in the page,
+ * same as every other piece of case-study copy.
+ */
+export type CaseStudyStandaloneSteps = { title: string; steps: CaseStudyStep[] };
 
 export type CaseStudyData = {
   metadataTitle: string;
@@ -60,6 +66,11 @@ export type CaseStudyData = {
     accent: string;
     subtitle: string;
   };
-  stats: CaseStudyStat[];
+  /** Optional: only render the metrics band when there's a real, honest number to show — not every project has one. */
+  stats?: CaseStudyStat[];
   chapters: CaseStudyChapter[];
+  /** A step-list positioned mid-narrative, outside any single chapter — see CaseStudyStandaloneSteps. */
+  standaloneSteps?: CaseStudyStandaloneSteps;
+  /** The closing pull-quote/takeaway, after the last chapter and before "More Projects". */
+  closingQuote?: CaseStudyPullQuote;
 };

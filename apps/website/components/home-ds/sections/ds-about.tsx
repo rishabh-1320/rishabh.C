@@ -1,14 +1,13 @@
 import type { HomeContent } from "@/lib/types";
 import { Section, Text } from "@packages/ds-ui";
 import { galleryImages, timelineImage } from "../images";
-import { SectionHeader } from "../ui/section-header";
-import { TimelineCard } from "../ui/timeline-card";
-import { TestimonialCard } from "../ui/testimonial-card";
-import { TestimonialQuotes } from "../ui/testimonial-quotes";
-import { RailScrollRow } from "../ui/rail-scroll-row";
-import { SectionRow } from "../ui/section-row";
-import { Block } from "../ui/block";
-import { HRule } from "../ui/h-rule";
+import { TitleContainer } from "../library/texts/title-container";
+import { ContainerBlock } from "../library/blocks/container-block";
+import { ContentBlock } from "../library/blocks/content-block";
+import { TimelineCard } from "../site-components/timeline-card";
+import { TestimonialCard } from "../library/texts/testimonial-card";
+import { RailScrollRow } from "../site-components/rail-scroll-row";
+import { TextContainer } from "../library/texts/text-container";
 
 export function DsAbout({ about }: { about: HomeContent["about"] }) {
   const [imgA, imgB, imgC] = about.photoSrc
@@ -17,21 +16,19 @@ export function DsAbout({ about }: { about: HomeContent["about"] }) {
 
   return (
     <Section bg="paper" pad="none" id="about">
-      <HRule dots />
-      <SectionRow>
-        <Block pad="both" padX="wide">
-          <SectionHeader eyebrow="Journey so far" title={about.heading} accent="Me" intro={about.intro} />
-        </Block>
-      </SectionRow>
-      <HRule dots />
+      <ContainerBlock>
+        <ContentBlock padTop="title">
+          <TitleContainer typeText="Journey so far" heading={about.heading} accent="Me" supportingText={about.intro} />
+        </ContentBlock>
+      </ContainerBlock>
 
-      {/* Collage and bio are two independent Figma frames (each with its own
-          72 top pad, so the gap between them reads as 144) — not one
-          shared block — and they use different horizontal insets: the
-          collage sits on the 24 gutter, the bio copy on the 48 "wide"
-          inset. Kept as two Blocks so both are exact. */}
-      <SectionRow>
-        <Block pad="none" padX="gutter" className="pt-18 pb-18">
+      {/* Collage and bio are two independent Figma content-blocks (each with
+          its own 72 top pad, so the gap between them reads as 144) — kept
+          separate to match, with different horizontal insets: the collage
+          sits on the tighter gutter inset, the bio copy on the wider content
+          inset (see ContentBlock's padX prop). */}
+      <ContainerBlock>
+        <ContentBlock padX={false} className="px-6 pb-18 pt-18">
           {/* 3-col collage: outer columns pair a big image with an offset accent
               square (mirrored top/bottom), the center column is one full-height
               image — traced from the Figma export's exact column geometry. */}
@@ -53,50 +50,52 @@ export function DsAbout({ about }: { about: HomeContent["about"] }) {
               <img src={imgC.src} alt={imgC.alt} className="aspect-[368/276] w-full rounded-ds-card object-cover" />
             </div>
           </div>
-        </Block>
-      </SectionRow>
+        </ContentBlock>
+      </ContainerBlock>
 
-      <SectionRow>
-        <Block pad="none" padX="wide" className="flex flex-col gap-8 pt-18 pb-18">
+      <ContainerBlock>
+        <ContentBlock className="flex flex-col gap-8">
           {about.bio.map((para, i) => (
             <Text key={i} variant="hp-bio">
               {para}
             </Text>
           ))}
           <Text variant="hp-body">{about.currentlyLine}</Text>
-        </Block>
-      </SectionRow>
-      <HRule dots />
+        </ContentBlock>
+      </ContainerBlock>
 
-      <SectionRow>
-        {/* padX="none": the scroll row below must reach the rails for its
-            clip boundary to land exactly on the line (see RailScrollRow). The
-            "Testimonials" label gets its own gutter inset to compensate. */}
-        <Block pad="joint" padX="none" className="flex flex-col gap-8">
-          <Text variant="hp-label" className="px-6">
-            Testimonials
-          </Text>
-          {/* Clipped horizontal scroll: cards are 576 + gap-6 (24), so the
-              3rd sits half-hidden behind the right rail — matching Figma. */}
-          <TestimonialQuotes>
+      <ContainerBlock>
+        {/*
+         * content-block: plain defaults match the Figma instance (417:9074)
+         * exactly, no override needed. Figma's own text-container plus the
+         * cards row below it combine for a 72px gap; our TextContainer
+         * carries no padding of its own, so that full gap is applied here
+         * via pt-18. Figma's row is a static 2-card overflow-clip (nothing
+         * scrollable), but real content has 3 testimonials — kept the
+         * scrollable rail rather than truncating real content to match a
+         * mock that's behind the copy.
+         */}
+        <ContentBlock className="flex flex-col">
+          <TextContainer title="Testimonials" />
+          <div className="pt-18">
             <RailScrollRow className="gap-6">
               {about.testimonials.map((t, i) => (
                 // 576 CSS px == 36rem (rem, not a literal px value, so it stays out of the drift guard's raw-px rule).
                 <div key={i} className="w-[36rem] shrink-0">
-                  <TestimonialCard quote={t.quote} name={t.name} role={t.role} href={t.href} />
+                  <TestimonialCard quote={t.quote} name={t.name} role={t.role} href={t.href} avatarSrc={t.avatarSrc} />
                 </div>
               ))}
             </RailScrollRow>
-          </TestimonialQuotes>
-        </Block>
-      </SectionRow>
-      <HRule dots />
+          </div>
+        </ContentBlock>
+      </ContainerBlock>
 
-      <SectionRow>
+      <ContainerBlock>
         {/* Figma: both the image and the timeline column start 120 below
             the rule (not the open-bottom preset's 24), 72 above the
             section end. */}
-        <Block pad="none" padX="gutter" className="pt-30 pb-18">
+        <ContentBlock padTop="none" padBottom="none" padX={false} className="flex flex-col gap-6 px-6 pb-18 pt-30">
+          <TextContainer title="Timeline" />
           <div className="grid gap-6 md:grid-cols-[496px_1fr]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -124,8 +123,8 @@ export function DsAbout({ about }: { about: HomeContent["about"] }) {
               <Text variant="hp-year">2022</Text>
             </div>
           </div>
-        </Block>
-      </SectionRow>
+        </ContentBlock>
+      </ContainerBlock>
     </Section>
   );
 }

@@ -82,7 +82,8 @@ export const dsTokens = {
     // Case-study template — mockup window-chrome frame
     "mockup-bg": "#F4F1EC", // warm cream body behind a mockup screenshot
     "mockup-bar": "rgba(0, 0, 0, 0.02)", // the 32px chrome bar above the screenshot
-    "hp-muted": "#A5A19C" // THE single muted-text grey in Homepage 6 (eyebrows, descriptions, badges, meta)
+    "hp-muted": "#A5A19C", // THE single muted-text grey in Homepage 6 (eyebrows, descriptions, badges, meta)
+    "avatar-placeholder": "#D9D9D9" // testimonial avatar fallback fill before a real photo is set
   },
 
   // 4-based spacing — the rationalization of the reference's messy values
@@ -166,7 +167,9 @@ export const dsTokens = {
     "hp-card-title-lg": { size: "32px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title-sm": { size: "20px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-metric": { size: "48px", lh: "1", weight: "400", tracking: "0em", family: "inter" },
-    "hp-brand": { size: "64px", lh: "0.9", weight: "400", tracking: "-0.025em", family: "inter" },
+    // Figma's footer wordmark is explicitly tracking-[-0.96px] at 64px (-0.96/64 = -0.015em),
+    // not the -0.025em every other hp-* role uses — measured, not a typo.
+    "hp-brand": { size: "64px", lh: "0.9", weight: "400", tracking: "-0.015em", family: "inter" },
 
     // Case-study restyle — reading-context roles (section headings + long-form
     // body copy); additive, only used inside components/case-study/*.

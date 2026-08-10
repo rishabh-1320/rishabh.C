@@ -1,6 +1,6 @@
 import { homeContent } from "@/lib/site-content";
 import { LenisProvider } from "@/lib/lenis-provider";
-import { Reveal } from "./scroll/reveal";
+import { Reveal } from "./site-components/scroll/reveal";
 import { DsNav } from "./sections/ds-nav";
 import { DsHero } from "./sections/ds-hero";
 import { DsMetrics } from "./sections/ds-metrics";
@@ -19,8 +19,6 @@ export function DsHome() {
         // below are transparent so this base shows through everywhere (nav band,
         // gaps, behind cards) with no seam.
         className="ds-root !bg-ds-hp-page"
-        data-hide-site-header
-        data-hide-status-bar
         style={{ minHeight: "100vh" }}
       >
         <DsNav />

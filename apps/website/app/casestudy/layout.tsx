@@ -1,5 +1,5 @@
 import { homeContent } from "@/lib/site-content";
-import { NavBar } from "@/components/home-ds/ui/nav-bar";
+import { NavBar } from "@/components/home-ds/site-components/nav-bar";
 
 const CASE_STUDY_NAV_LINKS = [
   { label: "Work", href: "/#work" },
@@ -10,13 +10,12 @@ const CASE_STUDY_NAV_LINKS = [
 /**
  * Case-study route layout. Wraps all /casestudy/* pages in `.ds-root` so they
  * render on the canonical design system (background, ink, font, tokens), and
- * swaps in the homepage's floating-pill NavBar (pointed at home anchors) in
- * place of the global SiteHeader/StatusBar — matching `home.tsx`'s own
- * `data-hide-site-header`/`data-hide-status-bar` opt-out.
+ * uses the homepage's floating-pill NavBar (pointed at home anchors) as the
+ * page chrome.
  */
 export default function CaseStudyLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="ds-root bg-ds-surface-paper" data-hide-site-header data-hide-status-bar>
+    <div className="ds-root bg-ds-surface-paper">
       <NavBar
         resumeUrl={homeContent.resumeUrl}
         linkedinUrl={homeContent.footer.linkedinUrl}

@@ -111,7 +111,8 @@ const config: Config = {
           "hero-blue": "var(--ds-color-hero-blue)",
           "on-accent": "var(--ds-color-on-accent)",
           "mockup-bg": "var(--ds-color-mockup-bg)",
-          "mockup-bar": "var(--ds-color-mockup-bar)"
+          "mockup-bar": "var(--ds-color-mockup-bar)",
+          "avatar-placeholder": "var(--ds-color-avatar-placeholder)"
         },
         // ── vs3 isolated namespace (quarantined; values from components/styles/vs3/tokens.ts) ──
         vs3: {

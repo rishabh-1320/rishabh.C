@@ -2,6 +2,8 @@ node_modules
 .next
 out
 .vercel
+storybook-static
+debug-storybook.log
 .env
 .env.*
 !.env.example
@@ -39,3 +41,6 @@ Content dump/
 .claude/settings.local.json
 .claude/worktrees/
 .env*
+
+*storybook.log
+storybook-static

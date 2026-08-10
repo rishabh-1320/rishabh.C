@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { tokensToCss } from "@packages/ds-ui";
-import { SiteHeader } from "@/components/site-header";
-import { StatusBar } from "@/components/status-bar";
 import { PageTransition } from "@/components/page-transition";
-import { homeContent } from "@/lib/site-content";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rishabh-c.vercel.app";
@@ -67,8 +64,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a href="#main" className="skip-link">Skip to main content</a>
         <PageTransition>
-          <StatusBar text={homeContent.statusBarText} />
-          <SiteHeader content={homeContent} />
           <main id="main">{children}</main>
         </PageTransition>
         <Analytics />

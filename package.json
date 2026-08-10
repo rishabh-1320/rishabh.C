@@ -13,6 +13,7 @@
     "dev:webapp": "npm run dev -w @apps/webapp",
     "dev:ai-tool": "npm run dev -w @apps/ai-tool",
     "dev:website-api": "npm run dev -w @services/website-api",
+    "dev:storybook": "npm run storybook -w @apps/storybook",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present"

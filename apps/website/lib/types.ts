@@ -82,6 +82,7 @@ export type Testimonial = {
   name: string;
   role: string;
   href?: string;
+  avatarSrc?: string;
 };
 
 export type HomeContent = {

@@ -102,7 +102,7 @@ export const chestnutCaseStudy: CaseStudyData = {
     },
     {
       id: "setup",
-      heading: { eyebrow: "Part 02", title: "The setup" },
+      heading: { eyebrow: "Setup", title: "The setup" },
       sideCards: [
         { label: "Payment logic", text: "The formula that determines what a producer gets paid, assembled from variables like premium, agent code, and persistency rate." }
       ],
@@ -114,7 +114,7 @@ export const chestnutCaseStudy: CaseStudyData = {
     },
     {
       id: "dead-end",
-      heading: { eyebrow: "Part 02", title: "The dead end" },
+      heading: { eyebrow: "Friction", title: "The dead end" },
       pullQuote: { label: "The tension", quote: "Easy entry, but a rigorous flow. That was the line to walk." },
       paragraphs: [
         "Here's the moment that broke the flow. You're deep in building a payment logic. You reach for a variable — and it doesn't exist yet. Maybe it's a brand-new attribute. Maybe it's a value that combines several others.",
@@ -126,7 +126,7 @@ export const chestnutCaseStudy: CaseStudyData = {
     },
     {
       id: "flow",
-      heading: { eyebrow: "Part 02", title: "The door, and the flow behind it" },
+      heading: { eyebrow: "Solution", title: "The door, and the flow behind it" },
       paragraphs: [
         "I didn't invent a new place to go. I used the one the admin was already standing in.",
         "When you build payment logic, you type a variable name and a filtered list of suggestions appears — standard type-ahead the admins use constantly. I added one thing, pinned to the bottom of that list: \"+ New variable.\"",
@@ -134,13 +134,14 @@ export const chestnutCaseStudy: CaseStudyData = {
         "The humble part of the feature is humble on purpose. The door is small and familiar. It's what's behind it that does the heavy lifting.",
         "Clicking \"+ New variable\" opens a stepped, guided flow — because authoring one of these is genuinely complex, and a blank form would be dangerous."
       ]
-      // The 4-step guided flow renders between two mockups mid-chapter (not
-      // just after paragraphs like every other chapter), so it's composed
-      // directly in the page rather than through this generic `steps` slot.
+      // The 4-step guided flow (see standaloneSteps below) renders between
+      // two mockups mid-narrative, not right after this chapter's own
+      // paragraphs — that's why it's a separate standalone block instead of
+      // this chapter's `steps` slot.
     },
     {
       id: "preview",
-      heading: { eyebrow: "Part 02", title: "The preview: seeing before you commit" },
+      heading: { eyebrow: "Confirmation", title: "The preview: seeing before you commit" },
       paragraphs: [
         "This was my call, and it's the part I'm most sure about.",
         "When the stakes are this high, the admin shouldn't have to imagine the outcome — they should see it. So Step 4 ends in a live preview: apply the configuration, and Chestnut shows real producers (by NPN) with their actual persistency values.",
@@ -149,7 +150,7 @@ export const chestnutCaseStudy: CaseStudyData = {
     },
     {
       id: "part2-outcome",
-      heading: { eyebrow: "Part 02", title: "How it was built, and where it landed" },
+      heading: { eyebrow: "Outcome", title: "How it was built, and where it landed" },
       paragraphs: [
         "I designed the entire flow — all four steps, every state.",
         "The analytic variable type itself was new. Engineering created it, and I was in from the start, designing the experience around it as it took shape. It worked well enough that it was later added to Settings too — the same creation flow, now living in both places.",
@@ -159,5 +160,29 @@ export const chestnutCaseStudy: CaseStudyData = {
         "The dead end is gone. An admin who hits a missing variable no longer leaves, no longer loses their work, and no longer flies blind. They create exactly what they need, see it work, and keep going."
       ]
     }
-  ]
+  ],
+
+  standaloneSteps: {
+    title: "A guided flow through a genuinely hard task",
+    steps: [
+      { title: "Variable type", description: "Custom, Expression, or Analytic." },
+      {
+        title: "Analytic type",
+        description:
+          'Summation, Growth, or Persistency — each with a one-line, plain-English example ("13th-month policy retention rate"). Translating dense actuarial concepts into language a person can actually choose between.'
+      },
+      {
+        title: "Configure metrics",
+        description:
+          "For a persistency variable: name it, choose how persistency is measured, and the type of date it keys off. Every option carries a description, so the admin isn't guessing at meaning."
+      },
+      {
+        title: "Period & filters",
+        description:
+          "Set the baseline period, the persistency window, and optional filters — line of business, product, policy status, producer level."
+      }
+    ]
+  },
+
+  closingQuote: { label: "Takeaway", quote: "Make the easy thing easy, and the careful thing safe." }
 };

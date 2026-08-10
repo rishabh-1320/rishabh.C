@@ -220,17 +220,20 @@ export const homeContent: HomeContent = {
       {
         quote: "PLACEHOLDER — swap for a real quote from a Tcules colleague or stakeholder.",
         name: "Tcules",
-        role: "Designation"
+        role: "Designation",
+        avatarSrc: "https://i.pravatar.cc/150?img=12"
       },
       {
         quote: "PLACEHOLDER — swap for a real quote from a Timelabs colleague or stakeholder.",
         name: "Tcules",
-        role: "Designation"
+        role: "Designation",
+        avatarSrc: "https://i.pravatar.cc/150?img=33"
       },
       {
         quote: "PLACEHOLDER — swap for a real quote from a Primelis or Quixera stakeholder.",
         name: "Tcules",
-        role: "Designation"
+        role: "Designation",
+        avatarSrc: "https://i.pravatar.cc/150?img=47"
       }
     ]
   },

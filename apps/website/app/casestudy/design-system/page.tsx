@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { InlineCode, Text } from "@packages/ds-ui";
-import { ScrollSpyToc } from "@/components/case-study/scroll-spy-toc";
+import { Section } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
-import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
+import { CtaFooter } from "@/components/home-ds/site-components/cta-footer";
+import { DummyContent, DummyChapter } from "@/components/dummy-content";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
+import { MoreProjects } from "@/components/case-study/more-projects";
 import {
   ParityProofMock,
   TokenTaxonomyMock,
@@ -13,15 +14,18 @@ import {
   FigmaToCodePipelineMock,
   ArksaberStorybookMock,
 } from "@/components/case-study/mockups/design-system";
-import { CaseSection } from "@/components/case-study/case-section";
-import { CaseStudyNav } from "@/components/case-study/case-study-nav";
-import { CaseShell } from "@/components/case-study/case-shell";
-import { HeroCard } from "@/components/case-study/hero-card";
 import { arksaberCaseStudy } from "@/lib/arksaber-case-study";
+import { homeContent } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: arksaberCaseStudy.metadataTitle,
   description: arksaberCaseStudy.metadataDescription,
+};
+
+const chapterById = (id: string) => {
+  const chapter = arksaberCaseStudy.chapters.find((c) => c.id === id);
+  if (!chapter) throw new Error(`Missing chapter: ${id}`);
+  return chapter;
 };
 
 export default function DesignSystemCaseStudyPage() {
@@ -29,172 +33,87 @@ export default function DesignSystemCaseStudyPage() {
     <>
       <ScrollProgressBar />
 
-      <div className="bg-gradient-to-b from-ds-surface-mist to-white pb-16 pt-10 md:pb-20 md:pt-14">
-        <CaseShell>
-          <div id="snapshot" className="scroll-mt-28">
-            <HeroCard
-              title={arksaberCaseStudy.title}
-              accent="whitelabel design system"
-              tags={["Design System", "Code"]}
-              meta={[
-                { title: "Role", value: arksaberCaseStudy.role },
-                { title: "Type", value: arksaberCaseStudy.type },
-                { title: "Stack", value: arksaberCaseStudy.stack },
-              ]}
-              footer={
-                <MockupFrame caption="Same component, designed in Figma and rendered from code — under two brands." chrome="none">
-                  <ParityProofMock />
-                </MockupFrame>
-              }
-            >
-              <p className="content-prose">
-                Arksaber is a whitelabel design system I built end to end — designed in Figma, then built as real React and Tailwind components, themeable across brands.
-              </p>
-              <p className="content-prose">
-                Most design systems stop at Figma and hand off a spec. This one ships as code. Same components, same token names — swap the values, and the whole system re-skins for a new brand.
-              </p>
-              <p className="content-prose">
-                I built the code with AI, working from my own tokens and designs. It&apos;s a proof of concept: two brands, the core component set, running in Storybook.
-              </p>
-            </HeroCard>
+      <Section bg="paper" pad="none" id="hero">
+        <DummyContent className="pt-16 pb-16">
+          <p className="text-sm text-neutral-500">{arksaberCaseStudy.hero.tags.join(" · ")}</p>
+          <h1 className="text-3xl font-semibold">{arksaberCaseStudy.hero.title}</h1>
+          <p className="mt-3">{arksaberCaseStudy.hero.subtitle}</p>
+          <div className="mt-6">
+            <MockupFrame caption="Same component, designed in Figma and rendered from code — under two brands." chrome="none">
+              <ParityProofMock />
+            </MockupFrame>
           </div>
-        </CaseShell>
-      </div>
+        </DummyContent>
 
-      <CaseShell sidebar className="py-2 md:py-4">
-        <aside className="md:sticky md:top-28 md:h-fit">
-          <Text variant="hp-eyebrow" as="p" className="md:mb-3">
-            On this page
-          </Text>
-          <ScrollSpyToc items={arksaberCaseStudy.toc} />
-        </aside>
+        {arksaberCaseStudy.stats && (
+          <DummyContent className="py-16">
+            {arksaberCaseStudy.stats.map((stat, i) => (
+              <p key={i}>
+                <strong>{stat.value}</strong> — {stat.label}
+              </p>
+            ))}
+          </DummyContent>
+        )}
+      </Section>
 
-        <article className="min-w-0 space-y-0">
+      {DummyChapter(chapterById("why"))}
+      {DummyChapter(chapterById("tokens"))}
 
-          <CaseSection id="why" heading="Why I built it">
-            <p className="content-prose">
-              I kept hitting the same gap. Design systems live in Figma. Products live in code. And the space between them is where consistency quietly dies — values get re-typed, states get missed, the build drifts from the design.
-            </p>
-            <p className="content-prose mt-4">
-              So I set a constraint: don&apos;t call it done at handoff. Call it done when it runs.
-            </p>
-            <p className="content-prose mt-4">
-              Arksaber was my way to prove I could own the whole loop — design the system, define the tokens, and build the actual components — and keep the two in lockstep. Whitelabel made it harder on purpose: if the architecture is right, one system should dress up as many brands without touching a single component.
-            </p>
-          </CaseSection>
+      <DummyContent className="pb-9">
+        <MockupFrame caption="Every value has a name, and the name says exactly where it's used." chrome="none">
+          <TokenTaxonomyMock />
+        </MockupFrame>
+      </DummyContent>
 
-          <CaseSection id="tokens" heading="The architecture: tokens that name themselves">
-            <p className="content-prose">
-              The system rests on tokens, and the naming is doing the heavy lifting.
-            </p>
-            <p className="content-prose mt-4">
-              Every token reads as <InlineCode>component / variant / property / state</InlineCode>. So <InlineCode>button/primary/fill/resting</InlineCode> is the fill color of a primary button at rest. <InlineCode>button/secondary/content/disabled</InlineCode> is the text color of a disabled secondary button. You can read a token and know exactly where it lives.
-            </p>
-            <p className="content-prose mt-4">A few real ones:</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-mono text-[14px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>button/primary/fill/resting → #3b82f6</li>
-              <li>button/primary/fill/hover → #2563eb</li>
-              <li>button/secondary/content/resting → #2563eb</li>
-              <li>button/secondary/outline/resting → #e5e5e5</li>
-            </ul>
-            <p className="content-prose mt-4">
-              It&apos;s not just color. Spacing and type are tokenized too — <InlineCode>spacing/button/gap</InlineCode> (8px), <InlineCode>size/label-md</InlineCode> (14px), <InlineCode>family/label-md</InlineCode> (Inter). Nothing in a component is a magic number; everything points back to a named decision.
-            </p>
-            <MockupFrame caption="Every value has a name, and the name says exactly where it's used." chrome="none">
-              <TokenTaxonomyMock />
-            </MockupFrame>
-            <p className="content-prose mt-4">
-              <strong>Why this matters:</strong> this is the layer that makes whitelabel work. The component never hard-codes a color. It asks for a token. So re-skinning a brand isn&apos;t a redesign — it&apos;s a new set of values behind the same names.
-            </p>
-            <MockupFrame caption="The tokens that get re-skinned per brand." chrome="none">
-              <TokenTableMock />
-            </MockupFrame>
-          </CaseSection>
+      <DummyContent className="pb-16">
+        <MockupFrame caption="The tokens that get re-skinned per brand." chrome="none">
+          <TokenTableMock />
+        </MockupFrame>
+      </DummyContent>
 
-          <CaseSection id="whitelabel" heading="The whitelabel engine">
-            <p className="content-prose">
-              Two brands, one system.
-            </p>
-            <p className="content-prose mt-4">
-              Because every component pulls from tokens, theming a second brand means changing the token <em>values</em> — not the components. The button doesn&apos;t know what brand it&apos;s in. It just knows it needs <InlineCode>button/primary/fill/resting</InlineCode>, whatever that resolves to.
-            </p>
-            <p className="content-prose mt-4">
-              That&apos;s the whole trick, and it&apos;s why the naming had to be disciplined first. Get the token layer right, and theming becomes a config change instead of a rebuild.
-            </p>
-            <MockupFrame caption="One system, two brands — only the token values change." chrome="none">
-              <BrandCompareMock />
-            </MockupFrame>
-          </CaseSection>
+      {DummyChapter(chapterById("whitelabel"))}
 
-          <CaseSection id="components" heading="Component anatomy: every state, on purpose">
-            <p className="content-prose">
-              I designed components as full state machines, not happy-path snapshots.
-            </p>
-            <p className="content-prose mt-4">
-              The Button covers two classes — primary and secondary — across resting, hover, active, and focus, plus a disabled treatment for each. The Input Field is more demanding: five states (resting, focus, hover, active, error), each in filled and empty, plus disabled — twelve variants in all. There&apos;s a Hint component for default, error, and success messages, an icon set, and a Modal with its own header and footer.
-            </p>
-            <p className="content-prose mt-4">
-              Atoms, molecules, organisms — buttons and inputs up through composed pieces like the modal.
-            </p>
-            <MockupFrame caption="Every state, accounted for — designed once, coded once." chrome="none">
-              <InputAnatomyMock />
-            </MockupFrame>
-          </CaseSection>
+      <DummyContent className="pb-16">
+        <MockupFrame caption="One system, two brands — only the token values change." chrome="none">
+          <BrandCompareMock />
+        </MockupFrame>
+      </DummyContent>
 
-          <CaseSection id="figma-to-code" heading="Figma to code: closing the loop">
-            <p className="content-prose">
-              Here&apos;s the part most systems skip.
-            </p>
-            <p className="content-prose mt-4">
-              The Figma components weren&apos;t a spec to interpret later — they were the source the code was built from. The variant structure carried straight across:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 font-ds-inter text-[17px] leading-7 text-ds-body-muted marker:text-ds-tag-muted">
-              <li>In Figma, the Button has three axes — <strong>Class</strong> (primary/secondary), <strong>State</strong> (resting/hover/active/focus), and <strong>Disable</strong>.</li>
-              <li>In code, those became the React props — <InlineCode>propClass</InlineCode>, <InlineCode>state</InlineCode>, <InlineCode>disable</InlineCode> — plus <InlineCode>icon</InlineCode>, <InlineCode>iconLeft</InlineCode>, <InlineCode>iconRight</InlineCode>, and <InlineCode>text</InlineCode>.</li>
-            </ul>
-            <p className="content-prose mt-4">
-              One-to-one. The way I structured the component in Figma is the way you call it in React. No translation drift.
-            </p>
-            <MockupFrame caption="How the design became the code." chrome="none">
-              <FigmaToCodePipelineMock />
-            </MockupFrame>
-          </CaseSection>
+      {DummyChapter(chapterById("components"))}
 
-          <CaseSection id="ai-workflow" heading="How I worked with AI">
-            <p className="content-prose">
-              AI built the codebase. I directed it.
-            </p>
-            <p className="content-prose mt-4">
-              I fed it two things: my token definitions as JSON, and the Figma designs themselves through Figma&apos;s MCP. From there, AI generated the CSS tokens and wrote the React components to match the designs — variant by variant, state by state.
-            </p>
-            <p className="content-prose mt-4">
-              My job wasn&apos;t typing the code. It was the architecture and the judgment: naming the tokens so they&apos;d theme cleanly, defining the variant model, and checking the output against the design until it matched. AI moved fast; I decided what &ldquo;correct&rdquo; meant.
-            </p>
-            <p className="content-prose mt-4">
-              This is the workflow I keep coming back to — AI to accelerate the build, me to own the system it&apos;s building.
-            </p>
-          </CaseSection>
+      <DummyContent className="pb-16">
+        <MockupFrame caption="Every state, accounted for — designed once, coded once." chrome="none">
+          <InputAnatomyMock />
+        </MockupFrame>
+      </DummyContent>
 
-          <CaseSection id="outcome" heading="Where it landed">
-            <p className="content-prose">
-              Arksaber runs in Storybook today — the core components, themeable across two brands, as real code.
-            </p>
-            <p className="content-prose mt-4">
-              It&apos;s a proof of concept, and I&apos;ll call it that honestly: it&apos;s not an enterprise system with adoption metrics. What it proves is the thing I set out to prove — that I can own the full loop from token to component to code, keep design and build in parity, and architect for whitelabel from the ground up.
-            </p>
-            <p className="content-prose mt-4">
-              The next steps are obvious: more components, a hosted Storybook, and docs. But the spine — the token architecture and the design-to-code parity — is already standing.
-            </p>
-            <MockupFrame caption="The system, running." chrome="none">
-              <ArksaberStorybookMock />
-            </MockupFrame>
-          </CaseSection>
+      {DummyChapter(chapterById("figma-to-code"))}
 
-        </article>
-      </CaseShell>
+      <DummyContent className="pb-16">
+        <MockupFrame caption="How the design became the code." chrome="none">
+          <FigmaToCodePipelineMock />
+        </MockupFrame>
+      </DummyContent>
 
-      <CaseStudyNav current="design-system" />
-      <CaseStudyFooter />
+      {DummyChapter(chapterById("ai-workflow"))}
+      {DummyChapter(chapterById("outcome"))}
+
+      <DummyContent className="pb-16">
+        <MockupFrame caption="The system, running." chrome="none">
+          <ArksaberStorybookMock />
+        </MockupFrame>
+      </DummyContent>
+
+      <MoreProjects current="design-system" />
+
+      <CtaFooter
+        closingLine={homeContent.footer.closingLine}
+        email={homeContent.footer.email}
+        linkedinUrl={homeContent.footer.linkedinUrl}
+        resumeUrl={homeContent.resumeUrl}
+        footerNote={homeContent.footerNote}
+        location={homeContent.footer.location}
+      />
     </>
   );
 }

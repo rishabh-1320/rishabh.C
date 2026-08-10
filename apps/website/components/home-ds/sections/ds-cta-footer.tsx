@@ -1,6 +1,6 @@
 import type { HomeContent } from "@/lib/types";
 import { homeContent } from "@/lib/site-content";
-import { CtaFooter } from "../ui/cta-footer";
+import { CtaFooter } from "../site-components/cta-footer";
 
 export function DsCtaFooter({
   footer,
