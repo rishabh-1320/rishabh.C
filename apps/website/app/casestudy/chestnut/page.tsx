@@ -18,6 +18,7 @@ import { CaseChapter } from "@/components/case-study/template/case-chapter";
 import { CasePullQuote } from "@/components/case-study/template/case-pull-quote";
 import { CaseStandaloneSteps } from "@/components/case-study/template/case-standalone-steps";
 import { ThreeColumnBlock } from "@/components/home-ds/library/case-study-blocks/three-column-block";
+import { EndOfArticleMarker } from "@/components/home-ds/library/case-study-blocks/end-of-article-marker";
 import { TextContainerCase } from "@/components/home-ds/library/texts/text-container-case";
 import { chestnutCaseStudy } from "@/lib/chestnut-case-study";
 import { homeContent } from "@/lib/site-content";
@@ -116,6 +117,10 @@ export default function ChestnutCaseStudyPage() {
           <CasePullQuote label={chestnutCaseStudy.closingQuote.label} quote={chestnutCaseStudy.closingQuote.quote} />
         </ThreeColumnBlock>
       )}
+
+      <ThreeColumnBlock columns={false}>
+        <EndOfArticleMarker />
+      </ThreeColumnBlock>
 
       <MoreProjects current="chestnut" />
 

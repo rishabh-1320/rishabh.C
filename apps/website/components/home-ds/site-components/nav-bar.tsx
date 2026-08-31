@@ -79,7 +79,7 @@ export function NavBar({
               <a
                 key={l.label}
                 href={l.href}
-                className="rounded-ds-control px-4 py-2 font-ds-inter text-[14px] font-light leading-6 tracking-[-0.015em] text-ds-nav-muted transition-colors duration-[var(--ds-dur-fast)] hover:bg-ds-surface-sunken"
+                className="rounded-ds-control px-4 py-2 font-ds-inter text-[14px] font-normal leading-[1.4] tracking-[-0.015em] text-ds-nav-muted transition-colors duration-[var(--ds-dur-fast)] hover:bg-ds-surface-sunken"
               >
                 {l.label}
               </a>
@@ -88,7 +88,7 @@ export function NavBar({
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-ds-pill bg-ds-accent px-4 py-2 font-ds-inter text-[14px] font-light leading-6 tracking-[-0.015em] text-ds-on-accent transition-colors duration-[var(--ds-dur-fast)] hover:bg-ds-accent-hover"
+              className="flex items-center gap-2 rounded-ds-pill bg-ds-accent px-4 py-2 font-ds-inter text-[14px] font-normal leading-[1.4] tracking-[-0.015em] text-ds-on-accent transition-colors duration-[var(--ds-dur-fast)] hover:bg-ds-accent-hover"
             >
               {/* 4px padding around the 16px icon = 24px total, matching the
                   Figma export's own wrapper — keeps every nav item's content
@@ -158,7 +158,7 @@ export function NavBar({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-ds-pill bg-ds-accent px-4 py-3 font-ds-inter text-[14px] font-light leading-6 text-ds-on-accent"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-ds-pill bg-ds-accent px-4 py-3 font-ds-inter text-[14px] font-normal leading-[1.4] text-ds-on-accent"
                 >
                   <span className="flex items-center justify-center p-1">{ArrowUpRightIcon}</span>
                   Resume

@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import { Section } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CtaFooter } from "@/components/home-ds/site-components/cta-footer";
-import { DummyContent, DummyChapter } from "@/components/dummy-content";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
 import { MoreProjects } from "@/components/case-study/more-projects";
+import { CaseHero } from "@/components/case-study/template/case-hero";
+import { CaseMetrics } from "@/components/case-study/template/case-metrics";
+import { CaseChapter } from "@/components/case-study/template/case-chapter";
+import { CasePullQuote } from "@/components/case-study/template/case-pull-quote";
+import { ThreeColumnBlock } from "@/components/home-ds/library/case-study-blocks/three-column-block";
+import { EndOfArticleMarker } from "@/components/home-ds/library/case-study-blocks/end-of-article-marker";
 import { ExistingDashboardMock, FinalDashboardMock } from "@/components/case-study/mockups/dashboard";
 import { dashboardCaseStudy } from "@/lib/hrms-dashboard-case-study";
 import { homeContent } from "@/lib/site-content";
@@ -26,54 +31,57 @@ export default function HrmsDashboardPage() {
       <ScrollProgressBar />
 
       <Section bg="paper" pad="none" id="hero">
-        <DummyContent className="pt-16 pb-16">
-          <p className="text-sm text-neutral-500">{dashboardCaseStudy.hero.tags.join(" · ")}</p>
-          <h1 className="text-3xl font-semibold">{dashboardCaseStudy.hero.title}</h1>
-          <p className="mt-3">{dashboardCaseStudy.hero.subtitle}</p>
-        </DummyContent>
+        {/*
+          The only case study with no dedicated hero mockup — `showVisual` renders
+          the Visual Block's empty "Image / Video" well as a standing reminder that
+          one is still needed. Its two mocks both land mid-article on purpose.
+        */}
+        <CaseHero
+          tags={[...dashboardCaseStudy.hero.tags]}
+          title={dashboardCaseStudy.hero.title}
+          accent={dashboardCaseStudy.hero.accent}
+          subtitle={dashboardCaseStudy.hero.subtitle}
+          showVisual
+        />
 
-        {dashboardCaseStudy.stats && (
-          <DummyContent className="py-16">
-            {dashboardCaseStudy.stats.map((stat, i) => (
-              <p key={i}>
-                <strong>{stat.value}</strong> — {stat.label}
-              </p>
-            ))}
-          </DummyContent>
-        )}
+        {dashboardCaseStudy.stats && <CaseMetrics stats={dashboardCaseStudy.stats} />}
       </Section>
 
-      {DummyChapter(chapterById("problem"))}
+      <CaseChapter {...chapterById("problem")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The old admin dashboard — a wall of numbers, no clear path to a decision." tone="legacy" urlLabel="hrms.timelabs.in/admin">
           <ExistingDashboardMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("stakeholders"))}
-      {DummyChapter(chapterById("kpis"))}
-      {DummyChapter(chapterById("charts"))}
+      <CaseChapter {...chapterById("stakeholders")} />
+      <CaseChapter {...chapterById("kpis")} />
+      <CaseChapter {...chapterById("charts")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The decisions that shaped the dashboard — each chart chosen for what it reveals, not what's familiar." urlLabel="hrms.timelabs.in/dashboard">
           <FinalDashboardMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("engineering"))}
-      {DummyChapter(chapterById("qa-bug"))}
-      {DummyChapter(chapterById("outcome"))}
-      {DummyChapter(chapterById("reflection"))}
+      <CaseChapter {...chapterById("engineering")} />
+      <CaseChapter {...chapterById("qa-bug")} />
+      <CaseChapter {...chapterById("outcome")} />
+      <CaseChapter {...chapterById("reflection")} />
 
       {dashboardCaseStudy.closingQuote && (
-        <DummyContent className="pb-16">
-          <p className="italic">
-            {dashboardCaseStudy.closingQuote.label ? `${dashboardCaseStudy.closingQuote.label}: ` : ""}
-            {dashboardCaseStudy.closingQuote.quote}
-          </p>
-        </DummyContent>
+        <ThreeColumnBlock columns>
+          <CasePullQuote
+            label={dashboardCaseStudy.closingQuote.label}
+            quote={dashboardCaseStudy.closingQuote.quote}
+          />
+        </ThreeColumnBlock>
       )}
+
+      <ThreeColumnBlock columns={false}>
+        <EndOfArticleMarker />
+      </ThreeColumnBlock>
 
       <MoreProjects current="dashboard" />
 

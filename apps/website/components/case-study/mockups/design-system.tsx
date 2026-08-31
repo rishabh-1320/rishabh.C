@@ -131,7 +131,11 @@ export function TokenTableMock() {
     ["size/label-md", "14px", "Button / input label size"],
   ];
   return (
-    <div className="overflow-hidden rounded-ds-md border border-ds-border">
+    // `w-full` matters: without a width the shrink-to-fit wrapper grows to the
+    // table's min-content width (long token strings), pushing the page into
+    // horizontal overflow on narrow viewports. `overflow-x-auto` (not
+    // `-hidden`) so the clipped columns stay reachable.
+    <div className="w-full overflow-x-auto rounded-ds-md border border-ds-border">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-ds-surface-sunken">

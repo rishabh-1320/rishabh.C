@@ -23,7 +23,7 @@ export function TestimonialCard({
 }) {
   return (
     <div className="flex flex-col items-start gap-12 border-r border-ds-hairline pr-18 pb-18 pt-12">
-      <Text variant="hp-body" className="w-full text-[16px] leading-normal">
+      <Text variant="hp-body" className="w-full text-[16px] font-normal leading-[1.4]">
         {quote}
       </Text>
       <div className="flex w-full items-center gap-6">

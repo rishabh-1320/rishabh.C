@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/"
+      allow: "/",
+      // The rendered case-study template reference — placeholder copy, not content.
+      disallow: ["/casestudy/template"]
     },
     sitemap: `${base}/sitemap.xml`
   };

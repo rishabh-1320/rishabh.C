@@ -112,7 +112,20 @@ const config: Config = {
           "on-accent": "var(--ds-color-on-accent)",
           "mockup-bg": "var(--ds-color-mockup-bg)",
           "mockup-bar": "var(--ds-color-mockup-bar)",
-          "avatar-placeholder": "var(--ds-color-avatar-placeholder)"
+          "avatar-placeholder": "var(--ds-color-avatar-placeholder)",
+          // Case-study template (Figma "Port 26" case-study frames)
+          "case-heading": "var(--ds-color-case-heading)",
+          "case-body": "var(--ds-color-case-body)",
+          "case-caption": "var(--ds-color-case-caption)",
+          "media-play-bg": "var(--ds-color-media-play-bg)",
+          "media-play-glyph": "var(--ds-color-media-play-glyph)",
+          "media-placeholder": "var(--ds-color-media-placeholder)",
+          "category-blue": "var(--ds-color-category-blue)",
+          "category-blue-wash": "var(--ds-color-category-blue-wash)",
+          "category-blue-eyebrow": "var(--ds-color-category-blue-eyebrow)",
+          // Assembled case-study template (Figma node 573:8093)
+          "case-muted": "var(--ds-color-case-muted)",
+          "canvas-muted": "var(--ds-color-canvas-muted)"
         },
         // ── vs3 isolated namespace (quarantined; values from components/styles/vs3/tokens.ts) ──
         vs3: {
@@ -273,6 +286,7 @@ const config: Config = {
         "ds-card": "var(--ds-shadow-card)",
         "ds-card-hover": "var(--ds-shadow-card-hover)",
         "ds-nav": "var(--ds-shadow-nav)",
+        "ds-media-play": "var(--ds-shadow-media-play)",
         "vs3-card": "var(--vs3-shadow-card)",
         "vs3-card-hover": "var(--vs3-shadow-card-hover)",
         "vs3-nav": "var(--vs3-shadow-nav)"

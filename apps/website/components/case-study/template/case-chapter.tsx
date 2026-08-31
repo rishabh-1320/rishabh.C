@@ -4,17 +4,23 @@ import { NumberedRow } from "@/components/case-study/numbered-row";
 import { CasePullQuote } from "./case-pull-quote";
 import { CaseChecklist } from "./case-checklist";
 import { CaseSideCard } from "./case-side-card";
+import { CaseTable } from "./case-table";
 import type { CaseStudyChapter } from "@/lib/case-study-types";
 
 /**
  * Renders one `CaseStudyChapter` — eyebrow (Caption) + title (H1), optional
- * pull-quote, paragraphs (Body), optional checklist or steps, optional
- * side cards in the right reading column. Always 3-column (matches the real
+ * pull-quote, paragraphs (Body), optional checklist or steps, an optional
+ * comparison table, and optional side cards in the right reading column.
+ *
+ * The table renders LAST because it summarizes what precedes it — a criteria
+ * matrix scoring the numbered rounds has to follow those rounds, not lead them.
+ *
+ * Always 3-column (matches the real
  * Figma instance, 480:4417: `LeftColumn`/`RightColumn` are present even when
  * empty) — text content never drops to the single full-width slot, only
  * `sideCards` presence changes whether `RightColumn` has anything in it.
  */
-export function CaseChapter({ heading, pullQuote, paragraphs, checklist, steps, sideCards }: CaseStudyChapter) {
+export function CaseChapter({ heading, pullQuote, paragraphs, table, checklist, steps, sideCards }: CaseStudyChapter) {
   const hasSideCards = Boolean(sideCards && sideCards.length > 0);
 
   const content = (
@@ -35,6 +41,7 @@ export function CaseChapter({ heading, pullQuote, paragraphs, checklist, steps, 
           ))}
         </div>
       )}
+      {table && <CaseTable title={table.title} headers={table.headers} rows={table.rows} />}
     </div>
   );
 

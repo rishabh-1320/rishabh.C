@@ -167,7 +167,10 @@ export function MockTable({
   legacy?: boolean;
 }) {
   return (
-    <div className="overflow-x-auto rounded-ds-md border border-ds-border">
+    // `w-full` matters: without a width the shrink-to-fit wrapper grows to the
+    // table's min-content width (long token strings), pushing the page into
+    // horizontal overflow on narrow viewports instead of scrolling in place.
+    <div className="w-full overflow-x-auto rounded-ds-md border border-ds-border">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-ds-surface-sunken">

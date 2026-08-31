@@ -64,7 +64,7 @@ export function AiToolTile({ name, icon }: { name: string; icon: string }) {
       <span
         role="tooltip"
         className={cn(
-          "pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-ds-control bg-ds-surface-ink px-2.5 py-1 font-ds-inter text-[12px] font-medium text-ds-on-ink transition-opacity duration-150",
+          "pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-ds-control bg-ds-surface-ink px-2.5 py-1 font-ds-inter text-[12px] font-normal leading-[1.4] text-ds-on-ink transition-opacity duration-150",
           tooltipVisible ? "opacity-100" : "opacity-0"
         )}
       >

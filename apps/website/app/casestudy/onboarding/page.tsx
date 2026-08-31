@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { Section } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CtaFooter } from "@/components/home-ds/site-components/cta-footer";
-import { DummyContent, DummyChapter } from "@/components/dummy-content";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
 import { MoreProjects } from "@/components/case-study/more-projects";
+import { CaseHero } from "@/components/case-study/template/case-hero";
+import { CaseMetrics } from "@/components/case-study/template/case-metrics";
+import { CaseChapter } from "@/components/case-study/template/case-chapter";
+import { ThreeColumnBlock } from "@/components/home-ds/library/case-study-blocks/three-column-block";
+import { EndOfArticleMarker } from "@/components/home-ds/library/case-study-blocks/end-of-article-marker";
 import {
   OnboardingHomeMock,
   OldAdminPanelMock,
@@ -34,74 +38,70 @@ export default function OnboardingCaseStudyPage() {
       <ScrollProgressBar />
 
       <Section bg="paper" pad="none" id="hero">
-        <DummyContent className="pt-16 pb-16">
-          <p className="text-sm text-neutral-500">{onboardingCaseStudy.hero.tags.join(" · ")}</p>
-          <h1 className="text-3xl font-semibold">{onboardingCaseStudy.hero.title}</h1>
-          <p className="mt-3">{onboardingCaseStudy.hero.subtitle}</p>
-          <div className="mt-6">
-            <MockupFrame caption="The redesigned onboarding home — you always know where you are and what's next." urlLabel="hrms.timelabs.in/onboarding">
-              <OnboardingHomeMock />
-            </MockupFrame>
-          </div>
-        </DummyContent>
+        <CaseHero
+          tags={[...onboardingCaseStudy.hero.tags]}
+          title={onboardingCaseStudy.hero.title}
+          accent={onboardingCaseStudy.hero.accent}
+          subtitle={onboardingCaseStudy.hero.subtitle}
+        >
+          <MockupFrame caption="The redesigned onboarding home — you always know where you are and what's next." urlLabel="hrms.timelabs.in/onboarding">
+            <OnboardingHomeMock />
+          </MockupFrame>
+        </CaseHero>
 
-        {onboardingCaseStudy.stats && (
-          <DummyContent className="py-16">
-            {onboardingCaseStudy.stats.map((stat, i) => (
-              <p key={i}>
-                <strong>{stat.value}</strong> — {stat.label}
-              </p>
-            ))}
-          </DummyContent>
-        )}
+        {onboardingCaseStudy.stats && <CaseMetrics stats={onboardingCaseStudy.stats} />}
       </Section>
 
-      {DummyChapter(chapterById("problem"))}
+      <CaseChapter {...chapterById("problem")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The old flow — tables, dense forms, and no sense of progress." tone="legacy" urlLabel="hrms.timelabs.in/onboarding">
           <OldAdminPanelMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("what-i-fixed"))}
-      {DummyChapter(chapterById("discovery"))}
+      <CaseChapter {...chapterById("what-i-fixed")} />
+      <CaseChapter {...chapterById("discovery")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="References, not research — studying how mature products guide people through setup." chrome="none">
           <InspirationBoardMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("redesign"))}
+      <CaseChapter {...chapterById("redesign")} />
 
-      <DummyContent className="pb-9">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The core fix — you always know where you are and what's next." chrome="none">
           <ProgressSystemMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Same capabilities as before — now one clear step at a time." urlLabel="hrms.timelabs.in/onboarding">
           <DocUploadStepMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("process"))}
+      <CaseChapter {...chapterById("process")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Layout, then components, then states — working from the structure inward." chrome="none">
           <IterationBoardsMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("outcome"))}
+      <CaseChapter {...chapterById("outcome")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Onboarding that candidates actually finish — on their own." chrome="none">
           <CompletionMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
+
+      <ThreeColumnBlock columns={false}>
+        <EndOfArticleMarker />
+      </ThreeColumnBlock>
 
       <MoreProjects current="onboarding" />
 

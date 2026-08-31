@@ -8,11 +8,11 @@ export function NumberedRow({ n, title, description }: { n: number; title: strin
   return (
     <div className="flex items-start gap-6">
       <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-ds-accent">
-        <span className="font-ds-inter text-base font-bold text-white">{n}</span>
+        <span className="font-ds-inter text-base font-normal leading-[1.4] text-white">{n}</span>
       </span>
       <div className="flex flex-1 flex-col gap-2">
-        <p className="font-ds-inter text-[15px] text-ds-heading">{title}</p>
-        <p className="font-ds-inter text-[15px] text-ds-body-muted">{description}</p>
+        <p className="font-ds-inter text-[15px] font-normal leading-[1.4] text-ds-heading">{title}</p>
+        <p className="font-ds-inter text-[15px] font-normal leading-[1.4] text-ds-body-muted">{description}</p>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export function MinimalBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-ds-tag font-ds-inter text-[12px] font-normal uppercase leading-none tracking-[-0.025em]",
+        "inline-flex items-center rounded-ds-tag font-ds-inter text-[12px] font-normal uppercase leading-[1.4] tracking-[-0.025em]",
         TONE[tone],
         className
       )}

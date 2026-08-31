@@ -13,7 +13,8 @@ export const workImages: Record<string, string> = {
   "work-chestnut": base("1560264280-88b68371db39"), // insurance / producer platform
   "work-hrms": base("1666875753105-c63a6f3bdc86"), // analytics dashboard
   "work-onboarding": base("1560265036-021b3652b490"), // onboarding / welcome team
-  "work-design-system": base("1581079948988-537795b40f5f") // color swatches / system
+  "work-design-system": base("1581079948988-537795b40f5f"), // color swatches / system
+  "work-omny": base("1553877522-43269d4ea984") // workspace navigation / multi-brand
 };
 
 /** AI exploration cards, keyed by AIExplorationCard.id */

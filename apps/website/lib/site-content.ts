@@ -112,6 +112,19 @@ export const homeContent: HomeContent = {
       tags: ["Onboarding", "HRMS", "Flow"]
     },
     {
+      id: "work-omny",
+      title: "Designing against a habit, without removing what triggered it",
+      description:
+        "Multi-workspace navigation for Omny. Killed an expensive default login destination without deleting it — approved and specified for development.",
+      role: "UX Designer",
+      year: "2026",
+      company: "Tcules",
+      ctaLabel: "View case study",
+      active: true,
+      href: "/casestudy/omny",
+      tags: ["UX", "B2B SaaS", "Navigation"]
+    },
+    {
       id: "work-design-system",
       title: "A whitelabel design system, built from scratch",
       description: "Built as a side project. Single token architecture, themable for any brand. My take on how systems should scale.",

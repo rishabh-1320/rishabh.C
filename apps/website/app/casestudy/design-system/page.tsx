@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { Section } from "@packages/ds-ui";
 import { ScrollProgressBar } from "@/components/scroll-progress-bar";
 import { CtaFooter } from "@/components/home-ds/site-components/cta-footer";
-import { DummyContent, DummyChapter } from "@/components/dummy-content";
 import { MockupFrame } from "@/components/case-study/mockup-frame";
 import { MoreProjects } from "@/components/case-study/more-projects";
+import { CaseHero } from "@/components/case-study/template/case-hero";
+import { CaseMetrics } from "@/components/case-study/template/case-metrics";
+import { CaseChapter } from "@/components/case-study/template/case-chapter";
+import { ThreeColumnBlock } from "@/components/home-ds/library/case-study-blocks/three-column-block";
+import { EndOfArticleMarker } from "@/components/home-ds/library/case-study-blocks/end-of-article-marker";
 import {
   ParityProofMock,
   TokenTaxonomyMock,
@@ -34,75 +38,71 @@ export default function DesignSystemCaseStudyPage() {
       <ScrollProgressBar />
 
       <Section bg="paper" pad="none" id="hero">
-        <DummyContent className="pt-16 pb-16">
-          <p className="text-sm text-neutral-500">{arksaberCaseStudy.hero.tags.join(" · ")}</p>
-          <h1 className="text-3xl font-semibold">{arksaberCaseStudy.hero.title}</h1>
-          <p className="mt-3">{arksaberCaseStudy.hero.subtitle}</p>
-          <div className="mt-6">
-            <MockupFrame caption="Same component, designed in Figma and rendered from code — under two brands." chrome="none">
-              <ParityProofMock />
-            </MockupFrame>
-          </div>
-        </DummyContent>
+        <CaseHero
+          tags={[...arksaberCaseStudy.hero.tags]}
+          title={arksaberCaseStudy.hero.title}
+          accent={arksaberCaseStudy.hero.accent}
+          subtitle={arksaberCaseStudy.hero.subtitle}
+        >
+          <MockupFrame caption="Same component, designed in Figma and rendered from code — under two brands." chrome="none">
+            <ParityProofMock />
+          </MockupFrame>
+        </CaseHero>
 
-        {arksaberCaseStudy.stats && (
-          <DummyContent className="py-16">
-            {arksaberCaseStudy.stats.map((stat, i) => (
-              <p key={i}>
-                <strong>{stat.value}</strong> — {stat.label}
-              </p>
-            ))}
-          </DummyContent>
-        )}
+        {arksaberCaseStudy.stats && <CaseMetrics stats={arksaberCaseStudy.stats} />}
       </Section>
 
-      {DummyChapter(chapterById("why"))}
-      {DummyChapter(chapterById("tokens"))}
+      <CaseChapter {...chapterById("why")} />
+      <CaseChapter {...chapterById("tokens")} />
 
-      <DummyContent className="pb-9">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Every value has a name, and the name says exactly where it's used." chrome="none">
           <TokenTaxonomyMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The tokens that get re-skinned per brand." chrome="none">
           <TokenTableMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("whitelabel"))}
+      <CaseChapter {...chapterById("whitelabel")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="One system, two brands — only the token values change." chrome="none">
           <BrandCompareMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("components"))}
+      <CaseChapter {...chapterById("components")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="Every state, accounted for — designed once, coded once." chrome="none">
           <InputAnatomyMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("figma-to-code"))}
+      <CaseChapter {...chapterById("figma-to-code")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="How the design became the code." chrome="none">
           <FigmaToCodePipelineMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
 
-      {DummyChapter(chapterById("ai-workflow"))}
-      {DummyChapter(chapterById("outcome"))}
+      <CaseChapter {...chapterById("ai-workflow")} />
+      <CaseChapter {...chapterById("outcome")} />
 
-      <DummyContent className="pb-16">
+      <ThreeColumnBlock columns={false}>
         <MockupFrame caption="The system, running." chrome="none">
           <ArksaberStorybookMock />
         </MockupFrame>
-      </DummyContent>
+      </ThreeColumnBlock>
+
+      <ThreeColumnBlock columns={false}>
+        <EndOfArticleMarker />
+      </ThreeColumnBlock>
 
       <MoreProjects current="design-system" />
 

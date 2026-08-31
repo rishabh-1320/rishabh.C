@@ -1,7 +1,7 @@
-import { Text } from "@packages/ds-ui";
 import { CaseStudyCard } from "./case-study-card";
 import { workImages, fallbackImage } from "../home-ds/images";
-import { ContainerBlock } from "../home-ds/library/blocks/container-block";
+import { ThreeColumnBlock } from "../home-ds/library/case-study-blocks/three-column-block";
+import { TextContainerCase } from "../home-ds/library/texts/text-container-case";
 
 const CASE_STUDIES = [
   {
@@ -35,6 +35,14 @@ const CASE_STUDIES = [
     subtitle: "Whitelabel design system, Figma to code",
     tags: ["Design System", "Code"],
     href: "/casestudy/design-system"
+  },
+  {
+    id: "omny",
+    workId: "work-omny",
+    title: "Omny Multi-Workspace Navigation",
+    subtitle: "Designing away a costly default without deleting it",
+    tags: ["UX", "B2B SaaS"],
+    href: "/casestudy/omny"
   }
 ] as const;
 
@@ -44,34 +52,39 @@ const CASE_STUDIES = [
  * specifically to avoid touching the other 3 pages' old template; now that
  * all 4 share the same template, there's no reason for four copies of the
  * same list + grid). Always the other 3 case studies, in CASE_STUDIES order.
+ *
+ * Styled to the assembled template's closing block (node 573:9059): a single
+ * `Section H1` heading over the card grid, full-bleed in a content-block rather
+ * than the homepage's 120px-rail ContainerBlock.
+ *
+ * Capped at three. With five case studies "all the others" is four, which wraps
+ * to an orphan card on a second row in a 3-up grid — so the grid stays 3-up and
+ * takes the first three in CASE_STUDIES order.
  */
 export function MoreProjects({ current }: { current: string }) {
-  const others = CASE_STUDIES.filter((cs) => cs.id !== current);
+  const others = CASE_STUDIES.filter((cs) => cs.id !== current).slice(0, 3);
 
   return (
-    <ContainerBlock className="py-16">
-      <div className="mb-8 flex items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <Text variant="hp-eyebrow-loose">More</Text>
-          <Text variant="hp-heading" as="p">
-            Projects
-          </Text>
+    <ThreeColumnBlock columns={false}>
+      <div className="flex w-full flex-col items-start gap-12">
+        <TextContainerCase type="Section H1" className="w-full">
+          Next projects, more projects
+        </TextContainerCase>
+        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+          {others.map((cs) => (
+            <CaseStudyCard
+              key={cs.id}
+              variant="standard"
+              image={workImages[cs.workId] ?? fallbackImage}
+              alt={cs.title}
+              tags={[...cs.tags]}
+              title={cs.title}
+              description={cs.subtitle}
+              href={cs.href}
+            />
+          ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {others.map((cs) => (
-          <CaseStudyCard
-            key={cs.id}
-            variant="standard"
-            image={workImages[cs.workId] ?? fallbackImage}
-            alt={cs.title}
-            tags={[...cs.tags]}
-            title={cs.title}
-            description={cs.subtitle}
-            href={cs.href}
-          />
-        ))}
-      </div>
-    </ContainerBlock>
+    </ThreeColumnBlock>
   );
 }

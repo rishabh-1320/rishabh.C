@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/casestudy/dashboard`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/casestudy/chestnut`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/casestudy/onboarding`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${base}/casestudy/design-system`, changeFrequency: "monthly", priority: 0.9 }
+    { url: `${base}/casestudy/design-system`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${base}/casestudy/omny`, changeFrequency: "monthly", priority: 0.9 }
   ];
 }

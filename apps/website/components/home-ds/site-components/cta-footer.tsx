@@ -86,7 +86,7 @@ export function CtaFooter({
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-ds-card border border-ds-surface-veil bg-ds-surface-veil px-8 py-4 font-ds-inter text-[16px] font-semibold text-white"
+              className="flex items-center gap-3 rounded-ds-card border border-ds-surface-veil bg-ds-surface-veil px-8 py-4 font-ds-inter text-[16px] font-normal leading-[1.4] text-white"
             >
               {LinkedinIcon}
               LinkedIn
@@ -104,7 +104,7 @@ export function CtaFooter({
               <span className="text-ds-on-ink-warm">Portfolio website</span>
               <span className="text-ds-accent">.</span>
             </p>
-            <div className="flex flex-col gap-1 font-ds-inter text-[16px] font-light tracking-[-0.025em] text-ds-on-ink-faint sm:flex-row sm:items-center sm:gap-2">
+            <div className="flex flex-col gap-1 font-ds-inter text-[16px] font-normal leading-[1.4] tracking-[-0.025em] text-ds-on-ink-faint sm:flex-row sm:items-center sm:gap-2">
               <span>{footerNote}</span>
               <span>{location}</span>
             </div>

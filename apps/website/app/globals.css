@@ -43,36 +43,20 @@ html {
   border-radius: var(--radius-md);
   z-index: 100;
   text-decoration: none;
-  font-weight: 600;
+  /* 16px — under 20px, so weight 400 / 1.4 per the house rule. */
+  font-weight: 400;
+  line-height: 1.4;
   transition: top 200ms var(--ease-out-quart);
 }
 .skip-link:focus {
   top: 12px;
 }
 
-@font-face {
-  font-family: "Aileron";
-  src: url("https://framerusercontent.com/assets/LnlFZ5ZUXRaYAm8jDpvZSmzclA.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: "Aileron";
-  src: url("https://framerusercontent.com/assets/suQ36PpzxORmpGk06KApyPNrO0.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 600;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: "Aileron";
-  src: url("https://framerusercontent.com/assets/RREMWv6SMZi54dQqnELmrDAWKHw.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-}
+/*
+ * Aileron used to be declared here as three @font-face rules hotlinking
+ * framerusercontent.com, and was the `body` default. Removed with the move to a
+ * single typeface — the site is Inter only, loaded once in app/layout.tsx.
+ */
 
 :root {
   /* Surface */
@@ -124,7 +108,7 @@ html {
   --z-modal:   50;
 
   /* Typography */
-  --font-display: "Aileron", "Inter", "Segoe UI", sans-serif;
+  --font-display: "Inter", "Segoe UI", sans-serif;
 
   /* Type scale — font-size / line-height pairs */
   --text-display-size:   60px;  --text-display-lh:   1.05;
@@ -225,8 +209,8 @@ html {
   --dur-slow:    640ms;
   --dur-reveal:  860ms;
 
-  --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
-  --font-body:    "Aileron", "Inter", "Segoe UI", sans-serif;
+  --font-display: "Inter", "Segoe UI", sans-serif;
+  --font-body:    "Inter", "Segoe UI", sans-serif;
 
   --text-display-size:   200px; --text-display-lh: 0.92;
   --text-h1-size:        96px;  --text-h1-lh:      0.98;
@@ -279,8 +263,8 @@ html {
   --dur-slow:    820ms;
   --dur-reveal:  1100ms;
 
-  --font-display: "Aileron", "Inter", "Segoe UI", sans-serif;
-  --font-mono:    "JetBrains Mono", "Berkeley Mono", ui-monospace, monospace;
+  --font-display: "Inter", "Segoe UI", sans-serif;
+  --font-mono:    "Inter", "Segoe UI", sans-serif;
 
   --text-display-size:   88px;  --text-display-lh: 1.0;
   --text-h1-size:        64px;  --text-h1-lh:      1.04;
@@ -344,8 +328,8 @@ html {
   --dur-slow:    1000ms;
   --dur-reveal:  1400ms;
 
-  --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
-  --font-body:    "Aileron", "Inter", "Segoe UI", sans-serif;
+  --font-display: "Inter", "Segoe UI", sans-serif;
+  --font-body:    "Inter", "Segoe UI", sans-serif;
 
   --text-display-size:   112px; --text-display-lh: 0.98;
   --text-h1-size:        72px;  --text-h1-lh:      1.02;
@@ -433,10 +417,10 @@ html {
   --dur-reveal:  820ms;
 
   /* — Typography — */
-  --font-display: "Fraunces", "Times New Roman", Georgia, serif;
-  --font-serif:   "Fraunces", "Times New Roman", Georgia, serif;
-  --font-sans:    "Hanken Grotesk", "Inter", "Segoe UI", sans-serif;
-  --font-script:  "Caveat Brush", "Comic Sans MS", cursive;
+  --font-display: "Inter", "Segoe UI", sans-serif;
+  --font-serif:   "Inter", "Segoe UI", sans-serif;
+  --font-sans:    "Inter", "Segoe UI", sans-serif;
+  --font-script:  "Inter", "Segoe UI", sans-serif;
 
   /* Locked type presets — size / line-height pairs (family+weight+tracking
      are bound inside the Text primitive so size can't pair with a wrong lh). */
@@ -516,7 +500,7 @@ body {
 body {
   background: #fff;
   color: var(--color-text);
-  font-family: "Aileron", "Inter", "Segoe UI", sans-serif;
+  font-family: "Inter", "Segoe UI", sans-serif;
   min-height: 100vh;
 }
 
@@ -568,7 +552,8 @@ a {
 }
 
 .content-prose {
-  line-height: 1.7;
+  /* 17px — under 20px, so the house rule's 1.4 applies (was 1.7). */
+  line-height: 1.4;
   color: var(--text-secondary);
 }
 

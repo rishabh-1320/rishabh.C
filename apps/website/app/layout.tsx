@@ -36,29 +36,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Canonical design-system tokens (--ds-*) — single source of truth, injected once on :root. */}
         <style dangerouslySetInnerHTML={{ __html: tokensToCss() }} />
-        <link
-          rel="preload"
-          href="https://framerusercontent.com/assets/suQ36PpzxORmpGk06KApyPNrO0.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/*
+          Two typefaces, one request. Inter carries the whole site; Caveat is
+          used by exactly one text node — the handwritten "Rishabh." in the
+          homepage hero (the `display-script` role). This replaced three
+          requests that also pulled Fraunces, Hanken Grotesk, Figtree,
+          Instrument Serif and JetBrains Mono.
+          Weights: 300 (hp-title/year/bio/lede), 400, 500, 600, 700 (Title/H1).
+          Italics 400/500 back Figure Caption and the two quote roles — they were
+          faux-italic before, since no italic axis was ever requested.
+        */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
-        />
-        {/* Signature theme fonts: Fraunces (serif display), Hanken Grotesk (sans), Caveat (handwritten accent) */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
-        />
-        {/* vs3 theme fonts: Figtree (light refined grotesk display), Inter (body) —
-            homepage 2026 refresh uses Inter as its primary sans, hence 300/500/600 too */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
         />
       </head>
       <body>

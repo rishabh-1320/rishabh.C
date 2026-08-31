@@ -83,7 +83,35 @@ export const dsTokens = {
     "mockup-bg": "#F4F1EC", // warm cream body behind a mockup screenshot
     "mockup-bar": "rgba(0, 0, 0, 0.02)", // the 32px chrome bar above the screenshot
     "hp-muted": "#A5A19C", // THE single muted-text grey in Homepage 6 (eyebrows, descriptions, badges, meta)
-    "avatar-placeholder": "#D9D9D9" // testimonial avatar fallback fill before a real photo is set
+    "avatar-placeholder": "#D9D9D9", // testimonial avatar fallback fill before a real photo is set
+
+    // ── Case-study template, Figma "Port 26" case-study frames (additive) ──
+    // Reading-context greys. Deliberately NOT folded into `heading`/`body-muted`:
+    // the case-study frames use their own near-black/grey pair, and merging them
+    // would silently restyle the homepage.
+    "case-heading": "#212121", // Heading/H3 + quote-big text (Figma node 573:8042, 573:8083)
+    "case-body": "#595959", // Body/Default paragraph grey
+    "case-caption": "#27272A", // Figma `gray/800` — italic figure caption under a visual
+
+    // Visual Block empty state (node 572:7926) — the "Image / Video" placeholder
+    "media-play-bg": "rgba(255, 255, 255, 0.9)",
+    "media-play-glyph": "#333333",
+    "media-placeholder": "#8C8C99",
+
+    // Category accents — one {default, wash, eyebrow} triple per category.
+    // Blue is the only category the Figma file defines today; more drop in here.
+    // NOTE: `category-blue` is the same hex as `tag-sky-fg` above — same color,
+    // different semantic role, kept separate on purpose.
+    "category-blue": "#2C6486", // Figma var `category/blue/default` — the 2px quote liner
+    "category-blue-wash": "#EEF7FC", // Figma var `blue/50` — quote block background
+    "category-blue-eyebrow": "#2E54D9", // eyebrow text (raw override in node 573:8042 — see CASE_STUDY_TEMPLATE.md)
+
+    // Assembled case-study template (Figma node 573:8093).
+    // Figma sets Display/Hero + Heading/H1 + Heading/H2 to literal #000000, but
+    // pure black reads wrong next to everything else here — those roles use
+    // `case-heading` #212121 instead, so all case-study headings share one colour.
+    "case-muted": "#52525B", // Figma `gray/600` — the hero subtitle
+    "canvas-muted": "#BFB3A3" // Figma `canvas/muted` — end-of-article marker shapes
   },
 
   // 4-based spacing — the rationalization of the reference's messy values
@@ -119,26 +147,43 @@ export const dsTokens = {
     mockup: "12px"
   },
 
+  /*
+   * Inter everywhere, with one deliberate exception: `script` is Caveat, used
+   * by the `display-script` role and nothing else — the handwritten "Rishabh."
+   * in the homepage hero. Fraunces and Hanken Grotesk are gone for good;
+   * `serif` and `sans` are kept as keys only so existing `font-ds-*` utilities
+   * keep resolving, and both point at Inter.
+   *
+   * Before repointing `script` at anything new, check what consumes it: today
+   * it is exactly one text node, which is why a second family is affordable
+   * here and wasn't anywhere else.
+   */
   font: {
-    serif: '"Fraunces", "Times New Roman", Georgia, serif',
-    sans: '"Hanken Grotesk", "Inter", "Segoe UI", sans-serif',
-    script: '"Caveat", "Comic Sans MS", cursive',
-    // Homepage 2026 refresh — primary sans for the new identity
+    serif: '"Inter", "Segoe UI", sans-serif',
+    sans: '"Inter", "Segoe UI", sans-serif',
+    script: '"Caveat", "Segoe Script", cursive',
     inter: '"Inter", "Segoe UI", sans-serif'
   },
 
-  // Locked type presets — size / line-height / weight / tracking per role.
-  // Consumed by the Text primitive so a size can never pair with a wrong lh.
+  /*
+   * Locked type presets — size / line-height / weight / tracking per role.
+   * Consumed by the Text primitive so a size can never pair with a wrong lh.
+   *
+   * House rule: any role under 20px is weight 400 and line-height 1.4. Small
+   * text carries no weight contrast — emphasis at these sizes comes from colour
+   * and spacing instead. Roles at 20px and above keep their own weight and
+   * line-height. Adding a sub-20px role means following the same rule.
+   */
   type: {
     display: { size: "60px", lh: "1.04", weight: "400", tracking: "-0.02em", family: "serif" },
     h1: { size: "47px", lh: "1.08", weight: "400", tracking: "-0.02em", family: "serif" },
     h2: { size: "36px", lh: "1.12", weight: "400", tracking: "-0.01em", family: "serif" },
     h3: { size: "22px", lh: "1.3", weight: "600", tracking: "-0.01em", family: "sans" },
     lead: { size: "20px", lh: "1.5", weight: "400", tracking: "0em", family: "sans" },
-    body: { size: "16px", lh: "1.6", weight: "400", tracking: "0em", family: "sans" },
-    "body-sm": { size: "14px", lh: "1.55", weight: "400", tracking: "0em", family: "sans" },
-    caption: { size: "13px", lh: "1.5", weight: "500", tracking: "0em", family: "sans" },
-    eyebrow: { size: "12px", lh: "1.4", weight: "600", tracking: "0.18em", family: "sans" },
+    body: { size: "16px", lh: "1.4", weight: "400", tracking: "0em", family: "sans" },
+    "body-sm": { size: "14px", lh: "1.4", weight: "400", tracking: "0em", family: "sans" },
+    caption: { size: "13px", lh: "1.4", weight: "400", tracking: "0em", family: "sans" },
+    eyebrow: { size: "12px", lh: "1.4", weight: "400", tracking: "0.18em", family: "sans" },
     // Homepage-only reuse: neither role is referenced outside the home-ds hero/CTA,
     // so both are safely repointed to the 2026 refresh's handwritten-accent sizing.
     script: { size: "48px", lh: "1.1", weight: "600", tracking: "0em", family: "script" },
@@ -147,22 +192,22 @@ export const dsTokens = {
 
     // Homepage 2026 refresh — new roles only; existing roles above are untouched
     // so other routes (case studies, global chrome) render exactly as before.
-    "hp-eyebrow": { size: "14px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
-    "hp-eyebrow-loose": { size: "14px", lh: "1.4", weight: "300", tracking: "0.1em", family: "inter" },
+    "hp-eyebrow": { size: "14px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-eyebrow-loose": { size: "14px", lh: "1.4", weight: "400", tracking: "0.1em", family: "inter" },
     "hp-title": { size: "48px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
     "hp-headline": { size: "36px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title": { size: "24px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
-    "hp-body": { size: "15px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-body": { size: "15px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-year": { size: "32px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
     "hp-bio": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
-    "hp-meta": { size: "12px", lh: "1.1", weight: "300", tracking: "-0.025em", family: "inter" },
-    "hp-caption": { size: "13px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
-    "hp-subtitle": { size: "16px", lh: "1.2", weight: "500", tracking: "-0.025em", family: "inter" },
+    "hp-meta": { size: "12px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-caption": { size: "13px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-subtitle": { size: "16px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-lede": { size: "24px", lh: "1.3", weight: "300", tracking: "-0.025em", family: "inter" },
 
     // Homepage 6 refresh — new roles traced from the Figma export (Inter, weight 400,
     // ‑0.025em everywhere except hp-metric which Figma sets to 0 tracking)
-    "hp-label": { size: "14px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-label": { size: "14px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-section-title": { size: "40px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title-lg": { size: "32px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title-sm": { size: "20px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
@@ -174,7 +219,7 @@ export const dsTokens = {
     // Case-study restyle — reading-context roles (section headings + long-form
     // body copy); additive, only used inside components/case-study/*.
     "hp-heading": { size: "30px", lh: "1.25", weight: "400", tracking: "-0.02em", family: "inter" },
-    "hp-prose": { size: "17px", lh: "1.7", weight: "400", tracking: "-0.01em", family: "inter" }
+    "hp-prose": { size: "17px", lh: "1.4", weight: "400", tracking: "-0.01em", family: "inter" }
   },
 
   // Mobile display overrides (applied via the :root media block in tokensToCss)
@@ -198,7 +243,9 @@ export const dsTokens = {
   shadow: {
     card: "0 1px 2px rgba(30,21,21,0.03), 0 8px 24px -8px rgba(30,21,21,0.08)",
     "card-hover": "0 2px 6px rgba(30,21,21,0.05), 0 18px 48px -12px rgba(30,21,21,0.16)",
-    nav: "0 2px 8px rgba(30,21,21,0.06), 0 12px 32px -12px rgba(30,21,21,0.12)"
+    nav: "0 2px 8px rgba(30,21,21,0.06), 0 12px 32px -12px rgba(30,21,21,0.12)",
+    // Visual Block play-button lift (Figma node 572:7922)
+    "media-play": "0 2px 8px rgba(0,0,0,0.15)"
   },
 
   motion: {
