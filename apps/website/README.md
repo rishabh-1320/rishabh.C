@@ -95,3 +95,54 @@ Deployed as a standalone Vercel project with root directory `apps/website`.
 Requires `WEBSITE_API_BASE_URL` to be set to the live URL of `services/website-api`.
 
 See [`docs/github-vercel-setup.md`](../../docs/github-vercel-setup.md) for the full deployment guide.
+
+---
+
+## Visitor analytics
+
+Self-hosted, server-side page-view tracking. `middleware.ts` records each page
+view into the Neon `visitor_logs` table; the dashboard lives at **`/admin/visitors`**
+behind HTTP Basic Auth (`ADMIN_USER` / `ADMIN_PASSWORD`).
+
+Because it runs in middleware rather than a client script, it sees the visitors
+that ad blockers hide from Vercel Analytics and Microsoft Clarity, which are also
+loaded in `app/layout.tsx`.
+
+### Filtering out your own traffic
+
+Rows are never deleted, only classified — and "is this the owner?" is decided
+when *reading*, not when writing. That makes every classification retroactive
+and reversible.
+
+- **`/admin/visitors` → "This is me"** on any row tags that browser
+  (`visitor_id`) forever. **"+ network"** tags the whole `/16` prefix, which is
+  what survives a home ISP rotating your address daily.
+- **`/admin/exclude-me`** does the same for the browser you are currently in,
+  *and* sets a cookie that stops the row being written at all.
+- **`/admin/include-me`** clears that cookie.
+- The **Owner & bot rules** panel lists every rule with its match count, and
+  removing a rule immediately restores those rows to the "Real" tab.
+
+A cookie alone was never enough: it covers one browser on one device on one
+origin and dies on any cache clear. The rules table is the durable layer.
+
+### Dev writes are blocked
+
+`.env.local` holds the **production** `DATABASE_URL`, so before this guard
+existed every `pnpm dev` page load inserted a production row (509 of the first
+671). Logging now requires `VERCEL_ENV === "production"`. To test tracking
+locally, set `VISITOR_LOG_LOCAL=1`.
+
+### Attribution
+
+Append `?src=<label>` to any link — one label per company you send the portfolio
+to — and the **Campaign sources** panel shows who opened it and which case
+studies they read. `utm_source` / `utm_medium` / `utm_campaign` are captured too.
+
+### Commands
+
+```bash
+pnpm db:migrate                        # apply db/migrations/*.sql
+pnpm db:prune -- --localhost --bots    # dry run; add --apply to delete
+pnpm db:prune -- --older-than=365 --apply
+```

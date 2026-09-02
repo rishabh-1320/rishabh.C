@@ -10,7 +10,8 @@
     "lint": "next lint",
     "lint:drift:ds": "node scripts/check-drift-ds.mjs",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "db:migrate": "node --env-file=.env.local scripts/migrate.mjs"
+    "db:migrate": "node --env-file=.env.local scripts/migrate.mjs",
+    "db:prune": "node --env-file=.env.local scripts/prune-visitors.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

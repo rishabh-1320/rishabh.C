@@ -2,8 +2,51 @@ import "server-only";
 import { sql } from "./db";
 
 export const VISITOR_EXCLUDE_COOKIE = "vt_exclude";
+export const VISITOR_COOKIE = "vt_vid";
+export const SESSION_COOKIE = "vt_sid";
+export const VISITOR_TTL_SECONDS = 60 * 60 * 24 * 730; // 2 years
+export const SESSION_TTL_SECONDS = 60 * 30; // 30 minutes
+export const PAGE_SIZE = 50;
+
+/**
+ * Owner classification happens here, at read time, rather than at insert time.
+ * A cookie-based opt-out could only ever cover one browser on one device on one
+ * origin, which is why the previous attempt kept missing traffic: three devices
+ * times two browsers times two domains was eight separate cookie jars, each one
+ * lost on a cookie clear or an incognito window. Matching against a rules table
+ * instead means tagging a device once cleans up every row it ever wrote, an
+ * ip_prefix rule survives the daily IP rotation on a home ISP, and getting a
+ * rule wrong is undone by deleting one row.
+ */
+const OWNER_PREDICATE = `EXISTS (
+  SELECT 1 FROM visitor_exclusions e
+  WHERE (e.kind = 'visitor_id' AND v.visitor_id IS NOT NULL AND e.value = v.visitor_id)
+     OR (e.kind = 'ip' AND e.value = v.ip)
+     OR (e.kind = 'ip_prefix' AND v.ip LIKE e.value || '%')
+)`;
+
+export type VisitorFilter = "real" | "mine" | "bots" | "all";
+
+export function parseFilter(value: string | undefined): VisitorFilter {
+  return value === "mine" || value === "bots" || value === "all" ? value : "real";
+}
+
+function whereFor(filter: VisitorFilter): string {
+  switch (filter) {
+    case "mine":
+      return `(v.is_local OR ${OWNER_PREDICATE})`;
+    case "bots":
+      return `v.is_bot AND NOT v.is_local`;
+    case "all":
+      return `true`;
+    default:
+      return `NOT v.is_local AND NOT v.is_bot AND NOT ${OWNER_PREDICATE}`;
+  }
+}
 
 export type VisitorLogInput = {
+  visitorId: string;
+  sessionId: string;
   ip: string | null;
   country: string | null;
   region: string | null;
@@ -18,17 +61,25 @@ export type VisitorLogInput = {
   path: string;
   referrer: string | null;
   userAgent: string | null;
+  host: string | null;
+  src: string | null;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  isLocal: boolean;
+  isBot: boolean;
+  botReason: string | null;
 };
 
 export type VisitorLogRow = {
   id: string;
   created_at: string;
+  visitor_id: string | null;
+  session_id: string | null;
   ip: string | null;
   country: string | null;
   region: string | null;
   city: string | null;
-  latitude: string | null;
-  longitude: string | null;
   device_type: string | null;
   browser_name: string | null;
   browser_version: string | null;
@@ -37,78 +88,203 @@ export type VisitorLogRow = {
   path: string;
   referrer: string | null;
   user_agent: string | null;
+  host: string | null;
+  src: string | null;
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  dwell_ms: number | null;
+  max_scroll_pct: number | null;
+  is_local: boolean;
+  is_bot: boolean;
+  bot_reason: string | null;
+  is_owner: boolean;
+  visit_number: number;
 };
 
 export async function insertVisitorLog(input: VisitorLogInput) {
   await sql`
     INSERT INTO visitor_logs (
-      ip, country, region, city, latitude, longitude,
+      visitor_id, session_id, ip, country, region, city, latitude, longitude,
       device_type, browser_name, browser_version, os_name, os_version,
-      path, referrer, user_agent
+      path, referrer, user_agent, host, src, utm_source, utm_medium, utm_campaign,
+      is_local, is_bot, bot_reason
     ) VALUES (
-      ${input.ip}, ${input.country}, ${input.region}, ${input.city}, ${input.latitude}, ${input.longitude},
+      ${input.visitorId}, ${input.sessionId}, ${input.ip}, ${input.country}, ${input.region}, ${input.city},
+      ${input.latitude}, ${input.longitude},
       ${input.deviceType}, ${input.browserName}, ${input.browserVersion}, ${input.osName}, ${input.osVersion},
-      ${input.path}, ${input.referrer}, ${input.userAgent}
+      ${input.path}, ${input.referrer}, ${input.userAgent}, ${input.host}, ${input.src},
+      ${input.utmSource}, ${input.utmMedium}, ${input.utmCampaign},
+      ${input.isLocal}, ${input.isBot}, ${input.botReason}
     )
   `;
 }
 
-const PAGE_SIZE = 50;
+/** Attaches dwell time / scroll depth to the most recent matching page view. */
+export async function recordEngagement(visitorId: string, path: string, dwellMs: number, maxScrollPct: number) {
+  await sql`
+    UPDATE visitor_logs SET
+      dwell_ms = GREATEST(COALESCE(dwell_ms, 0), ${dwellMs}),
+      max_scroll_pct = GREATEST(COALESCE(max_scroll_pct, 0), ${maxScrollPct})
+    WHERE id = (
+      SELECT id FROM visitor_logs
+      WHERE visitor_id = ${visitorId} AND path = ${path} AND created_at > now() - interval '6 hours'
+      ORDER BY created_at DESC LIMIT 1
+    )
+  `;
+}
 
-export async function getVisitorLogs(page: number): Promise<{ rows: VisitorLogRow[]; totalCount: number }> {
+export async function getVisitorLogs(page: number, filter: VisitorFilter): Promise<{ rows: VisitorLogRow[]; totalCount: number }> {
   const offset = Math.max(0, page) * PAGE_SIZE;
+  const where = whereFor(filter);
+
   const [rows, countResult] = await Promise.all([
-    sql`
-      SELECT id, created_at, ip, country, region, city, latitude, longitude,
-             device_type, browser_name, browser_version, os_name, os_version,
-             path, referrer, user_agent
-      FROM visitor_logs
-      ORDER BY created_at DESC
-      LIMIT ${PAGE_SIZE} OFFSET ${offset}
-    `,
-    sql`SELECT COUNT(*)::int AS count FROM visitor_logs`
+    sql.query(
+      `SELECT v.id, v.created_at, v.visitor_id, v.session_id, v.ip, v.country, v.region, v.city,
+              v.device_type, v.browser_name, v.browser_version, v.os_name, v.os_version,
+              v.path, v.referrer, v.user_agent, v.host, v.src, v.utm_source, v.utm_medium, v.utm_campaign,
+              v.dwell_ms, v.max_scroll_pct, v.is_local, v.is_bot, v.bot_reason,
+              ${OWNER_PREDICATE} AS is_owner,
+              COUNT(*) OVER (PARTITION BY COALESCE(v.visitor_id, v.ip)) AS visit_number
+       FROM visitor_logs v
+       WHERE ${where}
+       ORDER BY v.created_at DESC
+       LIMIT $1 OFFSET $2`,
+      [PAGE_SIZE, offset]
+    ),
+    sql.query(`SELECT COUNT(*)::int AS count FROM visitor_logs v WHERE ${where}`, [])
   ]);
+
   return { rows: rows as VisitorLogRow[], totalCount: (countResult[0] as { count: number }).count };
 }
 
-export { PAGE_SIZE };
-
 export type VisitorSummary = {
-  totalVisits: number;
+  pageViews: number;
+  uniqueVisitors: number;
+  sessions: number;
   last24h: number;
+  last7d: number;
+  returningVisitors: number;
+  avgDwellSeconds: number | null;
+  counts: { real: number; mine: number; bots: number; all: number };
+  daily: { day: string; views: number; visitors: number }[];
+  topPages: { path: string; views: number; visitors: number; avgDwell: number | null; avgScroll: number | null }[];
   topCountries: { country: string; count: number }[];
+  topCities: { city: string; count: number }[];
   deviceBreakdown: { deviceType: string; count: number }[];
+  topReferrers: { referrer: string; count: number }[];
+  topSources: { source: string; views: number; visitors: number }[];
 };
 
-export async function getVisitorSummary(): Promise<VisitorSummary> {
-  const [totals, last24h, topCountries, deviceBreakdown] = await Promise.all([
-    sql`SELECT COUNT(*)::int AS count FROM visitor_logs`,
-    sql`SELECT COUNT(*)::int AS count FROM visitor_logs WHERE created_at > now() - interval '24 hours'`,
-    sql`
-      SELECT COALESCE(country, 'Unknown') AS country, COUNT(*)::int AS count
-      FROM visitor_logs
-      GROUP BY country
-      ORDER BY count DESC
-      LIMIT 8
-    `,
-    sql`
-      SELECT COALESCE(device_type, 'Unknown') AS device_type, COUNT(*)::int AS count
-      FROM visitor_logs
-      GROUP BY device_type
-      ORDER BY count DESC
-    `
+export async function getVisitorSummary(filter: VisitorFilter): Promise<VisitorSummary> {
+  const where = whereFor(filter);
+  const q = (text: string) => sql.query(text, []);
+
+  const [totals, counts, daily, topPages, topCountries, topCities, devices, referrers, sources] = await Promise.all([
+    q(`SELECT COUNT(*)::int AS page_views,
+              COUNT(DISTINCT COALESCE(v.visitor_id, v.ip))::int AS unique_visitors,
+              COUNT(DISTINCT v.session_id)::int AS sessions,
+              COUNT(*) FILTER (WHERE v.created_at > now() - interval '24 hours')::int AS last_24h,
+              COUNT(*) FILTER (WHERE v.created_at > now() - interval '7 days')::int AS last_7d,
+              ROUND(AVG(v.dwell_ms) / 1000.0)::int AS avg_dwell_seconds
+       FROM visitor_logs v WHERE ${where}`),
+
+    // Tab counts, so the dashboard can show how much is being hidden.
+    q(`SELECT
+         COUNT(*) FILTER (WHERE NOT v.is_local AND NOT v.is_bot AND NOT ${OWNER_PREDICATE})::int AS real,
+         COUNT(*) FILTER (WHERE v.is_local OR ${OWNER_PREDICATE})::int AS mine,
+         COUNT(*) FILTER (WHERE v.is_bot AND NOT v.is_local)::int AS bots,
+         COUNT(*)::int AS all
+       FROM visitor_logs v`),
+
+    q(`SELECT to_char(d.day, 'YYYY-MM-DD') AS day,
+              COALESCE(x.views, 0)::int AS views,
+              COALESCE(x.visitors, 0)::int AS visitors
+       FROM generate_series((now() - interval '29 days')::date, now()::date, interval '1 day') AS d(day)
+       LEFT JOIN (
+         SELECT v.created_at::date AS day, COUNT(*) AS views,
+                COUNT(DISTINCT COALESCE(v.visitor_id, v.ip)) AS visitors
+         FROM visitor_logs v WHERE ${where} GROUP BY 1
+       ) x ON x.day = d.day
+       ORDER BY d.day`),
+
+    q(`SELECT v.path, COUNT(*)::int AS views,
+              COUNT(DISTINCT COALESCE(v.visitor_id, v.ip))::int AS visitors,
+              ROUND(AVG(v.dwell_ms) / 1000.0)::int AS "avgDwell",
+              ROUND(AVG(v.max_scroll_pct))::int AS "avgScroll"
+       FROM visitor_logs v WHERE ${where} GROUP BY v.path ORDER BY views DESC LIMIT 12`),
+
+    q(`SELECT COALESCE(v.country, 'Unknown') AS country, COUNT(*)::int AS count
+       FROM visitor_logs v WHERE ${where} GROUP BY 1 ORDER BY count DESC LIMIT 8`),
+
+    q(`SELECT COALESCE(v.city, 'Unknown') || CASE WHEN v.country IS NULL THEN '' ELSE ', ' || v.country END AS city,
+              COUNT(*)::int AS count
+       FROM visitor_logs v WHERE ${where} GROUP BY 1 ORDER BY count DESC LIMIT 8`),
+
+    q(`SELECT COALESCE(v.device_type, 'Unknown') AS "deviceType", COUNT(*)::int AS count
+       FROM visitor_logs v WHERE ${where} GROUP BY 1 ORDER BY count DESC`),
+
+    q(`SELECT COALESCE(v.referrer, '(direct)') AS referrer, COUNT(*)::int AS count
+       FROM visitor_logs v WHERE ${where} GROUP BY 1 ORDER BY count DESC LIMIT 8`),
+
+    q(`SELECT COALESCE(v.src, v.utm_source) AS source, COUNT(*)::int AS views,
+              COUNT(DISTINCT COALESCE(v.visitor_id, v.ip))::int AS visitors
+       FROM visitor_logs v WHERE ${where} AND COALESCE(v.src, v.utm_source) IS NOT NULL
+       GROUP BY 1 ORDER BY views DESC LIMIT 10`)
   ]);
 
+  // A returning visitor is one seen on more than one calendar day — the signal
+  // that actually matters when a recruiter comes back to re-read a case study.
+  const returning = await q(
+    `SELECT COUNT(*)::int AS count FROM (
+       SELECT COALESCE(v.visitor_id, v.ip) AS who
+       FROM visitor_logs v WHERE ${where}
+       GROUP BY 1 HAVING COUNT(DISTINCT v.created_at::date) > 1
+     ) t`
+  );
+
+  const t = totals[0] as Record<string, number | null>;
   return {
-    totalVisits: (totals[0] as { count: number }).count,
-    last24h: (last24h[0] as { count: number }).count,
-    topCountries: (topCountries as { country: string; count: number }[]).map((r) => ({
-      country: r.country,
-      count: r.count
-    })),
-    deviceBreakdown: (deviceBreakdown as { device_type: string; count: number }[]).map((r) => ({
-      deviceType: r.device_type,
-      count: r.count
-    }))
+    pageViews: (t.page_views as number) ?? 0,
+    uniqueVisitors: (t.unique_visitors as number) ?? 0,
+    sessions: (t.sessions as number) ?? 0,
+    last24h: (t.last_24h as number) ?? 0,
+    last7d: (t.last_7d as number) ?? 0,
+    avgDwellSeconds: t.avg_dwell_seconds as number | null,
+    returningVisitors: (returning[0] as { count: number }).count,
+    counts: counts[0] as VisitorSummary["counts"],
+    daily: daily as VisitorSummary["daily"],
+    topPages: topPages as VisitorSummary["topPages"],
+    topCountries: topCountries as VisitorSummary["topCountries"],
+    topCities: topCities as VisitorSummary["topCities"],
+    deviceBreakdown: devices as VisitorSummary["deviceBreakdown"],
+    topReferrers: referrers as VisitorSummary["topReferrers"],
+    topSources: sources as VisitorSummary["topSources"]
   };
+}
+
+export type ExclusionRow = { id: string; created_at: string; kind: string; value: string; note: string | null; matched: number };
+
+export async function getExclusions(): Promise<ExclusionRow[]> {
+  const rows = await sql`
+    SELECT e.id, e.created_at, e.kind, e.value, e.note,
+           (SELECT COUNT(*)::int FROM visitor_logs v WHERE
+              (e.kind = 'visitor_id' AND v.visitor_id = e.value)
+              OR (e.kind = 'ip' AND v.ip = e.value)
+              OR (e.kind = 'ip_prefix' AND v.ip LIKE e.value || '%')) AS matched
+    FROM visitor_exclusions e ORDER BY e.created_at DESC
+  `;
+  return rows as ExclusionRow[];
+}
+
+export async function addExclusion(kind: string, value: string, note: string | null) {
+  if (!["visitor_id", "ip", "ip_prefix"].includes(kind) || !value) return;
+  await sql`
+    INSERT INTO visitor_exclusions (kind, value, note) VALUES (${kind}, ${value}, ${note})
+    ON CONFLICT ON CONSTRAINT visitor_exclusions_kind_value_key DO NOTHING
+  `;
+}
+
+export async function removeExclusion(id: string) {
+  await sql`DELETE FROM visitor_exclusions WHERE id = ${id}`;
 }

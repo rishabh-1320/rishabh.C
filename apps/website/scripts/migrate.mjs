@@ -24,7 +24,14 @@ async function main() {
       continue;
     }
     const content = await readFile(path.join(migrationsDir, file), "utf8");
-    const statements = content.split(";").map((s) => s.trim()).filter(Boolean);
+    // Strip whole-line "--" comments BEFORE splitting: a semicolon inside a
+    // comment would otherwise cut a statement in half and hand Postgres the
+    // remainder as its own query.
+    const statements = content
+      .replace(/^\s*--.*$/gm, "")
+      .split(";")
+      .map((s) => s.trim())
+      .filter(Boolean);
     for (const statement of statements) {
       await sql.query(statement);
     }
