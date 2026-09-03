@@ -308,3 +308,130 @@ export async function addExclusion(kind: string, value: string, note: string | n
 export async function removeExclusion(id: string) {
   await sql`DELETE FROM visitor_exclusions WHERE id = ${id}`;
 }
+
+/* ---------------------------------------------------------------------------
+ * Grouped view
+ *
+ * The flat log repeats the same device on every line, which makes it hard to
+ * see that eighteen "different" Chandigarh addresses are one laptop on a
+ * rotating home connection. Grouping folds each device into a single row.
+ *
+ * The key is a device fingerprint -- network prefix plus browser, OS and device
+ * type -- rather than the visitor cookie. The cookie identifies a browser more
+ * precisely, but it is exactly the wrong key here: it did not exist for older
+ * rows, and a crawler that arrives without a cookie jar gets a brand new id on
+ * every request, so cookie-keyed groups shatter into one-row fragments. The
+ * fingerprint is stable across both, and it is what collapses the rotating-IP
+ * case: the address changes daily, the first two octets and the user agent
+ * do not. Each group reports how many distinct cookie identities are inside it,
+ * so an over-merge is visible rather than hidden.
+ * ------------------------------------------------------------------------- */
+
+const NETWORK_EXPR = `CASE
+  WHEN v.ip IS NULL THEN 'unknown'
+  WHEN v.ip LIKE '%:%' THEN v.ip
+  ELSE split_part(v.ip, '.', 1) || '.' || split_part(v.ip, '.', 2) || '.*'
+END`;
+
+const GROUP_KEY_EXPR = `${NETWORK_EXPR} || ' | ' || COALESCE(v.browser_name, '?') || '/' ||
+  COALESCE(v.os_name, '?') || ' | ' || COALESCE(v.device_type, '?')`;
+
+export type VisitorGroup = {
+  group_key: string;
+  network: string;
+  place: string | null;
+  browser: string | null;
+  os: string | null;
+  device_type: string | null;
+  views: number;
+  sessions: number;
+  ip_count: number;
+  visitor_count: number;
+  path_count: number;
+  days_active: number;
+  first_seen: string;
+  last_seen: string;
+  total_dwell_ms: number | null;
+  sources: string | null;
+  is_owner: boolean;
+  is_bot: boolean;
+  is_local: boolean;
+  bot_reason: string | null;
+  sample_ip: string | null;
+  sample_visitor_id: string | null;
+  children: VisitorLogRow[];
+};
+
+export async function getVisitorGroups(
+  page: number,
+  filter: VisitorFilter
+): Promise<{ groups: VisitorGroup[]; totalGroups: number }> {
+  const where = whereFor(filter);
+  const limit = 25;
+  const offset = Math.max(0, page) * limit;
+
+  const base = `SELECT v.*, ${OWNER_PREDICATE} AS is_owner, ${GROUP_KEY_EXPR} AS gk, ${NETWORK_EXPR} AS network
+                FROM visitor_logs v WHERE ${where}`;
+
+  const [groups, totals] = await Promise.all([
+    sql.query(
+      `WITH base AS (${base})
+       SELECT gk AS group_key,
+              mode() WITHIN GROUP (ORDER BY network) AS network,
+              mode() WITHIN GROUP (ORDER BY COALESCE(city, country)) AS place,
+              mode() WITHIN GROUP (ORDER BY browser_name) AS browser,
+              mode() WITHIN GROUP (ORDER BY os_name) AS os,
+              mode() WITHIN GROUP (ORDER BY device_type) AS device_type,
+              COUNT(*)::int AS views,
+              COUNT(DISTINCT session_id)::int AS sessions,
+              COUNT(DISTINCT ip)::int AS ip_count,
+              COUNT(DISTINCT visitor_id)::int AS visitor_count,
+              COUNT(DISTINCT path)::int AS path_count,
+              COUNT(DISTINCT (created_at AT TIME ZONE $1::text)::date)::int AS days_active,
+              MIN(created_at) AS first_seen,
+              MAX(created_at) AS last_seen,
+              NULLIF(SUM(COALESCE(dwell_ms, 0)), 0)::int AS total_dwell_ms,
+              string_agg(DISTINCT COALESCE(src, utm_source), ', ') AS sources,
+              bool_or(is_owner) AS is_owner,
+              bool_or(is_bot) AS is_bot,
+              bool_or(is_local) AS is_local,
+              mode() WITHIN GROUP (ORDER BY bot_reason) AS bot_reason,
+              mode() WITHIN GROUP (ORDER BY ip) AS sample_ip,
+              mode() WITHIN GROUP (ORDER BY visitor_id) AS sample_visitor_id
+       FROM base
+       GROUP BY gk
+       ORDER BY MAX(created_at) DESC
+       LIMIT $2 OFFSET $3`,
+      [DISPLAY_TIMEZONE, limit, offset]
+    ),
+    sql.query(`WITH base AS (${base}) SELECT COUNT(DISTINCT gk)::int AS count FROM base`, [])
+  ]);
+
+  const rows = groups as Omit<VisitorGroup, "children">[];
+  const keys = rows.map((g) => g.group_key);
+
+  // One query for every child row on this page rather than one per group.
+  const children = keys.length
+    ? ((await sql.query(
+        `SELECT * FROM (
+           SELECT b.*, ROW_NUMBER() OVER (PARTITION BY b.gk ORDER BY b.created_at DESC) AS rn
+           FROM (${base}) b
+         ) t
+         WHERE t.gk = ANY($1::text[]) AND t.rn <= 60
+         ORDER BY t.created_at DESC`,
+        [keys]
+      )) as (VisitorLogRow & { gk: string })[])
+    : [];
+
+  const byKey = new Map<string, VisitorLogRow[]>();
+  for (const child of children) {
+    const list = byKey.get(child.gk) ?? [];
+    list.push(child);
+    byKey.set(child.gk, list);
+  }
+
+  return {
+    groups: rows.map((g) => ({ ...g, children: byKey.get(g.group_key) ?? [] })),
+    totalGroups: (totals[0] as { count: number }).count
+  };
+}

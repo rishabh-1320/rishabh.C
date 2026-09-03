@@ -3,11 +3,13 @@ import Link from "next/link";
 import {
   DISPLAY_TIMEZONE,
   getExclusions,
+  getVisitorGroups,
   getVisitorLogs,
   getVisitorSummary,
   PAGE_SIZE,
   parseFilter,
   type VisitorFilter,
+  type VisitorGroup,
   type VisitorLogRow,
   type VisitorSummary
 } from "@/lib/visitor-log";
@@ -61,21 +63,34 @@ const TABS: { key: VisitorFilter; label: string; hint: string }[] = [
 export default async function VisitorsPage({
   searchParams
 }: {
-  searchParams: { page?: string; filter?: string };
+  searchParams: { page?: string; filter?: string; view?: string };
 }) {
   const page = Math.max(0, parseInt(searchParams.page ?? "0", 10) || 0);
   const filter = parseFilter(searchParams.filter);
+  const grouped = searchParams.view !== "timeline";
 
-  const [{ rows, totalCount }, summary, exclusions] = await Promise.all([
-    getVisitorLogs(page, filter),
+  const [log, groupResult, summary, exclusions] = await Promise.all([
+    grouped ? Promise.resolve(null) : getVisitorLogs(page, filter),
+    grouped ? getVisitorGroups(page, filter) : Promise.resolve(null),
     getVisitorSummary(filter),
     getExclusions()
   ]);
-  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+
+  const totalCount = grouped ? groupResult!.totalGroups : log!.totalCount;
+  const totalPages = Math.max(1, Math.ceil(totalCount / (grouped ? 25 : PAGE_SIZE)));
+  const qs = (extra: Record<string, string | number>) =>
+    "/admin/visitors?" + new URLSearchParams({ filter, view: grouped ? "grouped" : "timeline", ...Object.fromEntries(Object.entries(extra).map(([k, v]) => [k, String(v)])) }).toString();
   const activeTab = TABS.find((t) => t.key === filter)!;
 
   return (
     <main style={{ maxWidth: 1240, margin: "0 auto", padding: "40px 24px 80px", fontFamily: "system-ui, sans-serif", color: C.text, background: C.bg, minHeight: "100vh" }}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        details > summary::-webkit-details-marker { display: none; }
+        details > summary::before { content: "\\25B8"; color: #99998f; margin-right: 2px; font-size: 11px; }
+        details[open] > summary::before { content: "\\25BE"; }
+        details > summary:hover { background: #f6f6f4; }
+      ` }} />
+
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 26, fontWeight: 600, margin: 0 }}>Visitors</h1>
         <p style={{ color: C.muted, margin: "6px 0 0", fontSize: 14 }}>
@@ -89,7 +104,7 @@ export default async function VisitorsPage({
           return (
             <Link
               key={tab.key}
-              href={`/admin/visitors?filter=${tab.key}`}
+              href={`/admin/visitors?filter=${tab.key}&view=${grouped ? "grouped" : "timeline"}`}
               style={{
                 padding: "7px 14px", borderRadius: 999, fontSize: 13, textDecoration: "none",
                 border: `1px solid ${active ? C.text : C.border}`,
@@ -172,31 +187,134 @@ export default async function VisitorsPage({
         )}
       </Panel>
 
-      <Panel title={`Page views (${totalCount.toLocaleString()})`} flush>
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
-            <thead>
-              <tr style={{ background: "#f6f6f4", textAlign: "left" }}>
-                <Th>Time</Th><Th>Visitor</Th><Th>Location</Th><Th>IP</Th><Th>Device</Th>
-                <Th>Path</Th><Th>Read</Th><Th>Source</Th><Th></Th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 && (
-                <tr><td colSpan={9} style={{ padding: 28, textAlign: "center", color: C.muted }}>No rows for this filter.</td></tr>
-              )}
-              {rows.map((row) => <Row key={row.id} row={row} />)}
-            </tbody>
-          </table>
+      <section style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, marginBottom: 16, overflow: "hidden" }}>
+        <div style={{ padding: "12px 14px 10px", display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <h2 style={{ fontSize: 13, fontWeight: 600, margin: 0, textTransform: "uppercase", letterSpacing: 0.4, color: C.muted }}>
+            {grouped ? `Devices (${totalCount.toLocaleString()})` : `Page views (${totalCount.toLocaleString()})`}
+          </h2>
+          <div style={{ display: "flex", gap: 10, fontSize: 12.5 }}>
+            <Link href={`/admin/visitors?filter=${filter}&view=grouped`} style={{ ...pageLink, fontWeight: grouped ? 600 : 400, color: grouped ? C.text : C.accent }}>Grouped</Link>
+            <span style={{ color: C.border }}>|</span>
+            <Link href={`/admin/visitors?filter=${filter}&view=timeline`} style={{ ...pageLink, fontWeight: !grouped ? 600 : 400, color: !grouped ? C.text : C.accent }}>Timeline</Link>
+          </div>
         </div>
-      </Panel>
+
+        {grouped ? (
+          groupResult!.groups.length === 0
+            ? <p style={{ padding: 28, textAlign: "center", color: C.muted, fontSize: 13, margin: 0 }}>Nothing for this filter.</p>
+            : groupResult!.groups.map((g) => <GroupRow key={g.group_key} group={g} />)
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
+              <thead>
+                <tr style={{ background: "#f6f6f4", textAlign: "left" }}>
+                  <Th>Time</Th><Th>Visitor</Th><Th>Location</Th><Th>IP</Th><Th>Device</Th>
+                  <Th>Path</Th><Th>Read</Th><Th>Source</Th><Th></Th>
+                </tr>
+              </thead>
+              <tbody>
+                {log!.rows.length === 0 && (
+                  <tr><td colSpan={9} style={{ padding: 28, textAlign: "center", color: C.muted }}>No rows for this filter.</td></tr>
+                )}
+                {log!.rows.map((row) => <Row key={row.id} row={row} />)}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       <div style={{ display: "flex", gap: 12, alignItems: "center", justifyContent: "center", marginTop: 24, fontSize: 13 }}>
-        {page > 0 && <Link href={`/admin/visitors?filter=${filter}&page=${page - 1}`} style={pageLink}>← Newer</Link>}
+        {page > 0 && <Link href={qs({ page: page - 1 })} style={pageLink}>← Newer</Link>}
         <span style={{ color: C.muted }}>Page {page + 1} of {totalPages}</span>
-        {page + 1 < totalPages && <Link href={`/admin/visitors?filter=${filter}&page=${page + 1}`} style={pageLink}>Older →</Link>}
+        {page + 1 < totalPages && <Link href={qs({ page: page + 1 })} style={pageLink}>Older →</Link>}
       </div>
     </main>
+  );
+}
+
+function dateRange(first: string, last: string): string {
+  const f = new Date(first).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: DISPLAY_TIMEZONE });
+  const l = new Date(last).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: DISPLAY_TIMEZONE });
+  return f === l ? f : `${f} – ${l}`;
+}
+
+/**
+ * One device, collapsed. <details> gives us expand/collapse natively, so this
+ * whole thing stays a server component with no client JavaScript.
+ */
+function GroupRow({ group: g }: { group: VisitorGroup }) {
+  const device = [g.browser, g.os].filter(Boolean).join(" / ") || "Unknown device";
+  const tag = g.is_local
+    ? { text: "localhost", color: C.muted }
+    : g.is_owner
+      ? { text: "you", color: C.accent }
+      : g.is_bot
+        ? { text: g.bot_reason ?? "bot", color: C.warn }
+        : null;
+
+  const facts = [
+    `${g.views} view${g.views === 1 ? "" : "s"}`,
+    g.sessions > 0 ? `${g.sessions} session${g.sessions === 1 ? "" : "s"}` : null,
+    g.ip_count > 1 ? `${g.ip_count} IPs` : g.sample_ip,
+    g.visitor_count > 1 ? `${g.visitor_count} browsers` : null,
+    g.days_active > 1 ? `${g.days_active} days` : null,
+    g.path_count > 1 ? `${g.path_count} pages` : null,
+    g.sources ? `src: ${g.sources}` : null
+  ].filter(Boolean);
+
+  return (
+    <details style={{ borderTop: `1px solid ${C.border}`, background: tag && tag.text !== "you" ? "#fcfcfb" : undefined }}>
+      <summary style={{ padding: "10px 14px", cursor: "pointer", listStyle: "none", display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" }}>
+        <span style={{ fontFamily: "ui-monospace, monospace", fontWeight: 600, fontSize: 13 }}>{g.network}</span>
+        <span style={{ fontSize: 13 }}>{g.place ?? "Unknown"}</span>
+        <span style={{ fontSize: 13, color: C.muted }}>
+          {device}
+          {g.device_type && g.device_type !== "desktop" ? ` · ${g.device_type}` : ""}
+        </span>
+        {tag && <Badge color={tag.color}>{tag.text}</Badge>}
+        <span style={{ marginLeft: "auto", fontSize: 12, color: C.muted, whiteSpace: "nowrap" }}>
+          {facts.join(" · ")} · {dateRange(g.first_seen, g.last_seen)}
+        </span>
+      </summary>
+
+      <div style={{ padding: "0 14px 12px 28px" }}>
+        {!g.is_owner && !g.is_local && (
+          <form action={markAsMine} style={{ display: "flex", gap: 10, padding: "2px 0 10px" }}>
+            <input type="hidden" name="visitorId" value={g.sample_visitor_id ?? ""} />
+            <input type="hidden" name="ip" value={g.sample_ip ?? ""} />
+            <input type="hidden" name="label" value={device} />
+            <button type="submit" name="scope" value="visitor" style={linkButton}>This is me</button>
+            <button type="submit" name="scope" value="network" style={linkButton}>+ whole network ({g.network})</button>
+          </form>
+        )}
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+          <tbody>
+            {g.children.map((row) => (
+              <tr key={row.id} style={{ borderTop: `1px solid ${C.border}` }}>
+                <Td>{formatTimestamp(row.created_at)}</Td>
+                <Td mono>{row.ip ?? "—"}</Td>
+                <Td>{row.path}</Td>
+                <Td>
+                  {row.dwell_ms ? duration(Math.round(row.dwell_ms / 1000)) : "—"}
+                  {row.max_scroll_pct != null && <span style={{ color: C.muted }}> · {row.max_scroll_pct}%</span>}
+                </Td>
+                <Td>{row.src ?? row.utm_source ?? ""}</Td>
+                <Td>
+                  <span style={{ color: C.muted }}>
+                    {row.referrer ? row.referrer.replace(/^https?:\/\//, "").slice(0, 40) : "direct"}
+                  </span>
+                </Td>
+              </tr>
+            ))}
+            {g.views > g.children.length && (
+              <tr><td colSpan={6} style={{ padding: "8px 10px", color: C.muted }}>
+                showing the {g.children.length} most recent of {g.views}
+              </td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </details>
   );
 }
 
