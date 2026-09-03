@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  DISPLAY_TIMEZONE,
   getExclusions,
   getVisitorLogs,
   getVisitorSummary,
@@ -25,8 +26,19 @@ const C = {
   warn: "#a8632a"
 };
 
+// Rendered during SSR, so without an explicit timeZone this formats in the
+// server's zone -- UTC on Vercel -- and every timestamp reads 5h30m early.
 function formatTimestamp(iso: string): string {
-  return new Date(iso).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
+  return new Date(iso).toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: DISPLAY_TIMEZONE
+  });
+}
+
+function timezoneLabel(): string {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: DISPLAY_TIMEZONE, timeZoneName: "short" }).formatToParts(new Date());
+  return parts.find((p) => p.type === "timeZoneName")?.value ?? DISPLAY_TIMEZONE;
 }
 
 function locationLabel(row: { city: string | null; region: string | null; country: string | null }): string {
@@ -66,7 +78,9 @@ export default async function VisitorsPage({
     <main style={{ maxWidth: 1240, margin: "0 auto", padding: "40px 24px 80px", fontFamily: "system-ui, sans-serif", color: C.text, background: C.bg, minHeight: "100vh" }}>
       <header style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 26, fontWeight: 600, margin: 0 }}>Visitors</h1>
-        <p style={{ color: C.muted, margin: "6px 0 0", fontSize: 14 }}>{activeTab.hint}</p>
+        <p style={{ color: C.muted, margin: "6px 0 0", fontSize: 14 }}>
+          {activeTab.hint} · times in {DISPLAY_TIMEZONE.replace("_", " ")} ({timezoneLabel()})
+        </p>
       </header>
 
       <nav style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>

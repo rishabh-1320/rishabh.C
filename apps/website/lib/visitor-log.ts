@@ -9,6 +9,18 @@ export const SESSION_TTL_SECONDS = 60 * 30; // 30 minutes
 export const PAGE_SIZE = 50;
 
 /**
+ * Timezone the dashboard reports in. created_at is a TIMESTAMPTZ and is stored
+ * correctly in UTC, but both ends of the read path used to default to whatever
+ * zone they happened to run in: toLocaleString() rendered in the server's zone
+ * (UTC on Vercel) and `created_at::date` bucketed on the database session zone
+ * (GMT). A visit at 9:48pm IST therefore displayed as 4:18pm, and any visit
+ * before 5:30am IST was counted on the previous day's bar in the chart.
+ * Pinning one zone for every read fixes both, and pinning it explicitly means
+ * the numbers do not shift if Vercel or Neon ever changes region.
+ */
+export const DISPLAY_TIMEZONE = process.env.ANALYTICS_TIMEZONE || "Asia/Kolkata";
+
+/**
  * Owner classification happens here, at read time, rather than at insert time.
  * A cookie-based opt-out could only ever cover one browser on one device on one
  * origin, which is why the previous attempt kept missing traffic: three devices
@@ -178,7 +190,10 @@ export type VisitorSummary = {
 
 export async function getVisitorSummary(filter: VisitorFilter): Promise<VisitorSummary> {
   const where = whereFor(filter);
-  const q = (text: string) => sql.query(text, []);
+  // Only the two day-bucketing queries take a bound parameter; Postgres
+  // rejects a bind that supplies more parameters than the statement uses.
+  const q = (text: string, params: unknown[] = []) => sql.query(text, params);
+  const tzParam = [DISPLAY_TIMEZONE];
 
   const [totals, counts, daily, topPages, topCountries, topCities, devices, referrers, sources] = await Promise.all([
     q(`SELECT COUNT(*)::int AS page_views,
@@ -200,13 +215,17 @@ export async function getVisitorSummary(filter: VisitorFilter): Promise<VisitorS
     q(`SELECT to_char(d.day, 'YYYY-MM-DD') AS day,
               COALESCE(x.views, 0)::int AS views,
               COALESCE(x.visitors, 0)::int AS visitors
-       FROM generate_series((now() - interval '29 days')::date, now()::date, interval '1 day') AS d(day)
+       FROM generate_series(
+              (now() AT TIME ZONE $1::text)::date - 29,
+              (now() AT TIME ZONE $1::text)::date,
+              interval '1 day'
+            ) AS d(day)
        LEFT JOIN (
-         SELECT v.created_at::date AS day, COUNT(*) AS views,
+         SELECT (v.created_at AT TIME ZONE $1::text)::date AS day, COUNT(*) AS views,
                 COUNT(DISTINCT COALESCE(v.visitor_id, v.ip)) AS visitors
          FROM visitor_logs v WHERE ${where} GROUP BY 1
-       ) x ON x.day = d.day
-       ORDER BY d.day`),
+       ) x ON x.day = d.day::date
+       ORDER BY d.day`, tzParam),
 
     q(`SELECT v.path, COUNT(*)::int AS views,
               COUNT(DISTINCT COALESCE(v.visitor_id, v.ip))::int AS visitors,
@@ -239,8 +258,9 @@ export async function getVisitorSummary(filter: VisitorFilter): Promise<VisitorS
     `SELECT COUNT(*)::int AS count FROM (
        SELECT COALESCE(v.visitor_id, v.ip) AS who
        FROM visitor_logs v WHERE ${where}
-       GROUP BY 1 HAVING COUNT(DISTINCT v.created_at::date) > 1
-     ) t`
+       GROUP BY 1 HAVING COUNT(DISTINCT (v.created_at AT TIME ZONE $1::text)::date) > 1
+     ) t`,
+    tzParam
   );
 
   const t = totals[0] as Record<string, number | null>;
