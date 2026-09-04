@@ -12,5 +12,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { heading: homeContent.worksHeading, works: homeContent.works }
+  args: { heading: homeContent.worksHeading, intro: homeContent.worksIntro, works: homeContent.works }
 };

@@ -99,7 +99,7 @@ const VARIANT: Record<TextVariant, string> = {
   "hp-card-title-sm":
     "font-ds-inter text-ds-hp-card-title-sm font-[var(--ds-type-hp-card-title-sm-weight)] tracking-[var(--ds-type-hp-card-title-sm-tracking)] text-ds-heading",
   "hp-metric":
-    "font-ds-inter text-ds-hp-metric font-[var(--ds-type-hp-metric-weight)] tracking-[var(--ds-type-hp-metric-tracking)] text-ds-heading",
+    "font-ds-inter text-ds-hp-metric font-[var(--ds-type-hp-metric-weight)] tracking-[var(--ds-type-hp-metric-tracking)] text-ds-hp-metric-ink",
   "hp-brand":
     "font-ds-inter text-ds-hp-brand font-[var(--ds-type-hp-brand-weight)] tracking-[var(--ds-type-hp-brand-tracking)] text-ds-heading",
 

@@ -2,7 +2,6 @@ import type { HomeContent } from "@/lib/types";
 import { Section, Text } from "@packages/ds-ui";
 import { TitleContainer } from "../library/texts/title-container";
 import { MethodologyGrid } from "../site-components/methodology-grid";
-import { Marquee } from "../site-components/marquee";
 import { AiToolTile } from "../library/ai-tools/ai-tool-tile";
 import { ContainerBlock } from "../library/blocks/container-block";
 import { ContentBlock } from "../library/blocks/content-block";
@@ -53,11 +52,14 @@ export function DsSkill({
             <Text variant="hp-body">{aiWorkflow.intro}</Text>
           </div>
 
-          <Marquee>
+          {/* Figma lays the tiles out as a static row spread evenly across the
+              full content column, not a scrolling marquee — so the whole set
+              is readable at rest. */}
+          <div className="flex flex-wrap items-center justify-between gap-6">
             {aiWorkflow.tools.map((tool) =>
               tool.icon ? <AiToolTile key={tool.name} name={tool.name} icon={tool.icon} /> : null
             )}
-          </Marquee>
+          </div>
         </ContentBlock>
       </ContainerBlock>
     </Section>

@@ -6,7 +6,6 @@ import { DsHero } from "./sections/ds-hero";
 import { DsMetrics } from "./sections/ds-metrics";
 import { DsWork } from "./sections/ds-work";
 import { DsSkill } from "./sections/ds-skill";
-import { DsProjects } from "./sections/ds-projects";
 import { DsAbout } from "./sections/ds-about";
 import { DsCtaFooter } from "./sections/ds-cta-footer";
 
@@ -25,10 +24,10 @@ export function DsHome() {
         <main>
           <DsHero hero={homeContent.hero} />
           <Reveal>
-            <DsMetrics logoStrip={homeContent.logoStrip} stats={homeContent.stats} />
+            <DsMetrics stats={homeContent.stats} />
           </Reveal>
           <Reveal>
-            <DsWork heading={homeContent.worksHeading} works={homeContent.works} />
+            <DsWork heading={homeContent.worksHeading} intro={homeContent.worksIntro} works={homeContent.works} />
           </Reveal>
           <Reveal>
             <DsSkill
@@ -36,13 +35,6 @@ export function DsHome() {
               intro={homeContent.ideologyIntro}
               principles={homeContent.ideologyPrinciples}
               aiWorkflow={homeContent.aiWorkflow}
-            />
-          </Reveal>
-          <Reveal>
-            <DsProjects
-              heading={homeContent.aiExplorationsHeading}
-              intro={homeContent.aiExplorationsIntro}
-              explorations={homeContent.aiExplorations}
             />
           </Reveal>
           <Reveal>

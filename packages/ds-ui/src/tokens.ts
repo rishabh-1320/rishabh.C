@@ -54,7 +54,7 @@ export const dsTokens = {
     // ── Homepage 2026 refresh (additive only — never repurpose the keys above;
     // other routes/components still consume the legacy values as-is) ──
     "surface-paper": "#FFFFFF", // pure-white page bg for the new homepage
-    "surface-mist": "#F5F5F9", // metrics band gradient start (fades to white)
+    "surface-mist": "#F0F3F9", // metrics band gradient start (fades to white) — Figma 593:10898
     "heading": "#181818", // strong heading/emphasis text
     "body-muted": "#666666", // paragraph/description copy
     "nav-muted": "#71717A", // nav links + headline connector words
@@ -77,11 +77,13 @@ export const dsTokens = {
 
     // Homepage final — uniform page background (#FCFCFC) + hero blue wash
     "hp-page": "#FCFCFC", // the whole homepage background; also the dot line-mask color
-    "hero-blue": "#EDF5FF", // hero lower-area gradient blue (light) — tune vs Figma render
+    "hero-wash": "#DBE2F0", // hero gradient mid stop (Figma: light 42.79% → #DBE2F0 78.85% → #F0F3F9 100%;
+    // the light stop is `hp-page`, not Figma's literal #FFF — see ds-hero / ds-metrics)
 
     // Case-study template — mockup window-chrome frame
     "mockup-bg": "#F4F1EC", // warm cream body behind a mockup screenshot
     "mockup-bar": "rgba(0, 0, 0, 0.02)", // the 32px chrome bar above the screenshot
+    "hp-metric-ink": "#120D0D", // the stat numeral in the social-proof band (Figma 593:10901)
     "hp-muted": "#A5A19C", // THE single muted-text grey in Homepage 6 (eyebrows, descriptions, badges, meta)
     "avatar-placeholder": "#D9D9D9", // testimonial avatar fallback fill before a real photo is set
 
@@ -207,11 +209,11 @@ export const dsTokens = {
 
     // Homepage 6 refresh — new roles traced from the Figma export (Inter, weight 400,
     // ‑0.025em everywhere except hp-metric which Figma sets to 0 tracking)
-    "hp-label": { size: "14px", lh: "1.4", weight: "400", tracking: "-0.025em", family: "inter" },
+    "hp-label": { size: "14px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-section-title": { size: "40px", lh: "1.3", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title-lg": { size: "32px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
     "hp-card-title-sm": { size: "20px", lh: "1.1", weight: "400", tracking: "-0.025em", family: "inter" },
-    "hp-metric": { size: "48px", lh: "1", weight: "400", tracking: "0em", family: "inter" },
+    "hp-metric": { size: "48px", lh: "normal", weight: "400", tracking: "0em", family: "inter" },
     // Figma's footer wordmark is explicitly tracking-[-0.96px] at 64px (-0.96/64 = -0.015em),
     // not the -0.025em every other hp-* role uses — measured, not a typo.
     "hp-brand": { size: "64px", lh: "0.9", weight: "400", tracking: "-0.015em", family: "inter" },

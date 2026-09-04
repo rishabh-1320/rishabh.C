@@ -40,7 +40,9 @@ export function MetricCardDiv({
         className
       )}
     >
-      <Text variant="hp-metric" as="span" className="leading-none">
+      {/* No leading override — hp-metric now carries Figma's `normal` line
+          height, which gives the numeral its taller box above the label. */}
+      <Text variant="hp-metric" as="span">
         {animate ? <AnimatedCounter value={value} /> : value}
       </Text>
       <Text variant="hp-label" as="span">

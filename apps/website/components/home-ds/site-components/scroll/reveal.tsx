@@ -34,20 +34,48 @@ export function Reveal({
       return;
     }
 
+    // An element at or above the viewport has been scrolled *past*, not
+    // scrolled *to* — it should already be showing. IntersectionObserver only
+    // reports threshold crossings it actually samples, so a jump that skips
+    // the element entirely (an anchor link, refresh with scroll restoration,
+    // a back-nav, an instant scrollTo) never fires and would leave the section
+    // stuck at opacity 0 forever. Check the geometry directly, both at arm
+    // time and on scroll, and reveal anything the viewport has reached.
+    const reached = () => el.getBoundingClientRect().top < window.innerHeight;
+
+    if (reached()) {
+      setRevealed(true);
+      return;
+    }
+
     setArmed(true);
-    const observer = new IntersectionObserver(
+
+    let observer: IntersectionObserver | null = null;
+    const onScroll = () => {
+      if (!reached()) return;
+      setRevealed(true);
+      cleanup();
+    };
+    const cleanup = () => {
+      observer?.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setRevealed(true);
-            observer.unobserve(entry.target);
+            cleanup();
           }
         });
       },
       { threshold: 0.07, rootMargin: "0px 0px -40px 0px" }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return cleanup;
   }, []);
 
   const hidden = armed && !revealed;

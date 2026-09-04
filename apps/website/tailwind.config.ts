@@ -17,7 +17,17 @@ const config: Config = {
         // Homepage 6 — section-title top padding (Figma pt-120 / pb-24)
         "30": "7.5rem",
         // Homepage final — section-title top padding grew to 140px on the 1200 grid
-        "35": "8.75rem"
+        "35": "8.75rem",
+        // Homepage final — the empty 100px social-proof band above the metric row
+        "25": "6.25rem"
+      },
+      backgroundImage: {
+        // Figma Section-hero fill, with the light stop pinned to the page
+        // colour rather than pure white so the gradient resolves into the
+        // surrounding sections with no seam. Eases into the blue-grey that
+        // hands off to the social-proof band below (which opens on that
+        // same #F0F3F9).
+        "ds-hero": "linear-gradient(180deg, var(--ds-color-hp-page) 42.79%, var(--ds-color-hero-wash) 78.85%, var(--ds-color-surface-mist) 100%)"
       },
       colors: {
         surface: {
@@ -106,9 +116,10 @@ const config: Config = {
           dot: "var(--ds-color-dot)",
           "dot-on-ink": "var(--ds-color-dot-on-ink)",
           "stripe-line": "var(--ds-color-stripe-line)",
+          "hp-metric-ink": "var(--ds-color-hp-metric-ink)",
           "hp-muted": "var(--ds-color-hp-muted)",
           "hp-page": "var(--ds-color-hp-page)",
-          "hero-blue": "var(--ds-color-hero-blue)",
+          "hero-wash": "var(--ds-color-hero-wash)",
           "on-accent": "var(--ds-color-on-accent)",
           "mockup-bg": "var(--ds-color-mockup-bg)",
           "mockup-bar": "var(--ds-color-mockup-bar)",

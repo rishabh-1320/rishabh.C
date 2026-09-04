@@ -33,7 +33,12 @@ export function CardTitle({
   className?: string;
 }) {
   const content = (
-    <div className={cn("flex h-full flex-col justify-center gap-[78px]", PADDING[padding], className)}>
+    // Figma pins the metric/CTA row to the bottom edge of the card and lets
+    // the gap above it absorb whatever height is left. A fixed gap instead
+    // left a visible void on cards that carry no metric (the arrow button
+    // floating alone under empty space), and overflowed the shorter
+    // project-card box.
+    <div className={cn("flex h-full flex-col justify-between gap-12", PADDING[padding], className)}>
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (

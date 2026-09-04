@@ -10,7 +10,7 @@ import { Block } from "../site-components/block";
 // section. Every other section keeps its own scroll effects (Reveal, etc.).
 export function DsHero({ hero }: { hero: HeroContent }) {
   return (
-    <Section bg="paper" pad="none" id="hero">
+    <Section bg="paper" pad="none" id="hero" className="bg-ds-hero">
       <SectionRow>
         <Block border="none" pad="open-top">
           <HeroTitle
@@ -22,9 +22,16 @@ export function DsHero({ hero }: { hero: HeroContent }) {
         </Block>
       </SectionRow>
 
-      {/* Lower hero wash: a light blue gradient with faint vertical pinstripe
-          lines behind the dashboard image. */}
-      <StripePanel background="linear-gradient(to bottom, var(--ds-color-surface-paper), var(--ds-color-hero-blue))">
+      {/* The wash itself is the section's own `bg-ds-hero` gradient, which
+          spans the full hero height (Figma's stops are percentages of the
+          whole section, not of this lower panel). StripePanel here adds only
+          the faint vertical pinstripes behind the dashboard image.
+
+          `crossFade` carries those stripes past the hero's bottom edge and
+          fades them out across the boundary — most of the ramp above the
+          seam, the faint tail over the section below — so the two sections
+          read as one continuous surface instead of meeting at a hard cut. */}
+      <StripePanel crossFade>
         <SectionRow>
           <Block border="none" pad="open-bottom">
             <div className="overflow-hidden rounded-ds-chrome shadow-ds-card-hover">

@@ -100,6 +100,7 @@ export type HomeContent = {
   ideologyIntro: string;
   ideologyPrinciples: IdeologyPrinciple[];
   worksHeading: string;
+  worksIntro: string;
   works: WorkCard[];
   aiWorkflow: {
     heading: string;

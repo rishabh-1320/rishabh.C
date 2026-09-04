@@ -32,8 +32,9 @@ export function CaseStudyCard({
   return (
     <div className={cn("flex items-stretch overflow-clip rounded-ds-card", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image} alt={alt} loading="lazy" className="aspect-[552/314] w-1/2 rounded-ds-lg object-cover" />
-      <div className="w-1/2">
+      {/* 665 / 1104 of the content column in Figma — the image takes 60%, not half. */}
+      <img src={image} alt={alt} loading="lazy" className="aspect-[665/476] w-[60%] rounded-ds-lg object-cover" />
+      <div className="w-[40%]">
         <CardTitle tags={tags} title={title} description={description} metric={metric} metricLabel={metricLabel} padding="casestudy" href={href} />
       </div>
     </div>

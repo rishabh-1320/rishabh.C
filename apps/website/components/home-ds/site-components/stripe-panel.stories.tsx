@@ -11,7 +11,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    background: "linear-gradient(to bottom, var(--ds-color-surface-page), var(--ds-color-hero-blue))",
+    background: "linear-gradient(to bottom, var(--ds-color-surface-page), var(--ds-color-hero-wash))",
     children: <div className="flex h-64 items-center justify-center text-ds-ink">Content over the pinstripe wash</div>
   }
 };

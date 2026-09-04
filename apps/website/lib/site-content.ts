@@ -30,10 +30,10 @@ export const homeContent: HomeContent = {
   },
 
   stats: [
-    { value: "5", label: "Products shipped" },
+    { value: "5", label: "Unique products shipped" },
     { value: "5", label: "Industry domains" },
     { value: "100k+", label: "Users reached" },
-    { value: "3 yrs", label: "Designing B2B" }
+    { value: "3.5 yrs", label: "Designing B2B SaaS" }
   ],
 
   ideologyHeading: "Thinking in systems",
@@ -69,7 +69,8 @@ export const homeContent: HomeContent = {
     }
   ],
 
-  worksHeading: "Case studies, end to end",
+  worksHeading: "Client work turned case studies",
+  worksIntro: "Client work presented as UX case studies — the problem, the decisions, and what shipped.",
   works: [
     {
       id: "work-chestnut",
@@ -107,7 +108,7 @@ export const homeContent: HomeContent = {
       year: "2024–2025",
       company: "Timelabs",
       ctaLabel: "View case study",
-      active: true,
+      active: false,
       href: "/casestudy/onboarding",
       tags: ["Onboarding", "HRMS", "Flow"]
     },
@@ -132,7 +133,7 @@ export const homeContent: HomeContent = {
       year: "",
       company: "",
       ctaLabel: "View case study",
-      active: true,
+      active: false,
       href: "/casestudy/design-system",
       tags: ["Design System", "Tokens", "Whitelabel"]
     }
